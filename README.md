@@ -9,7 +9,32 @@ From examples/simple.go
 ```go
 package main
 
-func main() {}
+import (
+	"fmt"
+	"github.com/batazor/fsme/fsm"
+)
+
+func main() {
+	// Create new FSM
+	machine, err := fsm.New()
+
+	// Add rule
+	machine.AddStateTransitionRules("a", "b", "c")
+	machine.AddStateTransitionRules("b", "d", "e")
+	machine.AddStateTransitionRules("c", "k")
+	machine.AddStateTransitionRules("d", "a")
+	machine.AddStateTransitionRules("e", "k")
+	machine.AddStateTransitionRules("k")
+
+	// Init State
+	err = machine.SetStateTransition("b")
+	if err != nil {
+		fmt.Println(err)
+		return
+	}
+
+	fmt.Printf("State: %s\n", machine.GetCurrentState())
+}
 ```
 
 ### Extends

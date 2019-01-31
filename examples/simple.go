@@ -24,19 +24,5 @@ func main() {
 		return
 	}
 
-	// Next step
-	err = machine.SetStateTransition("e")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
-	// Next step
-	err = machine.SetStateTransition("k")
-	if err != nil {
-		fmt.Println(err)
-		return
-	}
-
 	fmt.Printf("State: %s\n", machine.GetCurrentState())
 }
