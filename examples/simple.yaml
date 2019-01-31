@@ -1,0 +1,37 @@
+# this example for generation FSM from yaml file
+
+state:
+  - a: # state a
+      destination:
+        - b
+        - c
+      callback:
+        onEnter: # trigger by onLeave
+          - timer:
+              watch: 10 # arg 1 <Int>
+              function: # arg 2 <Func>
+                - toStep: b # run func `toStep`
+        onLeave: # trigger by onEnter
+          - slack:
+              message: Leave from state a
+              channel: "#general"
+  - b:
+      destination:
+        - d
+        - e
+      callback:
+  - c:
+      destination:
+        - k
+      callback:
+  - d:
+      destination:
+        - a
+      callback:
+  - e:
+      destination:
+        - k
+      callback:
+  - k:
+      destination:
+      callback:
