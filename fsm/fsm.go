@@ -84,3 +84,15 @@ func (s *FSM) SetStateTransition(toState State) error {
 func (s *FSM) GetCurrentState() State {
 	return s.state
 }
+
+// Save is a function return FSM state machine with all transitions, rules, state
+func (s *FSM) Save() FSM {
+	return *s
+}
+
+// Load is a function for state import
+func (s *FSM) Load(sNew *FSM) error {
+	s = sNew
+
+	return nil
+}
