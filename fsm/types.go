@@ -10,9 +10,10 @@ type FSM struct {
 	// current is the state that the FSM is currently in.
 	state State
 
+	// transitions maps events and source states to destination states.
 	transitions map[State]TransitionRuleSet
-	rules       map[State]map[State]State
 
+	// mu guards access to the current state.
 	mu sync.Mutex
 }
 
