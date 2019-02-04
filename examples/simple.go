@@ -20,19 +20,24 @@ func main() {
 	// Add Events
 	machine.AddEvent("start", "a")
 	machine.AddEvent("to b", "b")
+	machine.AddEvent("to d", "d")
 
 	// Add callback for event
-	machine.AddCallback("start", func(e *fsm.Event) { fmt.Println("a state: " + e.FSM.GetCurrentState()) })
-	machine.AddCallback("to b", func(e *fsm.Event) { fmt.Println("b state: " + e.FSM.GetCurrentState()) })
+	machine.AddCallback("a", func() { fmt.Println("A state: ") })
+	machine.AddCallback("b", func() { fmt.Println("B state: ") })
 
 	// Init State
-	err = machine.SetStateTransition("b")
+	err = machine.SetStateTransition("a")
 	if err != nil {
 		fmt.Println(err)
 	}
 
 	// Send Event
-	err = machine.SendEvent("start")
+	err = machine.SendEvent("to b")
+	if err != nil {
+		fmt.Println(err)
+	}
+	err = machine.SendEvent("to d")
 	if err != nil {
 		fmt.Println(err)
 	}

@@ -41,3 +41,11 @@ func main() {
 
 1. Start with https://github.com/looplab/fsm
 2. Start with https://github.com/theckman/go-fsm
+
+### Callbacks
+
+```
+// Add callback for event
+machine.AddCallback("start", func(e *fsm.Event) { fmt.Println("a state: " + e.FSM.GetCurrentState()) })
+machine.AddCallback("to b", func(e *fsm.Event) { fmt.Println("b state: " + e.FSM.GetCurrentState()) })
+```

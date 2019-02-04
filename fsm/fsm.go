@@ -5,13 +5,13 @@ import (
 	"fmt"
 )
 
-// New a create a new FSM
+// Create a new FSM
 func New() (*FSM, error) {
-	f := FSM{}
-
-	f.transitions = make(map[State]TransitionRuleSet)
-	f.callbacks = make(map[State]Callback)
-	f.events = make(map[State]State)
+	f := FSM{
+		transitions: make(map[State]TransitionRuleSet),
+		callbacks:   make(map[State]func()),
+		events:      make(map[State]State),
+	}
 
 	return &f, nil
 }
@@ -59,7 +59,7 @@ func (f *FSM) SetStateTransition(toState State) error {
 
 	// if the state is not defined, it's invalid
 	if _, ok := f.transitions[toState]; !ok {
-		return errors.New(fmt.Sprintf("state %s has not been registered", toState))
+		return errors.New(fmt.Sprintf("state `%s` has not been registered", toState))
 	}
 
 	// if the state is nothing, this is probably the inital state
@@ -74,6 +74,14 @@ func (f *FSM) SetStateTransition(toState State) error {
 		strError := fmt.Sprintf("transition from state %s to %s is not permitted", f.state, toState)
 		return errors.New(strError)
 	}
+
+	// leave callback
+	a := f.callbacks[f.state]
+	f.onLeaveCallbacks(a)
+
+	// enter callback
+	b := f.callbacks[toState]
+	f.onLeaveCallbacks(b)
 
 	// set the state
 	f.state = toState
