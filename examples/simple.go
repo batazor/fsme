@@ -22,9 +22,10 @@ func main() {
 	machine.AddEvent("to b", "b")
 	machine.AddEvent("to d", "d")
 
-	// Add callback for event
-	machine.AddCallback("a", func() { fmt.Println("A state: ") })
-	machine.AddCallback("b", func() { fmt.Println("B state: ") })
+	// Add callback for state
+	machine.AddCallback("a", "enter", func(f *fsm.FSM) { fmt.Println("Enter state: ", f.GetCurrentState()) })
+	machine.AddCallback("a", "leave", func(f *fsm.FSM) { fmt.Println("Leave state: ", f.GetCurrentState()) })
+	machine.AddCallback("b", "enter", func(f *fsm.FSM) { fmt.Println("Enter state: ", f.GetCurrentState()) })
 
 	// Init State
 	err = machine.SetStateTransition("a")

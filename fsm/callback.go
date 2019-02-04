@@ -1,7 +1,5 @@
 package fsm
 
-import "fmt"
-
 const (
 	callbackNone int = iota
 	callbackOnEnter
@@ -9,18 +7,18 @@ const (
 )
 
 // AddCallback is a function for adding callback function by event
-func (f *FSM) AddCallback(event State, cb func()) error {
+func (f *FSM) AddCallback(event State, typeCb string, cb func(*FSM)) error {
+	// TODO: use typeCb
+
 	f.callbacks[event] = cb
 
 	return nil
 }
 
 // onLeaveCallbacks
-func (f *FSM) onLeaveCallbacks(cb func()) error {
-	fmt.Println("onLeaveCallbacks", cb)
-
+func (f *FSM) onLeaveCallbacks(cb func(*FSM)) error {
 	if fn, ok := f.callbacks[f.state]; ok {
-		fn()
+		fn(f)
 
 		return nil
 	}
@@ -29,11 +27,9 @@ func (f *FSM) onLeaveCallbacks(cb func()) error {
 }
 
 // onLeaveCallbacks
-func (f *FSM) onEnterCallbacks(cb func()) error {
-	fmt.Println("onEnterCallbacks", cb)
-
+func (f *FSM) onEnterCallbacks(cb func(*FSM)) error {
 	if fn, ok := f.callbacks[f.state]; ok {
-		fn()
+		fn(f)
 
 		return nil
 	}

@@ -20,7 +20,7 @@ type FSM struct {
 	events map[State]State
 
 	// callbacks maps events and source states to destination statef.
-	callbacks map[State]func()
+	callbacks map[State]func(*FSM)
 
 	// stateMu guards access to the current state.
 	stateMu sync.RWMutex
@@ -38,7 +38,7 @@ type TransitionRuleSet map[State]struct{}
 type Callback func(*FSM)
 
 // Callbaks is a shorthand for defining the callbacks in FSM
-type Callbacks map[State]func()
+type Callbacks map[State]func(*FSM)
 
 // Event is the info that get passed as a reference in the callbacks.
 type Event struct {

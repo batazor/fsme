@@ -9,7 +9,7 @@ import (
 func New() (*FSM, error) {
 	f := FSM{
 		transitions: make(map[State]TransitionRuleSet),
-		callbacks:   make(map[State]func()),
+		callbacks:   make(map[State]func(*FSM)),
 		events:      make(map[State]State),
 	}
 
