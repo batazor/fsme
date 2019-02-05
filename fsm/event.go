@@ -5,21 +5,6 @@ import (
 	"fmt"
 )
 
-func (f *FSM) Event(name State, args ...interface{}) error {
-	event := f.events[name]
-
-	if f.events[name] == "" {
-		return errors.New(fmt.Sprintf("event %s not register\n", event))
-	}
-
-	err := f.SetStateTransition(event)
-	if err != nil {
-		return err
-	}
-
-	return nil
-}
-
 // AddEvent is a function for adding event
 func (f *FSM) AddEvent(name State, dst State) error {
 	f.events[name] = dst

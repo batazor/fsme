@@ -1,11 +1,5 @@
 package fsm
 
-const (
-	callbackNone int = iota
-	callbackOnEnter
-	callbackOnLeave
-)
-
 // AddCallback is a function for adding callback function by event
 func (f *FSM) AddCallback(state State, typeCb string, cb func(*FSM)) error {
 	switch typeCb {

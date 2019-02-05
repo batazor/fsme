@@ -88,6 +88,7 @@ func (f *FSM) SetStateTransition(toState State) error {
 	return nil
 }
 
+// setState is a function for set new state FSM
 func (f *FSM) setState(toState State) {
 	f.stateMu.Lock()
 	defer f.stateMu.Unlock()
@@ -102,16 +103,4 @@ func (f *FSM) GetCurrentState() State {
 	defer f.stateMu.Unlock()
 
 	return f.state
-}
-
-// Save is a function return FSM state machine with all transitions, rules, state
-func (f *FSM) Save() FSM {
-	return *f
-}
-
-// Load is a function for state import
-func (f *FSM) Load(sNew *FSM) error {
-	f = sNew
-
-	return nil
 }

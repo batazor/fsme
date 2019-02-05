@@ -13,10 +13,6 @@ type FSM struct {
 	// transitions maps events and source states to destination statef.
 	transitions map[State]TransitionRuleSet
 
-	// transition is the internal transition functions used either directly
-	// or when Transition is called in an asynchronous state transition.
-	transition func()
-
 	events map[State]State
 
 	// callbacks maps events and source states to destination statef.
@@ -24,9 +20,6 @@ type FSM struct {
 
 	// stateMu guards access to the current state.
 	stateMu sync.RWMutex
-
-	// eventMu guards access to Event() and Transition().
-	eventMu sync.Mutex
 }
 
 // TransitionRuleSet is a set of allowed transitionf. This uses map of struct{}
@@ -43,23 +36,6 @@ type Callbacks struct {
 	leave map[State]Callback
 }
 
-// Event is the info that get passed as a reference in the callbacks.
-type Event struct {
-	// FSM is a reference to the current FSM.
-	FSM *FSM
-
-	// Name is the event name.
-	Name State
-
-	// Src is the state before the transition.
-	Source State
-
-	// Destination is the state after the transition.
-	Destination map[State]struct{}
-
-	// Error is an optional error that can be returned from a callback.
-	Error error
-
-	// Args is a optional list of arguments passed to the callback.
-	Args []interface{}
+type ExportImpl interface {
+	export() []byte
 }
