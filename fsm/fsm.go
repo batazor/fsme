@@ -52,9 +52,6 @@ func (f *FSM) AddStateTransitionRules(src State, dst ...State) error {
 // if the state transition is not allowed, or if the destination state has
 // not been defined. In both cases, it's seen as a non-permitted state transition.
 func (f *FSM) SetStateTransition(toState State) error {
-	f.stateMu.Lock()
-	defer f.stateMu.Unlock()
-
 	// if this is nil we cannot assume any state
 	if len(f.transitions) == 0 {
 		return errors.New("the machine has no states added")
@@ -67,8 +64,7 @@ func (f *FSM) SetStateTransition(toState State) error {
 
 	// if the state is nothing, this is probably the inital state
 	if f.state == "" {
-		// set the state
-		f.state = toState
+		f.setState(toState)
 		return nil
 	}
 
@@ -87,16 +83,23 @@ func (f *FSM) SetStateTransition(toState State) error {
 	f.onLeaveCallbacks(a)
 
 	// set the state
-	f.state = toState
+	f.setState(toState)
 
 	return nil
+}
+
+func (f *FSM) setState(toState State) {
+	f.stateMu.Lock()
+	defer f.stateMu.Unlock()
+
+	f.state = toState
 }
 
 // GetCurrentState returns the current state. If the State returned is
 // "", then the machine has not been given an initial state.
 func (f *FSM) GetCurrentState() State {
-	//f.stateMu.Lock()
-	//defer f.stateMu.Unlock()
+	f.stateMu.Lock()
+	defer f.stateMu.Unlock()
 
 	return f.state
 }
