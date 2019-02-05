@@ -7,17 +7,20 @@ const (
 )
 
 // AddCallback is a function for adding callback function by event
-func (f *FSM) AddCallback(event State, typeCb string, cb func(*FSM)) error {
-	// TODO: use typeCb
-
-	f.callbacks[event] = cb
+func (f *FSM) AddCallback(state State, typeCb string, cb func(*FSM)) error {
+	switch typeCb {
+	case "enter":
+		f.callbacks.enter[state] = cb
+	case "leave":
+		f.callbacks.leave[state] = cb
+	}
 
 	return nil
 }
 
 // onLeaveCallbacks
 func (f *FSM) onLeaveCallbacks(cb func(*FSM)) error {
-	if fn, ok := f.callbacks[f.state]; ok {
+	if fn, ok := f.callbacks.leave[f.state]; ok {
 		fn(f)
 
 		return nil
@@ -28,7 +31,7 @@ func (f *FSM) onLeaveCallbacks(cb func(*FSM)) error {
 
 // onLeaveCallbacks
 func (f *FSM) onEnterCallbacks(cb func(*FSM)) error {
-	if fn, ok := f.callbacks[f.state]; ok {
+	if fn, ok := f.callbacks.enter[f.state]; ok {
 		fn(f)
 
 		return nil

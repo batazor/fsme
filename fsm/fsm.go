@@ -9,8 +9,11 @@ import (
 func New() (*FSM, error) {
 	f := FSM{
 		transitions: make(map[State]TransitionRuleSet),
-		callbacks:   make(map[State]func(*FSM)),
-		events:      make(map[State]State),
+		callbacks: Callbacks{
+			make(map[State]Callback),
+			make(map[State]Callback),
+		},
+		events: make(map[State]State),
 	}
 
 	return &f, nil
@@ -75,13 +78,13 @@ func (f *FSM) SetStateTransition(toState State) error {
 		return errors.New(strError)
 	}
 
-	// leave callback
-	a := f.callbacks[f.state]
-	f.onLeaveCallbacks(a)
-
 	// enter callback
-	b := f.callbacks[toState]
-	f.onLeaveCallbacks(b)
+	b := f.callbacks.enter[toState]
+	f.onEnterCallbacks(b)
+
+	// leave callback
+	a := f.callbacks.leave[f.state]
+	f.onLeaveCallbacks(a)
 
 	// set the state
 	f.state = toState
@@ -92,6 +95,9 @@ func (f *FSM) SetStateTransition(toState State) error {
 // GetCurrentState returns the current state. If the State returned is
 // "", then the machine has not been given an initial state.
 func (f *FSM) GetCurrentState() State {
+	//f.stateMu.Lock()
+	//defer f.stateMu.Unlock()
+
 	return f.state
 }
 
