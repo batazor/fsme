@@ -2,9 +2,16 @@
 
 Finite State Machine Engine for Go
 
+[![GoDoc](https://godoc.org/github.com/ryanfaerman/fsm?status.png)](https://godoc.org/github.com/batazor/fsme/fsm)
+
+
+### Install
+
+`go get github.com/batazor/fsme/fsm`
+
 ### Basic Example
 
-From examples/simple.go
+From [examples/simple.go](./examples/simple.go)
 
 ```go
 package main
