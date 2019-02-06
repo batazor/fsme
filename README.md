@@ -56,6 +56,13 @@ func main() {
 }
 ```
 
+### Feature
+
++ FSM
++ Callback [Entry, Leave]
++ Export
++ [Examples](./examples)
+
 ### Extends
 
 1. Start with https://github.com/looplab/fsm
