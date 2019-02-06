@@ -2,9 +2,12 @@ package fsm
 
 // Import/Export
 // TODO: use DI instead struct Export
-type Marshalable interface {
+type Init interface {
 	Export() string
-	Import() ([]byte, error)
+	Import(FSM) error
+	// TODO: add work with channels (input/output)
+	Watch() chan<- interface{}
+	Listen(<-chan interface{})
 }
 
 // Export this FSM type for export data

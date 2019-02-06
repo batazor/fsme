@@ -11,6 +11,9 @@ type State string
 
 // FSM is the state machine that holds the current state.
 type FSM struct {
+	// Init - set global options
+	init Init
+
 	// current is the state that the FSM is currently in.
 	state State
 
@@ -30,7 +33,7 @@ type FSM struct {
 // to implement a set.
 type TransitionRuleSet map[State]struct{}
 
-// Create a new FSM
+// Create a new FSM with empty setup
 func New() (*FSM, error) {
 	f := FSM{
 		transitions: make(map[State]TransitionRuleSet),
