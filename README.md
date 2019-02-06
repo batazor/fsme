@@ -9,6 +9,10 @@ Finite State Machine Engine for Go
 
 `go get github.com/batazor/fsme/fsm`
 
+### UI
+
+![UI](./docs/editor.png)
+
 ### Basic Example
 
 From [examples/simple.go](./examples/simple.go)
