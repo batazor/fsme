@@ -1,0 +1,136 @@
+swagger: '2.0'
+info:
+  title: FSME
+  version: 0.1.0
+  description: FSME server for UI
+schemes:
+- http
+- https
+consumes:
+- application/io.goswagger.examples.todo-list.v1+json
+produces:
+- application/io.goswagger.examples.todo-list.v1+json
+definitions:
+  fsm:
+    type: object
+    required:
+    - rules
+    properties:
+      id:
+        type: integer
+        format: int
+        readOnly: true
+      description:
+        type: string
+      rules:
+        type: string
+      events:
+        type: string
+      callbacks:
+        type: string
+      state:
+        type: string
+  error:
+    type: object
+    required:
+    - message
+    properties:
+      code:
+        type: integer
+        format: int
+      message:
+        type: string
+paths:
+  "/":
+    get:
+      tags:
+      - fsm
+      operationId: getFSMList
+      parameters:
+      - name: enable
+        in: query
+        type: boolean
+        format: bool
+      - name: limit
+        in: query
+        type: integer
+        format: int
+        default: 10
+      responses:
+        200:
+          description: get list the fsm
+          schema:
+            type: array
+            items:
+              $ref: "#/definitions/fsm"
+        default:
+          description: generic error response
+          schema:
+            $ref: "#/definitions/error"
+    post:
+      tags:
+      - fsm
+      operationId: addFSM
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: "#/definitions/fsm"
+      responses:
+        201:
+          description: Created
+          schema:
+            $ref: '#/definitions/fsm'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/error'
+  "/{id}":
+    parameters:
+    - type: string
+      format: string
+      name: id
+      in: path
+      required: true
+    get:
+      tags:
+      - fsm
+      operationId: getFSM
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/fsm'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/error'
+    patch:
+      tags:
+      - fsm
+      operationId: updateFSM
+      parameters:
+      - name: body
+        in: body
+        schema:
+          $ref: '#/definitions/fsm'
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/fsm'
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/error'
+    delete:
+      tags:
+      - fsm
+      operationId: destroyFSM
+      responses:
+        204:
+          description: Deleted
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/error'

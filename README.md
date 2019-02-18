@@ -9,10 +9,6 @@ Finite State Machine Engine for Go
 
 `go get github.com/batazor/fsme/fsm`
 
-### UI
-
-![UI](./docs/editor.png)
-
 ### Basic Example
 
 From [examples/simple.go](./examples/simple.go)
@@ -80,10 +76,27 @@ func main() {
 1. Start with https://github.com/looplab/fsm
 2. Start with https://github.com/theckman/go-fsm
 
-### Callbacks
+## UI
 
-```
-// Add callback for event
-machine.AddCallback("start", func(e *fsm.Event) { fmt.Println("a state: " + e.FSM.GetCurrentState()) })
-machine.AddCallback("to b", func(e *fsm.Event) { fmt.Println("b state: " + e.FSM.GetCurrentState()) })
+![UI](./docs/editor.png)
+
+#### Server
+
+```bash
+# Run swagger-ui
+docker run -p 80:8080 \
+    -e BASE_URL=/swagger \
+    -e SWAGGER_JSON=/docs/swagger.json \
+    -v $pwd/docs/swagger:/docs \
+    swaggerapi/swagger-ui
+    
+# Run swagger-editor
+docker run -p 80:8080 \
+    -e BASE_URL=/swagger \
+    -e SWAGGER_JSON=/docs/swagger.json \
+    -v $pwd/docs/swagger:/docs \
+    swaggerapi/swagger-editor
+
+# Run goswagger
+swagger generate server -A todo-list -f ./docs/swagger/swagger.yaml
 ```
