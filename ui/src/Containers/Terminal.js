@@ -32,7 +32,7 @@ class Command extends Component {
           descriptions={{}}
           showActions={false}
           hideTopBar
-          msg='You can write anything here. Example - Hello! My name is Foo and I like Bar.'
+          msg="These shell commands are defined internally.  Type `help' to see this list."
         />
       </div>
     );
