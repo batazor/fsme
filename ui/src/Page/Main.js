@@ -38,6 +38,16 @@ const styles = {
 };
 
 class MainPage extends Component {
+  constructor() {
+    super()
+
+    this.onEvent = this.onEvent.bind(this)
+  }
+
+  onEvent(args, print, runCommand) {
+    console.log(args)
+  }
+
   render() {
     const { classes } = this.props;
 
@@ -60,7 +70,9 @@ class MainPage extends Component {
             <GraphEditor />
           </Paper>
 
-          <Terminal />
+          <Terminal
+            onEvent={this.onEvent}
+          />
         </main>
       </div>
     )

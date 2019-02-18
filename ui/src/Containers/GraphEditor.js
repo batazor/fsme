@@ -21,7 +21,7 @@ const sample = {
       "type": "empty"
     },
     {
-      "id": 4,
+      "id": 3,
       "title": "Node C",
       "x": 600.5757598876953,
       "y": 600.81818389892578,
@@ -36,7 +36,7 @@ const sample = {
     },
     {
       "source": 2,
-      "target": 4,
+      "target": 3,
       "type": "emptyEdge"
     }
   ]
