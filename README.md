@@ -89,7 +89,7 @@ docker run -p 80:8080 \
     -e SWAGGER_JSON=/docs/swagger.json \
     -v $pwd/docs/swagger:/docs \
     swaggerapi/swagger-ui
-    
+
 # Run swagger-editor
 docker run -p 80:8080 \
     -e BASE_URL=/swagger \
@@ -98,5 +98,5 @@ docker run -p 80:8080 \
     swaggerapi/swagger-editor
 
 # Run goswagger
-swagger generate server -A todo-list -f ./docs/swagger/swagger.yaml
+swagger generate server -A fsm-server -f ./docs/swagger.yaml
 ```
