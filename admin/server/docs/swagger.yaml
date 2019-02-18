@@ -5,7 +5,7 @@ info:
   description: FSME server for UI
 schemes:
 - http
-- https
+# - https
 consumes:
 - application/io.goswagger.examples.todo-list.v1+json
 produces:
