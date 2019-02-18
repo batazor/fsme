@@ -2,13 +2,6 @@ import React, { Component } from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import {
   GraphView, // required
-  Edge, // optional
-  type IEdge, // optional
-  Node, // optional
-  type INode, // optional
-  type LayoutEngineType, // required to change the layoutEngineType, otherwise optional
-  BwdlTransformer, // optional, Example JSON transformer
-  GraphUtils // optional, useful utility functions
 } from 'react-digraph';
 
 const sample = {
@@ -28,18 +21,11 @@ const sample = {
       "type": "empty"
     },
     {
-      "id": 3,
-      "title": "Node C",
-      "x": 237.5757598876953,
-      "y": 61.81818389892578,
-      "type": "custom"
-    },
-    {
       "id": 4,
       "title": "Node C",
       "x": 600.5757598876953,
       "y": 600.81818389892578,
-      "type": "custom"
+      "type": "empty"
     }
   ],
   "edges": [
