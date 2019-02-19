@@ -1,22 +1,37 @@
 import * as FSM from '../constants/fsm'
-import { FsmApi } from '../swagger/src'
+import { ApiClient, FsmApi } from '../swagger/src'
 
 export function list(opts = {}) {
-  FsmApi.getFSMList(opts, resp => console.warn('getFSMList', resp))
+  const client = new ApiClient()
+  client.basePath = "http://localhost:34801"
+  const api = new FsmApi(client)
+  api.getFSMList(opts)
+    .then(
+      resp => console.warn('getFSMList', resp),
+      err => console.warn('getFSMList err', err)
+    )
+
+  return d => d({
+    type: "",
+  })
 }
 
 export function get(id = 1) {
-  FsmApi.getFSM(id, resp => console.warn('getFSM', resp))
+  // const resp = FsmApi.getFSM(id)
+  // console.warn('getFSM', resp)
 }
 
 export function add(opts = {}) {
-  FsmApi.addFSM(opts, resp => console.warn('addFSM', resp))
+  // const resp = FsmApi.addFSM(opts)
+  // console.warn('addFSM', resp)
 }
 
 export function update(id = 1, opts = {}) {
-  FsmApi.updateFSM(id, opts, resp => console.warn('updateFSM', resp))
+  // const resp = FsmApi.updateFSM(id, opts)
+  // console.warn('updateFSM', resp)
 }
 
 export function remove(id = 1) {
-  FsmApi.destroyFSM(id, resp => console.warn('destroyFSM', resp))
+  // const resp = FsmApi.destroyFSM(id)
+  // console.warn('destroyFSM', resp)
 }

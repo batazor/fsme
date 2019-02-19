@@ -43,14 +43,20 @@ const styles = {
 };
 
 class MainPage extends Component {
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     this.onEvent = this.onEvent.bind(this)
+
+    props.listActions()
   }
 
   onEvent(args, print, runCommand) {
     console.log(args)
+  }
+
+  componentDidMount() {
+    // this.props.listActions()
   }
 
   render() {
