@@ -19,22 +19,19 @@ Method | HTTP request | Description
 
 ### Example
 ```javascript
-var Fsme = require('fsme');
+import Fsme from 'fsme';
 
-var apiInstance = new Fsme.FsmApi();
+let apiInstance = new Fsme.FsmApi();
 
-var opts = { 
+let opts = { 
   'body': new Fsme.Fsm() // Fsm | 
 };
+apiInstance.addFSM(opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.addFSM(opts, callback);
 ```
 
 ### Parameters
@@ -64,21 +61,18 @@ No authorization required
 
 ### Example
 ```javascript
-var Fsme = require('fsme');
+import Fsme from 'fsme';
 
-var apiInstance = new Fsme.FsmApi();
+let apiInstance = new Fsme.FsmApi();
 
-var id = "id_example"; // String | 
+let id = "id_example"; // String | 
 
+apiInstance.destroyFSM(id).then(() => {
+  console.log('API called successfully.');
+}, (error) => {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully.');
-  }
-};
-apiInstance.destroyFSM(id, callback);
 ```
 
 ### Parameters
@@ -108,21 +102,18 @@ No authorization required
 
 ### Example
 ```javascript
-var Fsme = require('fsme');
+import Fsme from 'fsme';
 
-var apiInstance = new Fsme.FsmApi();
+let apiInstance = new Fsme.FsmApi();
 
-var id = "id_example"; // String | 
+let id = "id_example"; // String | 
 
+apiInstance.getFSM(id).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.getFSM(id, callback);
 ```
 
 ### Parameters
@@ -152,23 +143,20 @@ No authorization required
 
 ### Example
 ```javascript
-var Fsme = require('fsme');
+import Fsme from 'fsme';
 
-var apiInstance = new Fsme.FsmApi();
+let apiInstance = new Fsme.FsmApi();
 
-var opts = { 
+let opts = { 
   'enable': true, // Boolean | 
   'limit': 10 // Number | 
 };
+apiInstance.getFSMList(opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.getFSMList(opts, callback);
 ```
 
 ### Parameters
@@ -199,24 +187,21 @@ No authorization required
 
 ### Example
 ```javascript
-var Fsme = require('fsme');
+import Fsme from 'fsme';
 
-var apiInstance = new Fsme.FsmApi();
+let apiInstance = new Fsme.FsmApi();
 
-var id = "id_example"; // String | 
+let id = "id_example"; // String | 
 
-var opts = { 
+let opts = { 
   'body': new Fsme.Fsm() // Fsm | 
 };
+apiInstance.updateFSM(id, opts).then((data) => {
+  console.log('API called successfully. Returned data: ' + data);
+}, (error) => {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-apiInstance.updateFSM(id, opts, callback);
 ```
 
 ### Parameters

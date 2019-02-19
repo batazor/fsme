@@ -99,4 +99,11 @@ docker run -p 80:8080 \
 
 # Run goswagger
 swagger generate server -A fsm-server -f ./docs/swagger.yaml
+
+# Generator client
+docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
+    -i /local/admin/server/docs/swagger.yaml \
+    -l javascript \
+		--additional-properties useInheritance=true,useES6=true,sortParamsByRequiredFlag=true,usePromises=true \
+    -o /local/admin/ui/src/swagger
 ```

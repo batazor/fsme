@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
@@ -9,6 +11,9 @@ import MenuIcon from '@material-ui/icons/Menu'
 import Paper from '@material-ui/core/Paper'
 import GraphEditor from '../../Containers/GraphEditor'
 import Terminal from '../../Containers/Terminal'
+import {
+  list, add, update, remove,
+} from '../../actions/fsm'
 
 const styles = {
   root: {
@@ -83,4 +88,22 @@ MainPage.propTypes = {
   classes: PropTypes.object.isRequired,
 };
 
-export default withStyles(styles)(MainPage);
+function mapStateToProps(state) {
+  return {
+    fsm: state.fsm,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    listActions: bindActionCreators(list, dispatch),
+    addActions: bindActionCreators(add, dispatch),
+    updateActions: bindActionCreators(update, dispatch),
+    removeActions: bindActionCreators(remove, dispatch),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(MainPage));

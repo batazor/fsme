@@ -23,46 +23,21 @@ Then install it via:
 npm install fsme --save
 ```
 
-##### Local development
-
-To use the library locally without publishing to a remote npm registry, first install the dependencies by changing 
-into the directory containing `package.json` (and this README). Let's call this `JAVASCRIPT_CLIENT_DIR`. Then run:
-
-```shell
-npm install
-```
-
-Next, [link](https://docs.npmjs.com/cli/link) it globally in npm with the following, also from `JAVASCRIPT_CLIENT_DIR`:
-
-```shell
-npm link
-```
-
-Finally, switch to the directory you want to use your fsme from, and run:
-
-```shell
-npm link /path/to/<JAVASCRIPT_CLIENT_DIR>
-```
-
-You should now be able to `require('fsme')` in javascript files from the directory you ran the last 
-command above from.
-
 #### git
 #
 If the library is hosted at a git repository, e.g.
-https://github.com/YOUR_USERNAME/fsme
+https://github.com/GIT_USER_ID/GIT_REPO_ID
 then install it via:
 
 ```shell
-    npm install YOUR_USERNAME/fsme --save
+    npm install GIT_USER_ID/GIT_REPO_ID --save
 ```
 
 ### For browser
 
 The library also works in the browser environment via npm and [browserify](http://browserify.org/). After following
 the above steps with Node.js and installing browserify with `npm install -g browserify`,
-perform the following (assuming *main.js* is your entry file, that's to say your javascript file where you actually 
-use this library):
+perform the following (assuming *main.js* is your entry file):
 
 ```shell
 browserify main.js > bundle.js
@@ -100,15 +75,12 @@ var api = new Fsme.FsmApi()
 var opts = { 
   'body': new Fsme.Fsm() // {Fsm} 
 };
+api.addFSM(opts).then(function(data) {
+  console.log('API called successfully. Returned data: ' + data);
+}, function(error) {
+  console.error(error);
+});
 
-var callback = function(error, data, response) {
-  if (error) {
-    console.error(error);
-  } else {
-    console.log('API called successfully. Returned data: ' + data);
-  }
-};
-api.addFSM(opts, callback);
 
 ```
 
