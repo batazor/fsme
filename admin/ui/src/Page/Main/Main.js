@@ -14,6 +14,9 @@ import Terminal from '../../Containers/Terminal'
 import {
   list, add, update, remove,
 } from '../../actions/fsm'
+import {
+  sendEvent,
+} from '../../actions/event'
 
 const styles = {
   root: {
@@ -53,6 +56,7 @@ class MainPage extends Component {
 
   onEvent(args, print, runCommand) {
     console.log(args)
+    sendEvent(args[1])
   }
 
   componentDidMount() {
