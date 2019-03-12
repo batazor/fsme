@@ -70,12 +70,11 @@ Please follow the [installation](#installation) instruction and execute the foll
 ```javascript
 var Fsme = require('fsme');
 
-var api = new Fsme.FsmApi()
+var api = new Fsme.EventApi()
 
-var opts = { 
-  'body': new Fsme.Fsm() // {Fsm} 
-};
-api.addFSM(opts).then(function(data) {
+var id = "id_example"; // {String} 
+
+api.sendEventFSM(id).then(function(data) {
   console.log('API called successfully. Returned data: ' + data);
 }, function(error) {
   console.error(error);
@@ -90,6 +89,7 @@ All URIs are relative to *http://localhost*
 
 Class | Method | HTTP request | Description
 ------------ | ------------- | ------------- | -------------
+*Fsme.EventApi* | [**sendEventFSM**](docs/EventApi.md#sendEventFSM) | **POST** /{id}/event | 
 *Fsme.FsmApi* | [**addFSM**](docs/FsmApi.md#addFSM) | **POST** / | 
 *Fsme.FsmApi* | [**destroyFSM**](docs/FsmApi.md#destroyFSM) | **DELETE** /{id} | 
 *Fsme.FsmApi* | [**getFSM**](docs/FsmApi.md#getFSM) | **GET** /{id} | 
@@ -100,6 +100,7 @@ Class | Method | HTTP request | Description
 ## Documentation for Models
 
  - [Fsme.Error](docs/Error.md)
+ - [Fsme.Event](docs/Event.md)
  - [Fsme.Fsm](docs/Fsm.md)
 
 

@@ -17,6 +17,8 @@ Method | HTTP request | Description
 
 
 
+Create a new fsm
+
 ### Example
 ```javascript
 import Fsme from 'fsme';
@@ -59,6 +61,8 @@ No authorization required
 
 
 
+Delete a fsm
+
 ### Example
 ```javascript
 import Fsme from 'fsme';
@@ -100,6 +104,8 @@ No authorization required
 
 
 
+Get a fsm by ID
+
 ### Example
 ```javascript
 import Fsme from 'fsme';
@@ -140,6 +146,8 @@ No authorization required
 > [Fsm] getFSMList(opts)
 
 
+
+Get list fsm
 
 ### Example
 ```javascript
@@ -184,6 +192,8 @@ No authorization required
 > Fsm updateFSM(id, opts)
 
 
+
+Update a fsm
 
 ### Example
 ```javascript

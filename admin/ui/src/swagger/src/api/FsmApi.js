@@ -37,6 +37,7 @@ export default class FsmApi {
 
 
     /**
+     * Create a new fsm
      * @param {Object} opts Optional parameters
      * @param {module:model/Fsm} opts.body 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Fsm} and HTTP response
@@ -68,6 +69,7 @@ export default class FsmApi {
     }
 
     /**
+     * Create a new fsm
      * @param {Object} opts Optional parameters
      * @param {module:model/Fsm} opts.body 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Fsm}
@@ -81,6 +83,7 @@ export default class FsmApi {
 
 
     /**
+     * Delete a fsm
      * @param {String} id 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing HTTP response
      */
@@ -116,6 +119,7 @@ export default class FsmApi {
     }
 
     /**
+     * Delete a fsm
      * @param {String} id 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}
      */
@@ -128,6 +132,7 @@ export default class FsmApi {
 
 
     /**
+     * Get a fsm by ID
      * @param {String} id 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with an object containing data of type {@link module:model/Fsm} and HTTP response
      */
@@ -163,6 +168,7 @@ export default class FsmApi {
     }
 
     /**
+     * Get a fsm by ID
      * @param {String} id 
      * @return {Promise} a {@link https://www.promisejs.org/|Promise}, with data of type {@link module:model/Fsm}
      */
@@ -175,6 +181,7 @@ export default class FsmApi {
 
 
     /**
+     * Get list fsm
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.enable 
      * @param {Number} opts.limit  (default to 10)
@@ -209,6 +216,7 @@ export default class FsmApi {
     }
 
     /**
+     * Get list fsm
      * @param {Object} opts Optional parameters
      * @param {Boolean} opts.enable 
      * @param {Number} opts.limit  (default to 10)
@@ -223,6 +231,7 @@ export default class FsmApi {
 
 
     /**
+     * Update a fsm
      * @param {String} id 
      * @param {Object} opts Optional parameters
      * @param {module:model/Fsm} opts.body 
@@ -261,6 +270,7 @@ export default class FsmApi {
     }
 
     /**
+     * Update a fsm
      * @param {String} id 
      * @param {Object} opts Optional parameters
      * @param {module:model/Fsm} opts.body 

@@ -14,7 +14,9 @@
 
 import ApiClient from './ApiClient';
 import Error from './model/Error';
+import Event from './model/Event';
 import Fsm from './model/Fsm';
+import EventApi from './api/EventApi';
 import FsmApi from './api/FsmApi';
 
 
@@ -63,10 +65,22 @@ export {
     Error,
 
     /**
+     * The Event model constructor.
+     * @property {module:model/Event}
+     */
+    Event,
+
+    /**
      * The Fsm model constructor.
      * @property {module:model/Fsm}
      */
     Fsm,
+
+    /**
+    * The EventApi service constructor.
+    * @property {module:api/EventApi}
+    */
+    EventApi,
 
     /**
     * The FsmApi service constructor.
