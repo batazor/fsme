@@ -30,6 +30,12 @@ definitions:
         type: string
       state:
         type: string
+  event:
+    type: object
+    required:
+    properties:
+      state:
+        type: string
   error:
     type: object
     required:
@@ -46,6 +52,7 @@ paths:
       tags:
       - fsm
       operationId: getFSMList
+      description: Get list fsm
       parameters:
       - name: enable
         in: query
@@ -71,6 +78,7 @@ paths:
       tags:
       - fsm
       operationId: addFSM
+      description: Create a new fsm
       parameters:
       - name: body
         in: body
@@ -96,6 +104,7 @@ paths:
       tags:
       - fsm
       operationId: getFSM
+      description: Get a fsm by ID
       responses:
         200:
           description: OK
@@ -109,6 +118,7 @@ paths:
       tags:
       - fsm
       operationId: updateFSM
+      description: Update a fsm
       parameters:
       - name: body
         in: body
@@ -127,9 +137,31 @@ paths:
       tags:
       - fsm
       operationId: destroyFSM
+      description: Delete a fsm
       responses:
         204:
           description: Deleted
+        default:
+          description: error
+          schema:
+            $ref: '#/definitions/error'
+  "/{id}/event":
+    parameters:
+    - type: string
+      format: string
+      name: id
+      in: path
+      required: true
+    post:
+      tags:
+      - event
+      operationId: sendEventFSM
+      description: Send event to fsm by ID
+      responses:
+        200:
+          description: OK
+          schema:
+            $ref: '#/definitions/event'
         default:
           description: error
           schema:
