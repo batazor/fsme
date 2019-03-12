@@ -32,7 +32,6 @@ definitions:
         type: string
   event:
     type: object
-    required:
     properties:
       state:
         type: string

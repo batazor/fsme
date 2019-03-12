@@ -31,7 +31,7 @@ func NewGetFSM(ctx *middleware.Context, handler GetFSMHandler) *GetFSM {
 
 /*GetFSM swagger:route GET /{id} fsm getFSM
 
-GetFSM get f s m API
+Get a fsm by ID
 
 */
 type GetFSM struct {

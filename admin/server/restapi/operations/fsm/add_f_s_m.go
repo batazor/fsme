@@ -31,7 +31,7 @@ func NewAddFSM(ctx *middleware.Context, handler AddFSMHandler) *AddFSM {
 
 /*AddFSM swagger:route POST / fsm addFSM
 
-AddFSM add f s m API
+Create a new fsm
 
 */
 type AddFSM struct {

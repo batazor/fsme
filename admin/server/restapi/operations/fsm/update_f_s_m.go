@@ -31,7 +31,7 @@ func NewUpdateFSM(ctx *middleware.Context, handler UpdateFSMHandler) *UpdateFSM 
 
 /*UpdateFSM swagger:route PATCH /{id} fsm updateFSM
 
-UpdateFSM update f s m API
+Update a fsm
 
 */
 type UpdateFSM struct {

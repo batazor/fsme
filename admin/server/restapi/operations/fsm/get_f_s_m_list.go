@@ -31,7 +31,7 @@ func NewGetFSMList(ctx *middleware.Context, handler GetFSMListHandler) *GetFSMLi
 
 /*GetFSMList swagger:route GET / fsm getFSMList
 
-GetFSMList get f s m list API
+Get list fsm
 
 */
 type GetFSMList struct {

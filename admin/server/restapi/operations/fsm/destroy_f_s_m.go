@@ -31,7 +31,7 @@ func NewDestroyFSM(ctx *middleware.Context, handler DestroyFSMHandler) *DestroyF
 
 /*DestroyFSM swagger:route DELETE /{id} fsm destroyFSM
 
-DestroyFSM destroy f s m API
+Delete a fsm
 
 */
 type DestroyFSM struct {

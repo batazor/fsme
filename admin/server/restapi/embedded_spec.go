@@ -36,6 +36,7 @@ func init() {
   "paths": {
     "/": {
       "get": {
+        "description": "Get list fsm",
         "tags": [
           "fsm"
         ],
@@ -74,6 +75,7 @@ func init() {
         }
       },
       "post": {
+        "description": "Create a new fsm",
         "tags": [
           "fsm"
         ],
@@ -105,6 +107,7 @@ func init() {
     },
     "/{id}": {
       "get": {
+        "description": "Get a fsm by ID",
         "tags": [
           "fsm"
         ],
@@ -125,6 +128,7 @@ func init() {
         }
       },
       "delete": {
+        "description": "Delete a fsm",
         "tags": [
           "fsm"
         ],
@@ -142,6 +146,7 @@ func init() {
         }
       },
       "patch": {
+        "description": "Update a fsm",
         "tags": [
           "fsm"
         ],
@@ -179,6 +184,38 @@ func init() {
           "required": true
         }
       ]
+    },
+    "/{id}/event": {
+      "post": {
+        "description": "Send event to fsm by ID",
+        "tags": [
+          "event"
+        ],
+        "operationId": "sendEventFSM",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/event"
+            }
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "format": "string",
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "definitions": {
@@ -193,6 +230,14 @@ func init() {
           "format": "int"
         },
         "message": {
+          "type": "string"
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "state": {
           "type": "string"
         }
       }
@@ -246,6 +291,7 @@ func init() {
   "paths": {
     "/": {
       "get": {
+        "description": "Get list fsm",
         "tags": [
           "fsm"
         ],
@@ -284,6 +330,7 @@ func init() {
         }
       },
       "post": {
+        "description": "Create a new fsm",
         "tags": [
           "fsm"
         ],
@@ -315,6 +362,7 @@ func init() {
     },
     "/{id}": {
       "get": {
+        "description": "Get a fsm by ID",
         "tags": [
           "fsm"
         ],
@@ -335,6 +383,7 @@ func init() {
         }
       },
       "delete": {
+        "description": "Delete a fsm",
         "tags": [
           "fsm"
         ],
@@ -352,6 +401,7 @@ func init() {
         }
       },
       "patch": {
+        "description": "Update a fsm",
         "tags": [
           "fsm"
         ],
@@ -389,6 +439,38 @@ func init() {
           "required": true
         }
       ]
+    },
+    "/{id}/event": {
+      "post": {
+        "description": "Send event to fsm by ID",
+        "tags": [
+          "event"
+        ],
+        "operationId": "sendEventFSM",
+        "responses": {
+          "200": {
+            "description": "OK",
+            "schema": {
+              "$ref": "#/definitions/event"
+            }
+          },
+          "default": {
+            "description": "error",
+            "schema": {
+              "$ref": "#/definitions/error"
+            }
+          }
+        }
+      },
+      "parameters": [
+        {
+          "type": "string",
+          "format": "string",
+          "name": "id",
+          "in": "path",
+          "required": true
+        }
+      ]
     }
   },
   "definitions": {
@@ -403,6 +485,14 @@ func init() {
           "format": "int"
         },
         "message": {
+          "type": "string"
+        }
+      }
+    },
+    "event": {
+      "type": "object",
+      "properties": {
+        "state": {
           "type": "string"
         }
       }

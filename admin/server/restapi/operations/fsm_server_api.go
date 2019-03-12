@@ -19,6 +19,7 @@ import (
 	strfmt "github.com/go-openapi/strfmt"
 	"github.com/go-openapi/swag"
 
+	"github.com/batazor/fsme/admin/server/restapi/operations/event"
 	"github.com/batazor/fsme/admin/server/restapi/operations/fsm"
 )
 
@@ -50,6 +51,9 @@ func NewFsmServerAPI(spec *loads.Document) *FsmServerAPI {
 		}),
 		FsmGetFSMListHandler: fsm.GetFSMListHandlerFunc(func(params fsm.GetFSMListParams) middleware.Responder {
 			return middleware.NotImplemented("operation FsmGetFSMList has not yet been implemented")
+		}),
+		EventSendEventFSMHandler: event.SendEventFSMHandlerFunc(func(params event.SendEventFSMParams) middleware.Responder {
+			return middleware.NotImplemented("operation EventSendEventFSM has not yet been implemented")
 		}),
 		FsmUpdateFSMHandler: fsm.UpdateFSMHandlerFunc(func(params fsm.UpdateFSMParams) middleware.Responder {
 			return middleware.NotImplemented("operation FsmUpdateFSM has not yet been implemented")
@@ -93,6 +97,8 @@ type FsmServerAPI struct {
 	FsmGetFSMHandler fsm.GetFSMHandler
 	// FsmGetFSMListHandler sets the operation handler for the get f s m list operation
 	FsmGetFSMListHandler fsm.GetFSMListHandler
+	// EventSendEventFSMHandler sets the operation handler for the send event f s m operation
+	EventSendEventFSMHandler event.SendEventFSMHandler
 	// FsmUpdateFSMHandler sets the operation handler for the update f s m operation
 	FsmUpdateFSMHandler fsm.UpdateFSMHandler
 
@@ -172,6 +178,10 @@ func (o *FsmServerAPI) Validate() error {
 
 	if o.FsmGetFSMListHandler == nil {
 		unregistered = append(unregistered, "fsm.GetFSMListHandler")
+	}
+
+	if o.EventSendEventFSMHandler == nil {
+		unregistered = append(unregistered, "event.SendEventFSMHandler")
 	}
 
 	if o.FsmUpdateFSMHandler == nil {
@@ -295,6 +305,11 @@ func (o *FsmServerAPI) initHandlerCache() {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
 	o.handlers["GET"][""] = fsm.NewGetFSMList(o.context, o.FsmGetFSMListHandler)
+
+	if o.handlers["POST"] == nil {
+		o.handlers["POST"] = make(map[string]http.Handler)
+	}
+	o.handlers["POST"]["/{id}/event"] = event.NewSendEventFSM(o.context, o.EventSendEventFSMHandler)
 
 	if o.handlers["PATCH"] == nil {
 		o.handlers["PATCH"] = make(map[string]http.Handler)
