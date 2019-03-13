@@ -30,6 +30,10 @@ layout:
       source: asset:model
       target: "{{ joinFilePath .Target .ModelPackage }}"
       file_name: "{{ (snakize (pascalize .Name)) }}.go"
+    - name: mongo
+      source: asset:mongo
+      target: "{{ joinFilePath .Target .ModelPackage }}"
+      file_name: "{{ (snakize (pascalize .Name)) }}Mongo.go"
   operations:
     - name: parameters
       source: asset:serverParameter
