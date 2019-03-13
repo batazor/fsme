@@ -6,7 +6,8 @@ package models
 // Editing this file might prove futile when you re-run the swagger generate command
 
 import (
-	strfmt "github.com/go-openapi/strfmt"
+	"github.com/go-openapi/strfmt"
+	"github.com/mongodb/mongo-go-driver/mongo"
 
 	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
@@ -36,6 +37,8 @@ type Fsm struct {
 
 	// state
 	State string `json:"state,omitempty"`
+
+	ClientDB *mongo.Client
 }
 
 // Validate validates this fsm
