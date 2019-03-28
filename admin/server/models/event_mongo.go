@@ -15,7 +15,7 @@ import (
 // Editing this file might prove futile when you re-run the swagger generate command
 
 type MongoEvent struct {
-	Event
+	Event    *Event
 	ClientDB *mongo.Client
 }
 

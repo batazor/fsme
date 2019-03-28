@@ -1,7 +1,7 @@
 {{ template "myHeader" . }}
 
 type Mongo{{ pascalize .Name }} struct {
-  {{ pascalize .Name }}
+  {{ pascalize .Name }} *{{ pascalize .Name }}
   ClientDB *mongo.Client
 }
 

@@ -15,7 +15,7 @@ import (
 // Editing this file might prove futile when you re-run the swagger generate command
 
 type MongoError struct {
-	Error
+	Error    *Error
 	ClientDB *mongo.Client
 }
 

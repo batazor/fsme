@@ -4,12 +4,14 @@ package restapi
 
 import (
 	"crypto/tls"
+	"github.com/batazor/fsme/admin/server/models"
 	"github.com/batazor/fsme/admin/server/pkg/mongo"
+	"log"
 	"net/http"
 
-	errors "github.com/go-openapi/errors"
-	runtime "github.com/go-openapi/runtime"
-	middleware "github.com/go-openapi/runtime/middleware"
+	"github.com/go-openapi/errors"
+	"github.com/go-openapi/runtime"
+	"github.com/go-openapi/runtime/middleware"
 	"github.com/rs/cors"
 
 	"github.com/batazor/fsme/admin/server/restapi/operations"
@@ -27,7 +29,7 @@ func configureAPI(api *operations.FsmServerAPI) http.Handler {
 	api.ServeError = errors.ServeError
 
 	// Run mongoDB
-	mongo.Run()
+	ClientDB := mongo.Run()
 
 	// Set your custom logger if needed. Default one is log.Printf
 	// Expected interface func(string, ...interface{})
@@ -40,6 +42,12 @@ func configureAPI(api *operations.FsmServerAPI) http.Handler {
 	api.JSONProducer = runtime.JSONProducer()
 
 	api.FsmAddFSMHandler = fsm.AddFSMHandlerFunc(func(params fsm.AddFSMParams) middleware.Responder {
+		newFSM := models.MongoFsm{
+			Fsm:      params.Body,
+			ClientDB: ClientDB,
+		}
+		log.Println(newFSM)
+		//newFSM.Create(params.Body)
 		return middleware.NotImplemented("operation fsm.AddFSM has not yet been implemented")
 	})
 	api.FsmDestroyFSMHandler = fsm.DestroyFSMHandlerFunc(func(params fsm.DestroyFSMParams) middleware.Responder {
