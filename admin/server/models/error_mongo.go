@@ -20,10 +20,10 @@ type MongoError struct {
 }
 
 // Create a new MongoError
-func (m *MongoError) Create(b []byte) (error, result mongo.InsertOneResult) {
+func (m *MongoError) Create(b []byte) (error, interface{}) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
-	insertResult, err := collection("namePackage").InsertOne(context.TODO(), b)
+	insertResult, err := collection.InsertOne(context.TODO(), b)
 	if err != nil {
 		return err, nil
 	}
@@ -32,22 +32,23 @@ func (m *MongoError) Create(b []byte) (error, result mongo.InsertOneResult) {
 }
 
 // Get by Id
-func (m *MongoError) GetById(b []byte) (error, Fsm) {
+func (m *MongoError) GetById(b []byte) (error, Error) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
+	filter := bson.D{}
 
 	// create a value into which the result can be decoded
-	var result Fsm
+	var result Error
 
-	err = collection.FindOne(context.TODO(), filter).Decode(&result)
+	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
-		return err, nil
+		return err, result
 	}
 
 	return nil, result
 }
 
 // Get list
-func (m *MongoError) GetList(b []byte) (error, Fsm) {
+func (m *MongoError) GetList(b []byte) (error, []*Error) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	// Pass these options to the Find method
@@ -55,19 +56,19 @@ func (m *MongoError) GetList(b []byte) (error, Fsm) {
 	options.SetLimit(2)
 
 	// Here's an array in which you can store the decoded documents
-	var results []*Fsm
+	var results []*Error
 
 	// Passing nil as the filter matches all documents in the collection
 	cur, err := collection.Find(context.TODO(), nil, options)
 	if err != nil {
-		return err, nil
+		return err, results
 	}
 
 	// Finding multiple documents returns a cursor
 	// Iterating through the cursor allows us to decode documents one at a time
 	for cur.Next(context.TODO()) {
 		// create a value into which the single document can be decoded
-		var elem Fsm
+		var elem Error
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
@@ -83,24 +84,28 @@ func (m *MongoError) GetList(b []byte) (error, Fsm) {
 	// Close the cursor once finished
 	cur.Close(context.TODO())
 
-	return nil, result
+	return nil, results
 }
 
 // Update
-func (m *MongoError) Update(b []byte) (error, mongo.UpdateResult) {
+func (m *MongoError) Update(b []byte) (error, *mongo.UpdateResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 	filter := bson.D{}
 
+	update := bson.D{
+		{"$inc", bson.D{}},
+	}
+
 	updateResult, err := collection.UpdateOne(context.TODO(), filter, update)
 	if err != nil {
-		return err, nil
+		return err, updateResult
 	}
 
 	return nil, updateResult
 }
 
 // Delete
-func (m *MongoError) Destroy(b []byte) (error, result mongo.DeleteResult) {
+func (m *MongoError) Destroy(b []byte) (error, *mongo.DeleteResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	deleteResult, err := collection.DeleteMany(context.TODO(), nil)

@@ -20,10 +20,10 @@ type MongoFsm struct {
 }
 
 // Create a new MongoFsm
-func (m *MongoFsm) Create(b []byte) (error, result mongo.InsertOneResult) {
+func (m *MongoFsm) Create(b []byte) (error, interface{}) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
-	insertResult, err := collection("namePackage").InsertOne(context.TODO(), b)
+	insertResult, err := collection.InsertOne(context.TODO(), b)
 	if err != nil {
 		return err, nil
 	}
@@ -34,20 +34,21 @@ func (m *MongoFsm) Create(b []byte) (error, result mongo.InsertOneResult) {
 // Get by Id
 func (m *MongoFsm) GetById(b []byte) (error, Fsm) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
+	filter := bson.D{}
 
 	// create a value into which the result can be decoded
 	var result Fsm
 
-	err = collection.FindOne(context.TODO(), filter).Decode(&result)
+	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
-		return err, nil
+		return err, result
 	}
 
 	return nil, result
 }
 
 // Get list
-func (m *MongoFsm) GetList(b []byte) (error, Fsm) {
+func (m *MongoFsm) GetList(b []byte) (error, []*Fsm) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	// Pass these options to the Find method
@@ -60,7 +61,7 @@ func (m *MongoFsm) GetList(b []byte) (error, Fsm) {
 	// Passing nil as the filter matches all documents in the collection
 	cur, err := collection.Find(context.TODO(), nil, options)
 	if err != nil {
-		return err, nil
+		return err, results
 	}
 
 	// Finding multiple documents returns a cursor
@@ -83,24 +84,28 @@ func (m *MongoFsm) GetList(b []byte) (error, Fsm) {
 	// Close the cursor once finished
 	cur.Close(context.TODO())
 
-	return nil, result
+	return nil, results
 }
 
 // Update
-func (m *MongoFsm) Update(b []byte) (error, mongo.UpdateResult) {
+func (m *MongoFsm) Update(b []byte) (error, *mongo.UpdateResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 	filter := bson.D{}
 
+	update := bson.D{
+		{"$inc", bson.D{}},
+	}
+
 	updateResult, err := collection.UpdateOne(context.TODO(), filter, update)
 	if err != nil {
-		return err, nil
+		return err, updateResult
 	}
 
 	return nil, updateResult
 }
 
 // Delete
-func (m *MongoFsm) Destroy(b []byte) (error, result mongo.DeleteResult) {
+func (m *MongoFsm) Destroy(b []byte) (error, *mongo.DeleteResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	deleteResult, err := collection.DeleteMany(context.TODO(), nil)

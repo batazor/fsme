@@ -6,10 +6,10 @@ type Mongo{{ pascalize .Name }} struct {
 }
 
 // Create a new Mongo{{ pascalize .Name }}
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(b []byte) (error, result mongo.InsertOneResult) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(b []byte) (error, interface{}) {
   collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
-  insertResult, err := collection("namePackage").InsertOne(context.TODO(), b)
+  insertResult, err := collection.InsertOne(context.TODO(), b)
   if err != nil {
     return err, nil
   }
@@ -18,22 +18,23 @@ func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(b []byte) (error, re
 }
 
 // Get by Id
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetById(b []byte) (error, Fsm) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetById(b []byte) (error, {{ pascalize .Name }}) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
+	filter := bson.D{}
 
 	// create a value into which the result can be decoded
-	var result Fsm
+	var result {{ pascalize .Name }}
 
-	err = collection.FindOne(context.TODO(), filter).Decode(&result)
+	err := collection.FindOne(context.TODO(), filter).Decode(&result)
 	if err != nil {
-		return err, nil
+		return err, result
 	}
 
 	return nil, result
 }
 
 // Get list
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetList(b []byte) (error, Fsm) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetList(b []byte) (error, []*{{ pascalize .Name }}) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	// Pass these options to the Find method
@@ -41,19 +42,19 @@ func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetList(b []byte) (error, F
 	options.SetLimit(2)
 
 	// Here's an array in which you can store the decoded documents
-	var results []*Fsm
+	var results []*{{ pascalize .Name }}
 
 	// Passing nil as the filter matches all documents in the collection
 	cur, err := collection.Find(context.TODO(), nil, options)
 	if err != nil {
-		return err, nil
+		return err, results
 	}
 
 	// Finding multiple documents returns a cursor
 	// Iterating through the cursor allows us to decode documents one at a time
 	for cur.Next(context.TODO()) {
 		// create a value into which the single document can be decoded
-		var elem Fsm
+		var elem {{ pascalize .Name }}
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
@@ -69,24 +70,28 @@ func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) GetList(b []byte) (error, F
 	// Close the cursor once finished
 	cur.Close(context.TODO())
 
-	return nil, result
+	return nil, results
 }
 
 // Update
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Update(b []byte) (error, mongo.UpdateResult) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Update(b []byte) (error, *mongo.UpdateResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 	filter := bson.D{}
 
+	update := bson.D{
+        {"$inc", bson.D{}},
+    }
+
 	updateResult, err := collection.UpdateOne(context.TODO(), filter, update)
 	if err != nil {
-		return err, nil
+		return err, updateResult
 	}
 
 	return nil, updateResult
 }
 
 // Delete
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Destroy(b []byte) (error, result mongo.DeleteResult) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Destroy(b []byte) (error, *mongo.DeleteResult) {
 	collection := m.ClientDB.Database("nameService").Collection("namePackage")
 
 	deleteResult, err := collection.DeleteMany(context.TODO(), nil)
