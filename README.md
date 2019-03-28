@@ -97,9 +97,6 @@ docker run -p 80:8080 \
     -v $pwd/docs/swagger:/docs \
     swaggerapi/swagger-editor
 
-# Run goswagger
-swagger generate server -A fsm-server -f ./docs/swagger.yaml -T ./docs/templates -C ./docs/default-server.yml
-
 # Generator client
 docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
     -i /local/admin/server/docs/swagger.yaml \
