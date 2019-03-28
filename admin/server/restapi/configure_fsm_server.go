@@ -4,6 +4,7 @@ package restapi
 
 import (
 	"crypto/tls"
+	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"net/http"
 
 	errors "github.com/go-openapi/errors"
@@ -24,6 +25,9 @@ func configureFlags(api *operations.FsmServerAPI) {
 func configureAPI(api *operations.FsmServerAPI) http.Handler {
 	// configure the api here
 	api.ServeError = errors.ServeError
+
+	// Run mongoDB
+	mongo.Run()
 
 	// Set your custom logger if needed. Default one is log.Printf
 	// Expected interface func(string, ...interface{})
