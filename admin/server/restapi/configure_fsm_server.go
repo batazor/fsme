@@ -6,6 +6,7 @@ import (
 	"crypto/tls"
 	"github.com/batazor/fsme/admin/server/models"
 	"github.com/batazor/fsme/admin/server/pkg/mongo"
+	"github.com/go-openapi/swag"
 	"log"
 	"net/http"
 
@@ -57,7 +58,17 @@ func configureAPI(api *operations.FsmServerAPI) http.Handler {
 		return middleware.NotImplemented("operation fsm.GetFSM has not yet been implemented")
 	})
 	api.FsmGetFSMListHandler = fsm.GetFSMListHandlerFunc(func(params fsm.GetFSMListParams) middleware.Responder {
-		return middleware.NotImplemented("operation fsm.GetFSMList has not yet been implemented")
+		newFSM := models.MongoFsm{
+			ClientDB: ClientDB,
+		}
+		err, fsmList := newFSM.GetList()
+		if err != nil {
+			return fsm.NewGetFSMListDefault(500).WithPayload(&models.Error{
+				Code: 500,
+				Message: swag.String("failed to get FSM list"),
+			})
+		}
+		return fsm.NewGetFSMListOK().WithPayload(fsmList)
 	})
 	api.FsmUpdateFSMHandler = fsm.UpdateFSMHandlerFunc(func(params fsm.UpdateFSMParams) middleware.Responder {
 		return middleware.NotImplemented("operation fsm.UpdateFSM has not yet been implemented")
