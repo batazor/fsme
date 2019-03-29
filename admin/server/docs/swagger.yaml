@@ -3,6 +3,7 @@ info:
   title: FSME
   version: 0.1.0
   description: FSME server for UI
+host: 127.0.0.1:8080
 schemes:
 - http
 # - https
