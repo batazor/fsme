@@ -94,7 +94,7 @@ docker run -p 80:8080 \
 docker run -p 80:8080 \
     -e BASE_URL=/swagger \
     -e SWAGGER_JSON=/docs/swagger.json \
-    -v $pwd/docs/swagger:/docs \
+    -v $pwd/docs:/docs \
     swaggerapi/swagger-editor
 
 # Generator client
