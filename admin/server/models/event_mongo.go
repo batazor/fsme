@@ -9,6 +9,7 @@ import (
 	"context"
 	"log"
 
+	"github.com/go-openapi/strfmt"
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/bson/primitive"
 	"github.com/mongodb/mongo-go-driver/mongo"
@@ -29,7 +30,8 @@ func (m *MongoEvent) Create(payload *Event) (error, *Event) {
 		return err, nil
 	}
 
-	payload.ID = insertResult.InsertedID.(primitive.ObjectID).Hex()
+	oid := insertResult.InsertedID.(primitive.ObjectID).String()
+	payload.ID = strfmt.ObjectId(oid)
 
 	return nil, payload
 }

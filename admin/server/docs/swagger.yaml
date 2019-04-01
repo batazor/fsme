@@ -18,14 +18,10 @@ definitions:
     - rules
     properties:
       _id:
-        type: object
+        type: string
+        format: ObjectId
         description: Identity record
         readOnly: true
-        x-go-type:
-          import:
-            package: github.com/mongodb/mongo-go-driver/bson/primitive
-            alias: primitive
-          type: primitive.ObjectID
       title:
         type: string
       description:
@@ -43,13 +39,9 @@ definitions:
     properties:
       _id:
         type: string
+        format: ObjectId
         description: Identity record
         readOnly: true
-        x-go-type:
-          import:
-            package: github.com/mongodb/mongo-go-driver/bson/primitive
-            alias: primitive
-          type: primitive.ObjectID
       state:
         type: string
   error:
@@ -60,13 +52,9 @@ definitions:
     properties:
       _id:
         type: string
+        format: ObjectId
         description: Identity record
         readOnly: true
-        x-go-type:
-          import:
-            package: github.com/mongodb/mongo-go-driver/bson/primitive
-            alias: primitive
-          type: primitive.ObjectID
       code:
         type: integer
         format: int

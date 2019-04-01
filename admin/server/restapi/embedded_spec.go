@@ -230,13 +230,7 @@ func init() {
         "_id": {
           "description": "Identity record",
           "type": "string",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "format": "ObjectId",
           "readOnly": true
         },
         "code": {
@@ -254,13 +248,7 @@ func init() {
         "_id": {
           "description": "Identity record",
           "type": "string",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "format": "ObjectId",
           "readOnly": true
         },
         "state": {
@@ -276,14 +264,8 @@ func init() {
       "properties": {
         "_id": {
           "description": "Identity record",
-          "type": "object",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "type": "string",
+          "format": "ObjectId",
           "readOnly": true
         },
         "callbacks": {
@@ -521,13 +503,7 @@ func init() {
         "_id": {
           "description": "Identity record",
           "type": "string",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "format": "ObjectId",
           "readOnly": true
         },
         "code": {
@@ -545,13 +521,7 @@ func init() {
         "_id": {
           "description": "Identity record",
           "type": "string",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "format": "ObjectId",
           "readOnly": true
         },
         "state": {
@@ -567,14 +537,8 @@ func init() {
       "properties": {
         "_id": {
           "description": "Identity record",
-          "type": "object",
-          "x-go-type": {
-            "import": {
-              "alias": "primitive",
-              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
-            },
-            "type": "primitive.ObjectID"
-          },
+          "type": "string",
+          "format": "ObjectId",
           "readOnly": true
         },
         "callbacks": {

@@ -8,6 +8,7 @@ import (
 	"github.com/mongodb/mongo-go-driver/bson"
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
+	"github.com/go-openapi/strfmt"
 )
 
 type Mongo{{ pascalize .Name }} struct {
@@ -24,7 +25,8 @@ func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(payload *{{ pascaliz
     return err, nil
   }
 
-  payload.ID = insertResult.InsertedID.(primitive.ObjectID).Hex()
+  oid := insertResult.InsertedID.(primitive.ObjectID).String()
+	payload.ID = strfmt.ObjectId(oid)
 
   return nil, payload
 }

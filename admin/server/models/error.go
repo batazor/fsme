@@ -19,7 +19,8 @@ type Error struct {
 
 	// Identity record
 	// Read Only: true
-	ID string `json:"_id,omitempty"`
+	// Format: ObjectId
+	ID strfmt.ObjectId `json:"_id,omitempty"`
 
 	// code
 	Code int64 `json:"code,omitempty"`
@@ -33,6 +34,10 @@ type Error struct {
 func (m *Error) Validate(formats strfmt.Registry) error {
 	var res []error
 
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
 	if err := m.validateMessage(formats); err != nil {
 		res = append(res, err)
 	}
@@ -40,6 +45,19 @@ func (m *Error) Validate(formats strfmt.Registry) error {
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}
+	return nil
+}
+
+func (m *Error) validateID(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("_id", "body", "ObjectId", m.ID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 

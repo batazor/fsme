@@ -8,7 +8,9 @@ package models
 import (
 	strfmt "github.com/go-openapi/strfmt"
 
+	"github.com/go-openapi/errors"
 	"github.com/go-openapi/swag"
+	"github.com/go-openapi/validate"
 )
 
 // Event event
@@ -17,7 +19,8 @@ type Event struct {
 
 	// Identity record
 	// Read Only: true
-	ID string `json:"_id,omitempty"`
+	// Format: ObjectId
+	ID strfmt.ObjectId `json:"_id,omitempty"`
 
 	// state
 	State string `json:"state,omitempty"`
@@ -25,6 +28,28 @@ type Event struct {
 
 // Validate validates this event
 func (m *Event) Validate(formats strfmt.Registry) error {
+	var res []error
+
+	if err := m.validateID(formats); err != nil {
+		res = append(res, err)
+	}
+
+	if len(res) > 0 {
+		return errors.CompositeValidationError(res...)
+	}
+	return nil
+}
+
+func (m *Event) validateID(formats strfmt.Registry) error {
+
+	if swag.IsZero(m.ID) { // not required
+		return nil
+	}
+
+	if err := validate.FormatOf("_id", "body", "ObjectId", m.ID.String(), formats); err != nil {
+		return err
+	}
+
 	return nil
 }
 
