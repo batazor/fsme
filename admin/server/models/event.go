@@ -15,7 +15,7 @@ import (
 // swagger:model event
 type Event struct {
 
-	// id
+	// Identity record
 	// Read Only: true
 	ID string `json:"_id,omitempty"`
 

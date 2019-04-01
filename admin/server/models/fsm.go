@@ -17,9 +17,9 @@ import (
 // swagger:model fsm
 type Fsm struct {
 
-	// id
+	// Identity record
 	// Read Only: true
-	ID string `json:"_id,omitempty"`
+	ID interface{} `json:"_id,omitempty"`
 
 	// callbacks
 	Callbacks string `json:"callbacks,omitempty"`

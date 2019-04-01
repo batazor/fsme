@@ -10,6 +10,7 @@ import (
 	"log"
 
 	"github.com/mongodb/mongo-go-driver/bson"
+	"github.com/mongodb/mongo-go-driver/bson/primitive"
 	"github.com/mongodb/mongo-go-driver/mongo"
 	"github.com/mongodb/mongo-go-driver/mongo/options"
 )
@@ -28,7 +29,7 @@ func (m *MongoError) Create(payload *Error) (error, *Error) {
 		return err, nil
 	}
 
-	payload.ID = insertResult.InsertedID.(string)
+	payload.ID = insertResult.InsertedID.(primitive.ObjectID).Hex()
 
 	return nil, payload
 }

@@ -222,12 +222,21 @@ func init() {
   "definitions": {
     "error": {
       "type": "object",
+      "format": "ObjectId",
       "required": [
         "message"
       ],
       "properties": {
         "_id": {
+          "description": "Identity record",
           "type": "string",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "code": {
@@ -243,7 +252,15 @@ func init() {
       "type": "object",
       "properties": {
         "_id": {
+          "description": "Identity record",
           "type": "string",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "state": {
@@ -258,7 +275,15 @@ func init() {
       ],
       "properties": {
         "_id": {
-          "type": "string",
+          "description": "Identity record",
+          "type": "object",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "callbacks": {
@@ -488,12 +513,21 @@ func init() {
   "definitions": {
     "error": {
       "type": "object",
+      "format": "ObjectId",
       "required": [
         "message"
       ],
       "properties": {
         "_id": {
+          "description": "Identity record",
           "type": "string",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "code": {
@@ -509,7 +543,15 @@ func init() {
       "type": "object",
       "properties": {
         "_id": {
+          "description": "Identity record",
           "type": "string",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "state": {
@@ -524,7 +566,15 @@ func init() {
       ],
       "properties": {
         "_id": {
-          "type": "string",
+          "description": "Identity record",
+          "type": "object",
+          "x-go-type": {
+            "import": {
+              "alias": "primitive",
+              "package": "github.com/mongodb/mongo-go-driver/bson/primitive"
+            },
+            "type": "primitive.ObjectID"
+          },
           "readOnly": true
         },
         "callbacks": {

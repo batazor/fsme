@@ -53,7 +53,7 @@ func configureAPI(api *operations.FsmServerAPI) http.Handler {
 				Message: swag.String("failed to create FSM"),
 			})
 		}
-		return fsm.NewAddFSMCreated().WithPayload(&response)
+		return fsm.NewAddFSMCreated().WithPayload(response)
 	})
 	api.FsmDestroyFSMHandler = fsm.DestroyFSMHandlerFunc(func(params fsm.DestroyFSMParams) middleware.Responder {
 		return middleware.NotImplemented("operation fsm.DestroyFSM has not yet been implemented")

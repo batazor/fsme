@@ -17,7 +17,7 @@ import (
 // swagger:model error
 type Error struct {
 
-	// id
+	// Identity record
 	// Read Only: true
 	ID string `json:"_id,omitempty"`
 

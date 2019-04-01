@@ -24,7 +24,7 @@ func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(payload *{{ pascaliz
     return err, nil
   }
 
-  payload.ID = insertResult.InsertedID.(string)
+  payload.ID = insertResult.InsertedID.(primitive.ObjectID).Hex()
 
   return nil, payload
 }
