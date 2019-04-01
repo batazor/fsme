@@ -294,12 +294,12 @@ func (o *FsmServerAPI) initHandlerCache() {
 	if o.handlers["DELETE"] == nil {
 		o.handlers["DELETE"] = make(map[string]http.Handler)
 	}
-	o.handlers["DELETE"]["/{id}"] = fsm.NewDestroyFSM(o.context, o.FsmDestroyFSMHandler)
+	o.handlers["DELETE"]["/{_id}"] = fsm.NewDestroyFSM(o.context, o.FsmDestroyFSMHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
 	}
-	o.handlers["GET"]["/{id}"] = fsm.NewGetFSM(o.context, o.FsmGetFSMHandler)
+	o.handlers["GET"]["/{_id}"] = fsm.NewGetFSM(o.context, o.FsmGetFSMHandler)
 
 	if o.handlers["GET"] == nil {
 		o.handlers["GET"] = make(map[string]http.Handler)
@@ -309,12 +309,12 @@ func (o *FsmServerAPI) initHandlerCache() {
 	if o.handlers["POST"] == nil {
 		o.handlers["POST"] = make(map[string]http.Handler)
 	}
-	o.handlers["POST"]["/{id}/event"] = event.NewSendEventFSM(o.context, o.EventSendEventFSMHandler)
+	o.handlers["POST"]["/{_id}/event"] = event.NewSendEventFSM(o.context, o.EventSendEventFSMHandler)
 
 	if o.handlers["PATCH"] == nil {
 		o.handlers["PATCH"] = make(map[string]http.Handler)
 	}
-	o.handlers["PATCH"]["/{id}"] = fsm.NewUpdateFSM(o.context, o.FsmUpdateFSMHandler)
+	o.handlers["PATCH"]["/{_id}"] = fsm.NewUpdateFSM(o.context, o.FsmUpdateFSMHandler)
 
 }
 

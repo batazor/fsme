@@ -33,6 +33,7 @@ func init() {
     "title": "FSME",
     "version": "0.1.0"
   },
+  "host": "127.0.0.1:8080",
   "paths": {
     "/": {
       "get": {
@@ -105,7 +106,7 @@ func init() {
         }
       }
     },
-    "/{id}": {
+    "/{_id}": {
       "get": {
         "description": "Get a fsm by ID",
         "tags": [
@@ -179,13 +180,13 @@ func init() {
         {
           "type": "string",
           "format": "string",
-          "name": "id",
+          "name": "_id",
           "in": "path",
           "required": true
         }
       ]
     },
-    "/{id}/event": {
+    "/{_id}/event": {
       "post": {
         "description": "Send event to fsm by ID",
         "tags": [
@@ -211,7 +212,7 @@ func init() {
         {
           "type": "string",
           "format": "string",
-          "name": "id",
+          "name": "_id",
           "in": "path",
           "required": true
         }
@@ -225,6 +226,10 @@ func init() {
         "message"
       ],
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "code": {
           "type": "integer",
           "format": "int"
@@ -237,6 +242,10 @@ func init() {
     "event": {
       "type": "object",
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "state": {
           "type": "string"
         }
@@ -248,6 +257,10 @@ func init() {
         "rules"
       ],
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "callbacks": {
           "type": "string"
         },
@@ -257,15 +270,13 @@ func init() {
         "events": {
           "type": "string"
         },
-        "id": {
-          "type": "integer",
-          "format": "int",
-          "readOnly": true
-        },
         "rules": {
           "type": "string"
         },
         "state": {
+          "type": "string"
+        },
+        "title": {
           "type": "string"
         }
       }
@@ -288,6 +299,7 @@ func init() {
     "title": "FSME",
     "version": "0.1.0"
   },
+  "host": "127.0.0.1:8080",
   "paths": {
     "/": {
       "get": {
@@ -360,7 +372,7 @@ func init() {
         }
       }
     },
-    "/{id}": {
+    "/{_id}": {
       "get": {
         "description": "Get a fsm by ID",
         "tags": [
@@ -434,13 +446,13 @@ func init() {
         {
           "type": "string",
           "format": "string",
-          "name": "id",
+          "name": "_id",
           "in": "path",
           "required": true
         }
       ]
     },
-    "/{id}/event": {
+    "/{_id}/event": {
       "post": {
         "description": "Send event to fsm by ID",
         "tags": [
@@ -466,7 +478,7 @@ func init() {
         {
           "type": "string",
           "format": "string",
-          "name": "id",
+          "name": "_id",
           "in": "path",
           "required": true
         }
@@ -480,6 +492,10 @@ func init() {
         "message"
       ],
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "code": {
           "type": "integer",
           "format": "int"
@@ -492,6 +508,10 @@ func init() {
     "event": {
       "type": "object",
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "state": {
           "type": "string"
         }
@@ -503,6 +523,10 @@ func init() {
         "rules"
       ],
       "properties": {
+        "_id": {
+          "type": "string",
+          "readOnly": true
+        },
         "callbacks": {
           "type": "string"
         },
@@ -512,15 +536,13 @@ func init() {
         "events": {
           "type": "string"
         },
-        "id": {
-          "type": "integer",
-          "format": "int",
-          "readOnly": true
-        },
         "rules": {
           "type": "string"
         },
         "state": {
+          "type": "string"
+        },
+        "title": {
           "type": "string"
         }
       }

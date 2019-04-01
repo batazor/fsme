@@ -17,6 +17,10 @@ import (
 // swagger:model fsm
 type Fsm struct {
 
+	// id
+	// Read Only: true
+	ID string `json:"_id,omitempty"`
+
 	// callbacks
 	Callbacks string `json:"callbacks,omitempty"`
 
@@ -26,16 +30,15 @@ type Fsm struct {
 	// events
 	Events string `json:"events,omitempty"`
 
-	// id
-	// Read Only: true
-	ID int64 `json:"id,omitempty"`
-
 	// rules
 	// Required: true
 	Rules *string `json:"rules"`
 
 	// state
 	State string `json:"state,omitempty"`
+
+	// title
+	Title string `json:"title,omitempty"`
 }
 
 // Validate validates this fsm

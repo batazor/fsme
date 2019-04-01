@@ -20,15 +20,17 @@ type MongoError struct {
 }
 
 // Create a new MongoError
-func (m *MongoError) Create(b []byte) (error, interface{}) {
+func (m *MongoError) Create(payload *Error) (error, *Error) {
 	collection := m.ClientDB.Database("fsme").Collection("Error")
 
-	insertResult, err := collection.InsertOne(context.TODO(), b)
+	insertResult, err := collection.InsertOne(context.TODO(), payload)
 	if err != nil {
 		return err, nil
 	}
 
-	return nil, insertResult.InsertedID
+	payload.ID = insertResult.InsertedID.(string)
+
+	return nil, payload
 }
 
 // Get by Id

@@ -46,7 +46,7 @@ func (o *SendEventFSMParams) BindRequest(r *http.Request, route *middleware.Matc
 
 	o.HTTPRequest = r
 
-	rID, rhkID, _ := route.Params.GetOK("id")
+	rID, rhkID, _ := route.Params.GetOK("_id")
 	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
 		res = append(res, err)
 	}

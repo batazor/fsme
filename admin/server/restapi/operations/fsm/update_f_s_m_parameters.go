@@ -34,14 +34,14 @@ type UpdateFSMParams struct {
 	HTTPRequest *http.Request `json:"-"`
 
 	/*
-	  In: body
-	*/
-	Body *models.Fsm
-	/*
 	  Required: true
 	  In: path
 	*/
 	ID string
+	/*
+	  In: body
+	*/
+	Body *models.Fsm
 }
 
 // BindRequest both binds and validates a request, it assumes that complex things implement a Validatable(strfmt.Registry) error interface
@@ -52,6 +52,11 @@ func (o *UpdateFSMParams) BindRequest(r *http.Request, route *middleware.Matched
 	var res []error
 
 	o.HTTPRequest = r
+
+	rID, rhkID, _ := route.Params.GetOK("_id")
+	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
+		res = append(res, err)
+	}
 
 	if runtime.HasBody(r) {
 		defer r.Body.Close()
@@ -69,11 +74,6 @@ func (o *UpdateFSMParams) BindRequest(r *http.Request, route *middleware.Matched
 			}
 		}
 	}
-	rID, rhkID, _ := route.Params.GetOK("id")
-	if err := o.bindID(rID, rhkID, route.Formats); err != nil {
-		res = append(res, err)
-	}
-
 	if len(res) > 0 {
 		return errors.CompositeValidationError(res...)
 	}

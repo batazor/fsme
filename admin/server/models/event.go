@@ -15,6 +15,10 @@ import (
 // swagger:model event
 type Event struct {
 
+	// id
+	// Read Only: true
+	ID string `json:"_id,omitempty"`
+
 	// state
 	State string `json:"state,omitempty"`
 }

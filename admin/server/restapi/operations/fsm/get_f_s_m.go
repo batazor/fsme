@@ -29,7 +29,7 @@ func NewGetFSM(ctx *middleware.Context, handler GetFSMHandler) *GetFSM {
 	return &GetFSM{Context: ctx, Handler: handler}
 }
 
-/*GetFSM swagger:route GET /{id} fsm getFSM
+/*GetFSM swagger:route GET /{_id} fsm getFSM
 
 Get a fsm by ID
 

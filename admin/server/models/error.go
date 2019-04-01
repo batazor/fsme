@@ -17,6 +17,10 @@ import (
 // swagger:model error
 type Error struct {
 
+	// id
+	// Read Only: true
+	ID string `json:"_id,omitempty"`
+
 	// code
 	Code int64 `json:"code,omitempty"`
 

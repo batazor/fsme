@@ -29,7 +29,7 @@ func NewUpdateFSM(ctx *middleware.Context, handler UpdateFSMHandler) *UpdateFSM 
 	return &UpdateFSM{Context: ctx, Handler: handler}
 }
 
-/*UpdateFSM swagger:route PATCH /{id} fsm updateFSM
+/*UpdateFSM swagger:route PATCH /{_id} fsm updateFSM
 
 Update a fsm
 

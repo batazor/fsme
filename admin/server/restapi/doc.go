@@ -7,7 +7,7 @@ FSME server for UI
 
     Schemes:
       http
-    Host: localhost
+    Host: 127.0.0.1:8080
     BasePath: /
     Version: 0.1.0
 

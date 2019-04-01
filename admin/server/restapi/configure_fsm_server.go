@@ -7,7 +7,6 @@ import (
 	"github.com/batazor/fsme/admin/server/models"
 	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"github.com/go-openapi/swag"
-	"log"
 	"net/http"
 
 	"github.com/go-openapi/errors"
@@ -47,9 +46,14 @@ func configureAPI(api *operations.FsmServerAPI) http.Handler {
 			Fsm:      params.Body,
 			ClientDB: ClientDB,
 		}
-		log.Println(newFSM)
-		//newFSM.Create(params.Body)
-		return middleware.NotImplemented("operation fsm.AddFSM has not yet been implemented")
+		err, response := newFSM.Create(params.Body)
+		if err != nil {
+			return fsm.NewGetFSMListDefault(500).WithPayload(&models.Error{
+				Code: 500,
+				Message: swag.String("failed to create FSM"),
+			})
+		}
+		return fsm.NewAddFSMCreated().WithPayload(&response)
 	})
 	api.FsmDestroyFSMHandler = fsm.DestroyFSMHandlerFunc(func(params fsm.DestroyFSMParams) middleware.Responder {
 		return middleware.NotImplemented("operation fsm.DestroyFSM has not yet been implemented")

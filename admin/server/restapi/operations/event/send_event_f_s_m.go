@@ -29,7 +29,7 @@ func NewSendEventFSM(ctx *middleware.Context, handler SendEventFSMHandler) *Send
 	return &SendEventFSM{Context: ctx, Handler: handler}
 }
 
-/*SendEventFSM swagger:route POST /{id}/event event sendEventFSM
+/*SendEventFSM swagger:route POST /{_id}/event event sendEventFSM
 
 Send event to fsm by ID
 

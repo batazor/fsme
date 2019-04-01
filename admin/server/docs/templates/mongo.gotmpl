@@ -16,15 +16,17 @@ type Mongo{{ pascalize .Name }} struct {
 }
 
 // Create a new Mongo{{ pascalize .Name }}
-func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(b []byte) (error, interface{}) {
+func ({{.ReceiverName}} *Mongo{{ pascalize .Name }}) Create(payload *{{ pascalize .Name }}) (error, *{{ pascalize .Name }}) {
   collection := m.ClientDB.Database("fsme").Collection("{{ pascalize .Name }}")
 
-  insertResult, err := collection.InsertOne(context.TODO(), b)
+  insertResult, err := collection.InsertOne(context.TODO(), payload)
   if err != nil {
     return err, nil
   }
 
-  return nil, insertResult.InsertedID
+  payload.ID = insertResult.InsertedID.(string)
+
+  return nil, payload
 }
 
 // Get by Id

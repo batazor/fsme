@@ -29,7 +29,7 @@ func NewDestroyFSM(ctx *middleware.Context, handler DestroyFSMHandler) *DestroyF
 	return &DestroyFSM{Context: ctx, Handler: handler}
 }
 
-/*DestroyFSM swagger:route DELETE /{id} fsm destroyFSM
+/*DestroyFSM swagger:route DELETE /{_id} fsm destroyFSM
 
 Delete a fsm
 

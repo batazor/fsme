@@ -20,15 +20,17 @@ type MongoFsm struct {
 }
 
 // Create a new MongoFsm
-func (m *MongoFsm) Create(b []byte) (error, interface{}) {
+func (m *MongoFsm) Create(payload *Fsm) (error, *Fsm) {
 	collection := m.ClientDB.Database("fsme").Collection("Fsm")
 
-	insertResult, err := collection.InsertOne(context.TODO(), b)
+	insertResult, err := collection.InsertOne(context.TODO(), payload)
 	if err != nil {
 		return err, nil
 	}
 
-	return nil, insertResult.InsertedID
+	payload.ID = insertResult.InsertedID.(string)
+
+	return nil, payload
 }
 
 // Get by Id

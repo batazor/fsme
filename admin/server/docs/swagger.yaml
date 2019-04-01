@@ -17,10 +17,11 @@ definitions:
     required:
     - rules
     properties:
-      id:
-        type: integer
-        format: int
+      _id:
+        type: string
         readOnly: true
+      title:
+        type: string
       description:
         type: string
       rules:
@@ -34,6 +35,9 @@ definitions:
   event:
     type: object
     properties:
+      _id:
+        type: string
+        readOnly: true
       state:
         type: string
   error:
@@ -41,6 +45,9 @@ definitions:
     required:
     - message
     properties:
+      _id:
+        type: string
+        readOnly: true
       code:
         type: integer
         format: int
@@ -93,11 +100,11 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/error'
-  "/{id}":
+  "/{_id}":
     parameters:
     - type: string
       format: string
-      name: id
+      name: _id
       in: path
       required: true
     get:
@@ -145,11 +152,11 @@ paths:
           description: error
           schema:
             $ref: '#/definitions/error'
-  "/{id}/event":
+  "/{_id}/event":
     parameters:
     - type: string
       format: string
-      name: id
+      name: _id
       in: path
       required: true
     post:
