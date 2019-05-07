@@ -16,7 +16,7 @@
     "superagent": "^5.0.2"
   },
   "devDependencies": {
-    "babel-core": "6.26.0",
+    "babel-core": "6.26.3",
     "babel-preset-env": "^1.6.1",
     "babel-preset-stage-0": "^6.24.1",
     "expect.js": "~0.3.1",
