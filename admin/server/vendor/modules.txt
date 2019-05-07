@@ -12,7 +12,7 @@ github.com/globalsign/mgo/internal/json
 # github.com/go-openapi/analysis v0.17.2
 github.com/go-openapi/analysis
 github.com/go-openapi/analysis/internal
-# github.com/go-openapi/errors v0.18.0
+# github.com/go-openapi/errors v0.19.0
 github.com/go-openapi/errors
 # github.com/go-openapi/jsonpointer v0.17.2
 github.com/go-openapi/jsonpointer
