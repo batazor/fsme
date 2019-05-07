@@ -11,7 +11,7 @@ require (
 	github.com/go-openapi/validate v0.18.0
 	github.com/go-stack/stack v1.8.0 // indirect
 	github.com/go-swagger/go-swagger v0.19.0 // indirect
-	github.com/golang/snappy v0.0.0-20190218232222-2a8bb927dd31 // indirect
+	github.com/golang/snappy v0.0.1 // indirect
 	github.com/gorilla/handlers v1.4.0 // indirect
 	github.com/jessevdk/go-flags v1.4.0
 	github.com/kr/pretty v0.1.0 // indirect

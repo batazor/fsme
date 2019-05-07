@@ -39,7 +39,7 @@ github.com/go-openapi/swag
 github.com/go-openapi/validate
 # github.com/go-stack/stack v1.8.0
 github.com/go-stack/stack
-# github.com/golang/snappy v0.0.0-20190218232222-2a8bb927dd31
+# github.com/golang/snappy v0.0.1
 github.com/golang/snappy
 # github.com/jessevdk/go-flags v1.4.0
 github.com/jessevdk/go-flags
