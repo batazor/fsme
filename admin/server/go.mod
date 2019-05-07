@@ -22,6 +22,6 @@ require (
 	github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c // indirect
 	github.com/xdg/stringprep v1.0.0 // indirect
 	golang.org/x/net v0.0.0-20190507105821-f4e77d36d62c
-	golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4 // indirect
+	golang.org/x/sync v0.0.0-20190507112223-112230192c58 // indirect
 	golang.org/x/tools v0.0.0-20190328030505-8f05a32dce9f // indirect
 )
