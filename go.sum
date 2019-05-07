@@ -14,6 +14,7 @@ github.com/batazor/fsme/admin/server v0.0.0-20190507112130-e7ad6968d9b2/go.mod h
 github.com/batazor/fsme/admin/server v0.0.0-20190507113950-17329610c23a/go.mod h1:AsILQcgY0r+HDQpkTEG3czcHkj6N5g9ytA1/yZoMTYs=
 github.com/batazor/fsme/admin/server v0.0.0-20190507144350-eb39dbba8a40/go.mod h1:AsILQcgY0r+HDQpkTEG3czcHkj6N5g9ytA1/yZoMTYs=
 github.com/batazor/fsme/admin/server v0.0.0-20190507215640-7c902ae3fffb/go.mod h1:NOA27MMQmSV3/BVwI1ZT7RZk/2YDUys5UVGDYR+W3a4=
+github.com/batazor/fsme/admin/server v0.0.0-20190507232843-5a5430c37f8f/go.mod h1:aiG7KXlwhE+rhRsgLGipbifTsltib6/Ujb4jVHW79cE=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -66,6 +67,7 @@ github.com/go-stack/stack v1.8.0/go.mod h1:v0f6uXyyMGvRgIKkXu+yp6POWl0qKG85gN/me
 github.com/go-swagger/go-swagger v0.19.0/go.mod h1:fOcXeMI1KPNv3uk4u7cR4VSyq0NyrYx4SS1/ajuTWDg=
 github.com/golang/snappy v0.0.0-20190218232222-2a8bb927dd31 h1:L7s4Kab5p6uNwbGGZl4w9VkSTmzHSLkP8w/xCbYEWOo=
 github.com/golang/snappy v0.0.0-20190218232222-2a8bb927dd31/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
+github.com/golang/snappy v0.0.1/go.mod h1:/XxbfmMg8lxefKM7IXC3fBNl/7bRcc72aCRzEWrmP2Q=
 github.com/google/uuid v1.0.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/google/uuid v1.1.0/go.mod h1:TIyPZe4MgqvfeYDBFedMoGGpEw/LqOeaOT+nhxU+yHo=
 github.com/gorilla/handlers v1.4.0/go.mod h1:Qkdc/uu4tH4g6mTK6auzZ766c4CA0Ng8+o/OAirnOIQ=
