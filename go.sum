@@ -11,6 +11,7 @@ github.com/batazor/fsme/admin/server v0.0.0-20190507095542-d79709bfa280/go.mod h
 github.com/batazor/fsme/admin/server v0.0.0-20190507095817-d79709bfa280/go.mod h1:A0Ky1IA79wnq7tR/Cgnywpjt+VyKfptqtFSP60hAQtE=
 github.com/batazor/fsme/admin/server v0.0.0-20190507105801-1c3227a057a2/go.mod h1:A0Ky1IA79wnq7tR/Cgnywpjt+VyKfptqtFSP60hAQtE=
 github.com/batazor/fsme/admin/server v0.0.0-20190507112130-e7ad6968d9b2/go.mod h1:oKHzW/mPoFoO6NltwMZzGAdTSGJIk5GsjByo0pmdrOE=
+github.com/batazor/fsme/admin/server v0.0.0-20190507113950-17329610c23a/go.mod h1:AsILQcgY0r+HDQpkTEG3czcHkj6N5g9ytA1/yZoMTYs=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -110,6 +111,7 @@ golang.org/x/net v0.0.0-20190404232315-eb5bcb51f2a3/go.mod h1:t9HGtf8HONx5eT2rtn
 golang.org/x/net v0.0.0-20190507105821-f4e77d36d62c/go.mod h1:t9HGtf8HONx5eT2rtn7q6eTqICYqUVnKs3thJo3Qplg=
 golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4 h1:YUO/7uOKsKeq9UokNS62b8FYywz3ker1l1vDZRCRefw=
 golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
+golang.org/x/sync v0.0.0-20190507112223-112230192c58/go.mod h1:RxMgew5VJxzue5/jJTE5uejpjVlOe/izrB70Jof72aM=
 golang.org/x/sys v0.0.0-20181205085412-a5c9d58dba9a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a/go.mod h1:STP8DvDyc/dI5b8T5hshtkjS+E42TnysNCUPdjciGhY=
 golang.org/x/sys v0.0.0-20190412213103-97732733099d/go.mod h1:h1NjWce9XRLGQEsW7wpKNCjG9DtNlClVuFLEZdDNbEs=
