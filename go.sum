@@ -8,6 +8,7 @@ github.com/asaskevich/govalidator v0.0.0-20180720115003-f9ffefc3facf/go.mod h1:l
 github.com/batazor/fsme/admin/server v0.0.0-20190219152810-880203a6cfe0 h1:RshHpnUUsJPWDzetbdND7K/0ENT6tkmMv9wwBceGlhk=
 github.com/batazor/fsme/admin/server v0.0.0-20190219152810-880203a6cfe0/go.mod h1:+MWgpHO1C9FOH6U0qh+ddEKbz1HaqFuqmlWg0c4hTDQ=
 github.com/batazor/fsme/admin/server v0.0.0-20190507095542-d79709bfa280/go.mod h1:A0Ky1IA79wnq7tR/Cgnywpjt+VyKfptqtFSP60hAQtE=
+github.com/batazor/fsme/admin/server v0.0.0-20190507095817-d79709bfa280/go.mod h1:A0Ky1IA79wnq7tR/Cgnywpjt+VyKfptqtFSP60hAQtE=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
