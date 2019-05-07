@@ -3,7 +3,7 @@ module github.com/batazor/fsme/admin/server
 require (
 	github.com/go-openapi/errors v0.18.0
 	github.com/go-openapi/inflect v0.19.0 // indirect
-	github.com/go-openapi/loads v0.18.0
+	github.com/go-openapi/loads v0.19.0
 	github.com/go-openapi/runtime v0.18.0
 	github.com/go-openapi/spec v0.18.0
 	github.com/go-openapi/strfmt v0.18.0
