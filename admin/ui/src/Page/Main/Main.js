@@ -18,32 +18,7 @@ import {
   sendEvent,
 } from '../../actions/event'
 
-const styles = {
-  root: {
-    display: 'grid',
-    gridTemplateRows: 'auto 1fr',
-    flex: 1,
-    overflow: 'auto',
-  },
-  rootPaper: {
-    display: 'grid',
-    gridTemplateRows: '1fr',
-    flex: 1,
-  },
-  grow: {
-    flexGrow: 1,
-  },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
-  },
-  main: {
-    display: 'grid',
-    flexDirection: 'row',
-    gridTemplateColumns: 'auto 25em',
-    overflow: 'auto',
-  },
-};
+import styles from './styles'
 
 class MainPage extends Component {
   constructor(props) {
@@ -51,7 +26,7 @@ class MainPage extends Component {
 
     this.onEvent = this.onEvent.bind(this)
 
-    props.listActions()
+    // props.listActions()
   }
 
   onEvent(args, print, runCommand) {

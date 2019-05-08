@@ -1,19 +1,18 @@
-import * as FSM from '../constants/fsm'
-import { ApiClient, FsmApi } from '../swagger/src'
+// import * as FSM from '../constants/fsm'
 
 export function list(opts = {}) {
-  const client = new ApiClient()
-  client.basePath = "http://localhost:34801"
-  const api = new FsmApi(client)
-  api.getFSMList(opts)
-    .then(
-      resp => console.warn('getFSMList', resp),
-      err => console.warn('getFSMList err', err)
-    )
-
-  return d => d({
-    type: "",
-  })
+  // const client = new ApiClient()
+  // client.basePath = "http://localhost:34801"
+  // const api = new FsmApi(client)
+  // api.getFSMList(opts)
+  //   .then(
+  //     resp => console.warn('getFSMList', resp),
+  //     err => console.warn('getFSMList err', err)
+  //   )
+  //
+  // return d => d({
+  //   type: "",
+  // })
 }
 
 export function get(id = 1) {
