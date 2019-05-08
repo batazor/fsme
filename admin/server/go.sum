@@ -9,6 +9,7 @@ github.com/batazor/fsme v0.0.0-20190507095835-1c3227a057a2 h1:vVJfNlLt2J4sW+rCO2
 github.com/batazor/fsme v0.0.0-20190507112127-e7ad6968d9b2 h1:h9ICDJQgE7y6giDmckT4unDrWH3qnFIbpaklvM/a6ZQ=
 github.com/batazor/fsme v0.0.0-20190507114944-eb39dbba8a40 h1:xBU3UmbD4RGznKtI+LgJt5yGwq+s3p8Cf99sXksWfh0=
 github.com/batazor/fsme v0.0.0-20190507220003-0b9e8808988b h1:Y3uT+5PpZqptZlzZw3jjKNpdgE5DJx76gB286ZQzkvQ=
+github.com/batazor/fsme v0.0.0-20190507223249-5a5430c37f8f h1:zQ2iQGqihYVEUdOmppsplVkHD7hW33FJ67Stu+GN8U4=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -87,6 +88,7 @@ github.com/mitchellh/mapstructure v1.1.2 h1:fmNYVwqnSfB9mZU6OS2O6GsXM+wcskZDuKQz
 github.com/mitchellh/mapstructure v1.1.2/go.mod h1:FVVH3fgwuzCH5S8UJGiWEs2h04kUh9fWfEaFds41c1Y=
 github.com/mongodb/mongo-go-driver v0.3.0 h1:00tKWMrabkVU1e57/TTP4ZBIfhn/wmjlSiRnIM9d0T8=
 github.com/mongodb/mongo-go-driver v0.3.0/go.mod h1:NK/HWDIIZkaYsnYa0hmtP443T5ELr0KDecmIioVuuyU=
+github.com/mongodb/mongo-go-driver v1.0.1/go.mod h1:NK/HWDIIZkaYsnYa0hmtP443T5ELr0KDecmIioVuuyU=
 github.com/pborman/uuid v1.2.0/go.mod h1:X/NO0urCmaxf9VXbdlT7C2Yzkj2IKimNn4k+gtPdI/k=
 github.com/pelletier/go-toml v1.2.0 h1:T5zMGML61Wp+FlcbWjRDT7yAxhJNAiPPLOFECq181zc=
 github.com/pelletier/go-toml v1.2.0/go.mod h1:5z9KED0ma1S8pY6P1sdut58dfprrGBbd/94hg7ilaic=

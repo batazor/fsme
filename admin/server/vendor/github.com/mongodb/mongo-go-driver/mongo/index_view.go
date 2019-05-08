@@ -12,15 +12,15 @@ import (
 	"errors"
 	"fmt"
 
-	"github.com/mongodb/mongo-go-driver/bson"
-	"github.com/mongodb/mongo-go-driver/bson/bsoncodec"
-	"github.com/mongodb/mongo-go-driver/bson/bsontype"
-	"github.com/mongodb/mongo-go-driver/mongo/options"
-	"github.com/mongodb/mongo-go-driver/mongo/readpref"
-	"github.com/mongodb/mongo-go-driver/x/bsonx"
-	"github.com/mongodb/mongo-go-driver/x/mongo/driver"
-	"github.com/mongodb/mongo-go-driver/x/network/command"
-	"github.com/mongodb/mongo-go-driver/x/network/description"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/bsoncodec"
+	"go.mongodb.org/mongo-driver/bson/bsontype"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/mongo/readpref"
+	"go.mongodb.org/mongo-driver/x/bsonx"
+	"go.mongodb.org/mongo-driver/x/mongo/driver"
+	"go.mongodb.org/mongo-driver/x/network/command"
+	"go.mongodb.org/mongo-driver/x/network/description"
 )
 
 // ErrInvalidIndexValue indicates that the index Keys document has a value that isn't either a number or a string.
@@ -47,7 +47,7 @@ type IndexModel struct {
 func (iv IndexView) List(ctx context.Context, opts ...*options.ListIndexesOptions) (*Cursor, error) {
 	sess := sessionFromContext(ctx)
 
-	err := iv.coll.client.ValidSession(sess)
+	err := iv.coll.client.validSession(sess)
 	if err != nil {
 		return nil, err
 	}
@@ -74,11 +74,11 @@ func (iv IndexView) List(ctx context.Context, opts ...*options.ListIndexesOption
 		if err == command.ErrEmptyCursor {
 			return newEmptyCursor(), nil
 		}
-		return nil, replaceTopologyErr(err)
+		return nil, replaceErrors(err)
 	}
 
 	cursor, err := newCursor(batchCursor, iv.coll.registry)
-	return cursor, replaceTopologyErr(err)
+	return cursor, replaceErrors(err)
 }
 
 // CreateOne creates a single index in the collection specified by the model.
@@ -92,7 +92,7 @@ func (iv IndexView) CreateOne(ctx context.Context, model IndexModel, opts ...*op
 }
 
 // CreateMany creates multiple indexes in the collection specified by the models. The names of the
-// creates indexes are returned.
+// created indexes are returned.
 func (iv IndexView) CreateMany(ctx context.Context, models []IndexModel, opts ...*options.CreateIndexesOptions) ([]string, error) {
 	names := make([]string, 0, len(models))
 	indexes := bsonx.Arr{}
@@ -129,7 +129,7 @@ func (iv IndexView) CreateMany(ctx context.Context, models []IndexModel, opts ..
 
 	sess := sessionFromContext(ctx)
 
-	err := iv.coll.client.ValidSession(sess)
+	err := iv.coll.client.validSession(sess)
 	if err != nil {
 		return nil, err
 	}
@@ -225,8 +225,11 @@ func (iv IndexView) createOptionsDoc(opts *options.IndexOptions) (bsonx.Doc, err
 		optsDoc = append(optsDoc, bsonx.Elem{"partialFilterExpression", bsonx.Document(doc)})
 	}
 	if opts.Collation != nil {
-		doc := opts.Collation.ToDocument()
-		optsDoc = append(optsDoc, bsonx.Elem{"collation", bsonx.Document(doc)})
+		collDoc, err := bsonx.ReadDoc(opts.Collation.ToDocument())
+		if err != nil {
+			return nil, err
+		}
+		optsDoc = append(optsDoc, bsonx.Elem{"collation", bsonx.Document(collDoc)})
 	}
 
 	return optsDoc, nil
@@ -240,7 +243,7 @@ func (iv IndexView) DropOne(ctx context.Context, name string, opts ...*options.D
 
 	sess := sessionFromContext(ctx)
 
-	err := iv.coll.client.ValidSession(sess)
+	err := iv.coll.client.validSession(sess)
 	if err != nil {
 		return nil, err
 	}
@@ -266,7 +269,7 @@ func (iv IndexView) DropOne(ctx context.Context, name string, opts ...*options.D
 func (iv IndexView) DropAll(ctx context.Context, opts ...*options.DropIndexesOptions) (bson.Raw, error) {
 	sess := sessionFromContext(ctx)
 
-	err := iv.coll.client.ValidSession(sess)
+	err := iv.coll.client.validSession(sess)
 	if err != nil {
 		return nil, err
 	}

@@ -4,7 +4,7 @@
 // not use this file except in compliance with the License. You may obtain
 // a copy of the License at http://www.apache.org/licenses/LICENSE-2.0
 
-package mongo
+package mongo // import "go.mongodb.org/mongo-driver/mongo"
 
 import (
 	"context"
@@ -14,13 +14,13 @@ import (
 	"reflect"
 	"strings"
 
-	"github.com/mongodb/mongo-go-driver/mongo/options"
-	"github.com/mongodb/mongo-go-driver/x/bsonx"
+	"go.mongodb.org/mongo-driver/mongo/options"
+	"go.mongodb.org/mongo-driver/x/bsonx"
 
-	"github.com/mongodb/mongo-go-driver/bson"
-	"github.com/mongodb/mongo-go-driver/bson/bsoncodec"
-	"github.com/mongodb/mongo-go-driver/bson/bsontype"
-	"github.com/mongodb/mongo-go-driver/bson/primitive"
+	"go.mongodb.org/mongo-driver/bson"
+	"go.mongodb.org/mongo-driver/bson/bsoncodec"
+	"go.mongodb.org/mongo-driver/bson/bsontype"
+	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
 // Dialer is used to make network connections.
@@ -55,7 +55,7 @@ type MarshalError struct {
 
 // Error implements the error interface.
 func (me MarshalError) Error() string {
-	return fmt.Sprintf("cannot transform type %s to a *bsonx.Document", reflect.TypeOf(me.Value))
+	return fmt.Sprintf("cannot transform type %s to a BSON Document: %v", reflect.TypeOf(me.Value), me.Err)
 }
 
 // Pipeline is a type that makes creating aggregation pipelines easier. It is a
@@ -117,7 +117,8 @@ func transformAndEnsureID(registry *bsoncodec.Registry, val interface{}) (bsonx.
 		d[0] = idElem
 	}
 
-	t, data, err := idElem.Value.MarshalAppendBSONValue(buf[:0])
+	idBuf := make([]byte, 0, 256)
+	t, data, err := idElem.Value.MarshalAppendBSONValue(idBuf[:0])
 	if err != nil {
 		return nil, nil, err
 	}
