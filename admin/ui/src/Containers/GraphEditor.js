@@ -11,7 +11,7 @@ const sample = {
       "title": "Node A",
       "x": 258.3976135253906,
       "y": 331.9783248901367,
-      "type": "empty"
+      "type": "custom"
     },
     {
       "id": 2,
@@ -32,12 +32,14 @@ const sample = {
     {
       "source": 1,
       "target": 2,
-      "type": "emptyEdge"
     },
     {
       "source": 2,
       "target": 3,
-      "type": "emptyEdge"
+    },
+    {
+      "source": 3,
+      "target": 1,
     }
   ]
 }
@@ -57,8 +59,8 @@ const GraphConfig =  {
       typeText: "Custom",
       shapeId: "#custom", // relates to the type property of a node
       shape: (
-        <symbol viewBox="0 0 50 25" id="custom" key="0">
-          <ellipse cx="50" cy="25" rx="50" ry="25"></ellipse>
+        <symbol viewBox="0 0 100 100" id="custom" key="0">
+          <circle style={{ fill: 'yellow' }} cx="50" cy="50" r="45"></circle>
         </symbol>
       )
     }
