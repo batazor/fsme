@@ -9,6 +9,7 @@ github.com/batazor/fsme v0.0.0-20190507095835-1c3227a057a2 h1:vVJfNlLt2J4sW+rCO2
 github.com/batazor/fsme v0.0.0-20190507112127-e7ad6968d9b2 h1:h9ICDJQgE7y6giDmckT4unDrWH3qnFIbpaklvM/a6ZQ=
 github.com/batazor/fsme v0.0.0-20190507114944-eb39dbba8a40 h1:xBU3UmbD4RGznKtI+LgJt5yGwq+s3p8Cf99sXksWfh0=
 github.com/batazor/fsme v0.0.0-20190507220003-0b9e8808988b h1:Y3uT+5PpZqptZlzZw3jjKNpdgE5DJx76gB286ZQzkvQ=
+github.com/batazor/fsme v0.0.0-20190507223249-5a5430c37f8f h1:zQ2iQGqihYVEUdOmppsplVkHD7hW33FJ67Stu+GN8U4=
 github.com/coreos/etcd v3.3.10+incompatible/go.mod h1:uF7uidLiAD3TWHmW31ZFd/JWoc32PjwdhPthX9715RE=
 github.com/coreos/go-etcd v2.0.0+incompatible/go.mod h1:Jez6KQU2B/sWsbdaef3ED8NzMklzPG4d5KIOhIy30Tk=
 github.com/coreos/go-semver v0.2.0/go.mod h1:nnelYz7RCh+5ahJtPPxZlU+153eP4D4r3EedlOD2RNk=
@@ -136,6 +137,7 @@ golang.org/x/text v0.3.0/go.mod h1:NqM8EUOU14njkJ3fqMW+pc6Ldnwhi/IjpwHt7yyuwOQ=
 golang.org/x/tools v0.0.0-20190328030505-8f05a32dce9f h1:MC9ePo9/ITLPbt6QsoTD78Pg07by0QbfGLUQpkJ01QM=
 golang.org/x/tools v0.0.0-20190328030505-8f05a32dce9f/go.mod h1:LCzVGOaR6xXOjkQ3onu1FJEFr0SW1gC7cKk1uF8kGRs=
 golang.org/x/tools v0.0.0-20190507144406-2d16b83fe98c/go.mod h1:RgjU9mgBXZiqYHBnxXauZ1Gv1EHHAz9KjViQ78xBX0Q=
+golang.org/x/tools v0.0.0-20190508034909-952990169864/go.mod h1:RgjU9mgBXZiqYHBnxXauZ1Gv1EHHAz9KjViQ78xBX0Q=
 gopkg.in/check.v1 v0.0.0-20161208181325-20d25e280405/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/check.v1 v1.0.0-20180628173108-788fd7840127/go.mod h1:Co6ibVJAznAaIkqp8huTwlJQCZ016jof/cbN4VW5Yz0=
 gopkg.in/yaml.v2 v2.2.1/go.mod h1:hI93XBmqTisBFMUTm0b8Fm+jr3Dg1NNxqwp+5A1VGuI=

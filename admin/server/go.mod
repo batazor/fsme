@@ -23,5 +23,5 @@ require (
 	github.com/xdg/stringprep v1.0.0 // indirect
 	golang.org/x/net v0.0.0-20190507105821-f4e77d36d62c
 	golang.org/x/sync v0.0.0-20190507112223-112230192c58 // indirect
-	golang.org/x/tools v0.0.0-20190507144406-2d16b83fe98c // indirect
+	golang.org/x/tools v0.0.0-20190508034909-952990169864 // indirect
 )
