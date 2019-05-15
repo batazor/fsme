@@ -79,28 +79,3 @@ func main() {
 ## UI
 
 ![UI](./docs/editor.png)
-
-#### Server
-
-```bash
-# Run swagger-ui
-docker run -p 80:8080 \
-    -e BASE_URL=/swagger \
-    -e SWAGGER_JSON=/docs/swagger.json \
-    -v $pwd/docs/swagger:/docs \
-    swaggerapi/swagger-ui
-
-# Run swagger-editor
-docker run -p 80:8080 \
-    -e BASE_URL=/swagger \
-    -e SWAGGER_JSON=/docs/swagger.json \
-    -v $PWD/docs:/docs \
-    swaggerapi/swagger-editor
-
-# Generator client
-docker run --rm -v ${PWD}:/local swaggerapi/swagger-codegen-cli generate \
-    -i /local/admin/server/docs/swagger.yaml \
-    -l javascript \
-		--additional-properties useInheritance=true,useES6=true,sortParamsByRequiredFlag=true,usePromises=true \
-    -o /local/admin/ui/src/swagger
-```

@@ -5,7 +5,7 @@ import (
 	"github.com/batazor/fsme/fsm"
 )
 
-func genereateDigraph(f fsm.Export) string {
+func genereateDigraph(f fsm.Export) interface{} {
 	str := `digraph StateMachine {
 	rankdir=LR
     node[width=1 fixedsize=true shape=circle style=filled fillcolor="darkorchid1" ]

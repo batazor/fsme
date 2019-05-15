@@ -25,8 +25,6 @@ class MainPage extends Component {
     super(props)
 
     this.onEvent = this.onEvent.bind(this)
-
-    // props.listActions()
   }
 
   onEvent(args, print, runCommand) {
@@ -35,7 +33,7 @@ class MainPage extends Component {
   }
 
   componentDidMount() {
-    // this.props.listActions()
+    this.props.listActions()
   }
 
   render() {
@@ -57,7 +55,7 @@ class MainPage extends Component {
 
         <main className={classes.main}>
           <Paper className={classes.rootPaper} elevation={1}>
-            <GraphEditor />
+            <GraphEditor fsm={this.props.fsm['ID_1']} />
           </Paper>
 
           <Terminal
@@ -75,7 +73,7 @@ MainPage.propTypes = {
 
 function mapStateToProps(state) {
   return {
-    fsm: state.fsm,
+    fsm: state.fsm.fsm,
   }
 }
 

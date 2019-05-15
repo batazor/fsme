@@ -1,23 +1,41 @@
-// import * as FSM from '../constants/fsm'
+import * as FSM from '../constants/fsm'
 
 export function list(opts = {}) {
-  // const client = new ApiClient()
-  // client.basePath = "http://localhost:34801"
-  // const api = new FsmApi(client)
-  // api.getFSMList(opts)
-  //   .then(
-  //     resp => console.warn('getFSMList', resp),
-  //     err => console.warn('getFSMList err', err)
-  //   )
-  //
-  // return d => d({
-  //   type: "",
-  // })
+  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FSM.LIST,
+        payload: response,
+      })
+    })
+    .catch(error => error.then(response => { throw response }))
 }
 
 export function get(id = 1) {
-  // const resp = FsmApi.getFSM(id)
-  // console.warn('getFSM', resp)
+  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}`, {
+    method: 'GET',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FSM.GET,
+        payload: response,
+      })
+    })
+    .catch(error => error.then(response => { throw response }))
 }
 
 export function add(opts = {}) {

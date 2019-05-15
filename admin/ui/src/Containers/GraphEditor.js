@@ -4,46 +4,6 @@ import {
   GraphView, // required
 } from 'react-digraph';
 
-const sample = {
-  "nodes": [
-    {
-      "id": 1,
-      "title": "Node A",
-      "x": 258.3976135253906,
-      "y": 331.9783248901367,
-      "type": "custom"
-    },
-    {
-      "id": 2,
-      "title": "Node B",
-      "x": 593.9393920898438,
-      "y": 260.6060791015625,
-      "type": "empty"
-    },
-    {
-      "id": 3,
-      "title": "Node C",
-      "x": 600.5757598876953,
-      "y": 600.81818389892578,
-      "type": "empty"
-    }
-  ],
-  "edges": [
-    {
-      "source": 1,
-      "target": 2,
-    },
-    {
-      "source": 2,
-      "target": 3,
-    },
-    {
-      "source": 3,
-      "target": 1,
-    }
-  ]
-}
-
 const GraphConfig =  {
   NodeTypes: {
     empty: { // required to show empty nodes
@@ -92,9 +52,32 @@ class Graph extends Component {
   constructor(props) {
     super(props);
 
+    // console.log('fsm', props.fsm.FSM)
+    const mapNode = {}
+    Object.keys(props.fsm.FSM.Transitions).forEach((item, index) => mapNode[item] = index + 1)
+    const edges = []
+
+    Object.keys(props.fsm.FSM.Transitions).forEach(item => {
+      Object.keys(props.fsm.FSM.Transitions[item]).forEach(edge => {
+        edges.push({
+          "source": mapNode[item],
+          "target": mapNode[edge],
+        })
+      })
+    })
+
     this.state = {
-      graph: sample,
-      selected: {}
+      "graph": {
+        "nodes": Object.keys(props.fsm.FSM.Transitions).map((item, index) => ({
+          "id": index + 1,
+          "title": item,
+          "x": 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
+          "y": 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
+          "type": item === props.fsm.FSM.State ? "custom" : "empty",
+        })),
+        "edges": edges,
+      },
+      "selected": {}
     }
   }
 

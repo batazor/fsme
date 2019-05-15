@@ -9,7 +9,10 @@ export default function update(state: Object = initialState, action: Object): Ob
     case FSM.LIST: {
       return {
         ...state,
-        fsm: action.payload,
+        fsm: {
+          ...state.fsm,
+          [action.payload[0]._id]: action.payload[0],
+        },
       }
     }
     case FSM.GET:
