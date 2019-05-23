@@ -10,7 +10,7 @@
     "history": "^4.9.0",
     "localforage": "^1.7.3",
     "react": "^16.8.6",
-    "react-digraph": "^6.2.2",
+    "react-digraph": "^6.3.0",
     "react-dom": "^16.8.6",
     "react-redux": "^7.0.3",
     "react-router": "^5.0.0",
