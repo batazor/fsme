@@ -1,16 +1,22 @@
-// import * as FSM from '../constants/fsm'
+import * as FSM from '../constants/fsm'
 
 export function sendEvent(nameEveent = "") {
-  // const client = new ApiClient()
-  // client.basePath = "http://localhost:44555"
-  // const api = new EventApi(client)
-  // api.sendEventFSM(nameEveent)
-  //   .then(
-  //     resp => console.warn('sendEvent', resp),
-  //     err => console.warn('sendEvent err', err)
-  //   )
-  //
-  // return d => d({
-  //   type: "",
-  // })
+  console.log(nameEveent)
+
+  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}/1/event/${nameEveent}`, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FSM.UPDATE,
+        payload: response[0],
+      })
+    })
+    .catch(error => console.error(error))
 }

@@ -16,7 +16,8 @@ export function list(opts = {}) {
         payload: response,
       })
     })
-    .catch(error => error.then(response => { throw response }))
+    .catch(error => console.error(error))
+    // .catch(error => error.then(response => { throw response }))
 }
 
 export function get(id = 1) {

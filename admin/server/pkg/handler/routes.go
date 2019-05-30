@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
+	"github/batazor/fsme/admin/server/pkg/db"
 	"net/http"
 	"github.com/batazor/fsme/fsm"
 )
@@ -20,35 +21,18 @@ func Routes() chi.Router {
 	r.Patch("/{id}", Update)
 	r.Delete("/{id}", Delete)
 
+	r.Post("/{id}/event/{eventName}", SendEvent)
+
 	return r
 }
 
 func List(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// Create new FSM
-	machine, err := fsm.New()
+	// Get list FSM
+	machine, err := db.List()
 	if err != nil {
 		w.Write([]byte(""))
-	}
-
-	// Add rule
-	machine.AddStateTransitionRules("a", "b", "c")
-	machine.AddStateTransitionRules("b", "d", "e")
-	machine.AddStateTransitionRules("c", "k")
-	machine.AddStateTransitionRules("d", "a")
-	machine.AddStateTransitionRules("e", "k")
-	machine.AddStateTransitionRules("k")
-
-	// Add Events
-	machine.AddEvent("start", "a")
-	machine.AddEvent("to b", "b")
-	machine.AddEvent("to d", "d")
-
-	// Init State
-	err = machine.SetStateTransition("a")
-	if err != nil {
-		fmt.Println(err)
 	}
 
 	response := machine.Export(generateFSM)
@@ -81,6 +65,35 @@ func Update(w http.ResponseWriter, r *http.Request) {
 func Delete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte("Delete"))
+}
+
+func SendEvent(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	eventName := chi.URLParam(r, "eventName")
+	state := fsm.State(eventName)
+	machine, err := db.Get()
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	err = machine.SendEvent(state)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	response := machine.Export(generateFSM)
+
+	b, err := json.Marshal(response)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return;
+	}
+
+	w.Write([]byte(string(b)))
 }
 
 func generateFSM(f fsm.Export) interface{} {

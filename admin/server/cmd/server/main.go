@@ -1,11 +1,11 @@
 package main
 
 import (
-	"github.com/batazor/fsme/admin/server/pkg/handler"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
+	"github/batazor/fsme/admin/server/pkg/handler"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -44,7 +44,10 @@ func main() {
 	logger.Info("Run on port " + PORT)
 
 	// start HTTP-server
-	http.ListenAndServe(":"+PORT, r)
+	err := http.ListenAndServe(":"+PORT, r)
+	if err != nil {
+		logger.Fatal(err.Error())
+	}
 }
 
 func NotFoundHandler(w http.ResponseWriter, r *http.Request) {

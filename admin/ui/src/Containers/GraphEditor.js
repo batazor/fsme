@@ -1,8 +1,9 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import {
   GraphView, // required
-} from 'react-digraph';
+} from 'react-digraph'
+import _ from 'lodash'
 
 const GraphConfig =  {
   NodeTypes: {
@@ -49,35 +50,55 @@ const styles = {
 
 class Graph extends Component {
 
-  constructor(props) {
-    super(props);
+  static getDerivedStateFromProps(props, state) {
+    // if update state
+    if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
+      const mapNode = {}
+      const edges = []
+      let nodes = []
 
-    // console.log('fsm', props.fsm.FSM)
-    const mapNode = {}
-    Object.keys(props.fsm.FSM.Transitions).forEach((item, index) => mapNode[item] = index + 1)
-    const edges = []
+      if (props.fsm) {
+        Object.keys(props.fsm.FSM.Transitions).forEach((item, index) => mapNode[item] = index + 1)
 
-    Object.keys(props.fsm.FSM.Transitions).forEach(item => {
-      Object.keys(props.fsm.FSM.Transitions[item]).forEach(edge => {
-        edges.push({
-          "source": mapNode[item],
-          "target": mapNode[edge],
+        Object.keys(props.fsm.FSM.Transitions).forEach(item => {
+          Object.keys(props.fsm.FSM.Transitions[item]).forEach(edge => {
+            edges.push({
+              "source": mapNode[item],
+              "target": mapNode[edge],
+            })
+          })
         })
-      })
-    })
 
-    this.state = {
-      "graph": {
-        "nodes": Object.keys(props.fsm.FSM.Transitions).map((item, index) => ({
+        nodes = Object.keys(props.fsm.FSM.Transitions).map((item, index) => ({
           "id": index + 1,
           "title": item,
           "x": 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
           "y": 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
           "type": item === props.fsm.FSM.State ? "custom" : "empty",
-        })),
-        "edges": edges,
+        }))
+      }
+
+      return {
+        graph: {
+          nodes,
+          edges,
+        },
+        selected: {}
+      }
+    }
+
+    return null;
+  }
+
+  constructor() {
+    super();
+
+    this.state = {
+      graph: {
+        nodes: [],
+        edges: [],
       },
-      "selected": {}
+      selected: {}
     }
   }
 

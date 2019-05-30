@@ -28,8 +28,8 @@ class MainPage extends Component {
   }
 
   onEvent(args, print, runCommand) {
-    console.log(args)
-    sendEvent(args[1])
+    args.shift()
+    this.props.sendEvent(args.join(" "))
   }
 
   componentDidMount() {
@@ -83,6 +83,7 @@ function mapDispatchToProps(dispatch) {
     addActions: bindActionCreators(add, dispatch),
     updateActions: bindActionCreators(update, dispatch),
     removeActions: bindActionCreators(remove, dispatch),
+    sendEvent: bindActionCreators(sendEvent, dispatch),
   }
 }
 
