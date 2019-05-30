@@ -3,7 +3,7 @@ module github/batazor/fsme/admin/server
 go 1.12
 
 require (
-	github.com/batazor/fsme v0.0.0-20190527131157-573af18a99da
+	github.com/batazor/fsme v0.0.0-20190530153957-7ec9bc33dc96
 	github.com/go-chi/chi v4.0.2+incompatible
 	github.com/go-chi/cors v1.0.0
 	github.com/go-chi/render v1.0.1
