@@ -4,5 +4,5 @@ build:
     server: admin/server/Dockerfile
 run:
   ui:
-  server:
+  server: ./app
   # mongodb:
