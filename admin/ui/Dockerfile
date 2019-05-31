@@ -1,4 +1,4 @@
-FROM node:12-lapine AS build
+FROM node:12-alpine AS build
 
 WORKDIR /src
 COPY ./ ./
