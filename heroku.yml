@@ -1,0 +1,8 @@
+build:
+  docker:
+    ui: admin/ui/Dockerfile
+    server: admin/server/Dockerfile
+run:
+  ui:
+  server:
+  # mongodb:
