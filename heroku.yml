@@ -3,6 +3,6 @@ build:
     ui: admin/ui/Dockerfile
     server: admin/server/Dockerfile
 run:
-  ui:
+  ui: nginx -g daemon off;
   server: ./app
   # mongodb:
