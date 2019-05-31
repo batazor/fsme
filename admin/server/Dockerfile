@@ -17,8 +17,8 @@ FROM alpine:latest
 
 EXPOSE 6001
 
+RUN apk add --update bash
 RUN addgroup -S 997 && adduser -S -g 997 997
-RUN rm /bin/sh && ln -s /bin/bash /bin/sh
 USER 997
 
 WORKDIR /app/
