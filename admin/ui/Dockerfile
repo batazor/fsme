@@ -7,6 +7,8 @@ RUN npm run build
 
 FROM nginx:1.16-alpine
 
+RUN rm /bin/sh && ln -s /bin/bash /bin/sh
+
 WORKDIR /usr/share/nginx/html
 COPY ./ops/root /
 COPY --from=build /src/build ./
