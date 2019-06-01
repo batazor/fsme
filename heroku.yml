@@ -1,9 +1,5 @@
 build:
   docker:
-    web: admin/heroku/Dockerfile
+    web: admin/Dockerfile
   config:
     REACT_APP_API_URL: https://fsme.herokuapp.com/api
-release:
-  image: web
-  command:
-    - ls
