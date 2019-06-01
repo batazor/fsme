@@ -22,7 +22,7 @@ export default function update(state: Object = initialState, action: Object): Ob
         ...state,
         fsm: {
           ...state.fsm,
-          [action.payload._id]: action.payload,
+          [action.payload[0]._id]: action.payload,
         },
       }
     }

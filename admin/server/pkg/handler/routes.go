@@ -59,7 +59,37 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 func Update(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("Update"))
+
+	// Parse body
+	decoder := json.NewDecoder(r.Body)
+	var newFSM Fsm
+	err := decoder.Decode(&newFSM)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return;
+	}
+
+	// Update FSM
+	machine, err := db.Get()
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	// Update FSM
+	machine.SetStateTransition(newFSM.FSM.State)
+
+	response := machine.Export(generateFSM)
+
+	b, err := json.Marshal(response)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return;
+	}
+
+	w.Write([]byte(string(b)))
 }
 
 func Delete(w http.ResponseWriter, r *http.Request) {
