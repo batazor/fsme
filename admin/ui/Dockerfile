@@ -1,9 +1,14 @@
 FROM node:12-alpine AS build
 
+ARG REACT_APP_API_URL
+ENV REACT_APP_API_URL=$REACT_APP_API_URL
+
 WORKDIR /src
 COPY ./ ./
-RUN npm i
-RUN npm run build
+RUN \
+  echo "REACT_APP_API_URL=$REACT_APP_API_URL" >> .env && \
+  npm i && \
+  npm run build
 
 FROM nginx:1.16-alpine
 
