@@ -81,24 +81,22 @@ class MainPage extends Component {
             </Tabs>
           </AppBar>
 
-          {
-            this.state.typeEditor === "view" && (
-              <Paper className={classes.rootPaper} elevation={1}>
-                <GraphEditor fsm={this.props.fsm['ID_1']} />
+          <Paper className={classes.rootPaper} elevation={1}>
+            {
+              this.state.typeEditor === "view" && (
+                  <GraphEditor fsm={this.props.fsm['ID_1']} />
+              )
+            }
+            {
+              this.state.typeEditor === "json-editor" && (
+                <Paper className={classes.rootPaper} elevation={1}>
+                  <JSONEditor code={this.props.fsm['ID_1']} />
+                </Paper>
+              )
+            }
 
-                <Terminal
-                  onEvent={this.onEvent}
-                />
-              </Paper>
-            )
-          }
-          {
-            this.state.typeEditor === "json-editor" && (
-              <Paper className={classes.rootPaper} elevation={1}>
-                <JSONEditor code={this.props.fsm['ID_1']} />
-              </Paper>
-            )
-          }
+            <Terminal onEvent={this.onEvent} />
+          </Paper>
         </main>
       </div>
     )

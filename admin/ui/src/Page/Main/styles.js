@@ -16,7 +16,7 @@ export default theme => ({
     flex: 1,
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr',
-      gridTemplateRows: '1fr 1fr',
+      gridTemplateRows: 'minmax(20em, auto)',
     },
   },
   grow: {
