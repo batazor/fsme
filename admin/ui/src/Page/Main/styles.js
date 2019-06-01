@@ -5,9 +5,14 @@ export default {
     flex: 1,
     overflow: 'auto',
   },
+  main: {
+    overflow: "auto",
+    display: "flex",
+    flexDirection: "column",
+  },
   rootPaper: {
     display: 'grid',
-    gridTemplateRows: '1fr',
+    gridTemplateColumns: '1fr auto',
     flex: 1,
   },
   grow: {
@@ -16,11 +21,5 @@ export default {
   menuButton: {
     marginLeft: -12,
     marginRight: 20,
-  },
-  main: {
-    display: 'grid',
-    flexDirection: 'row',
-    gridTemplateColumns: 'auto 25em',
-    overflow: 'auto',
   },
 }
