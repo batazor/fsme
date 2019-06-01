@@ -3,11 +3,11 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/batazor/fsme/admin/server/pkg/db"
+	"github.com/batazor/fsme/fsm"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
-	"github/batazor/fsme/admin/server/pkg/db"
 	"net/http"
-	"github.com/batazor/fsme/fsm"
 )
 
 // Routes creates a REST router

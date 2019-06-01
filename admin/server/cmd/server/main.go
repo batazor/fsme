@@ -1,11 +1,12 @@
 package main
 
 import (
+	"github.com/batazor/fsme/admin/server/pkg/handler"
+	l "github.com/batazor/fsme/admin/server/pkg/logger"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
 	"github.com/go-chi/render"
-	"github/batazor/fsme/admin/server/pkg/handler"
 	"go.uber.org/zap"
 	"net/http"
 )
@@ -33,6 +34,7 @@ func main() {
 	})
 
 	r.Use(cors.Handler)
+	r.Use(l.Logger(logger))
 	r.Use(render.SetContentType(render.ContentTypeJSON))
 	r.Use(middleware.RequestID)
 	r.Use(middleware.RealIP)

@@ -1,4 +1,4 @@
-module github/batazor/fsme/admin/server
+module github.com/batazor/fsme/admin/server
 
 go 1.12
 
