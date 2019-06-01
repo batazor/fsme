@@ -46,8 +46,8 @@ class MainPage extends Component {
   }
 
   onSave(args, print, runCommand) {
-    // const [newFSM, setNewFSM] = useState(0);
-    console.warn('onSave newFSM', this.state.newFSM)
+    const { _id } = this.state.newFSM
+    this.props.updateActions(_id, this.state.newFSM)
   }
 
   onChangeTypeEditor(event, typeEditor) {
