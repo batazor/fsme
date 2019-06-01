@@ -18,4 +18,4 @@ WORKDIR /usr/share/nginx/html
 COPY ./ops/root /
 COPY --from=build /src/build ./
 
-CMD bash /heroku-exec.sh && /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+CMD /bin/bash /heroku-exec.sh && /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
