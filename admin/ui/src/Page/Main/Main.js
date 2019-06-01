@@ -12,15 +12,11 @@ import IconButton from '@material-ui/core/IconButton'
 import MenuIcon from '@material-ui/icons/Menu'
 import Paper from '@material-ui/core/Paper'
 
-import GraphEditor from '../../Containers/GraphEditor'
-import JSONEditor from '../../Containers/JSONEditor'
 import Terminal from '../../Containers/Terminal'
-import {
-  list, add, update, remove,
-} from '../../actions/fsm'
-import {
-  sendEvent,
-} from '../../actions/event'
+import GraphEditor from '../../Components/GraphEditor'
+import JSONEditor from '../../Components/JSONEditor'
+import { list, add, update, remove } from '../../actions/fsm'
+import { sendEvent } from '../../actions/event'
 
 import styles from './styles'
 
