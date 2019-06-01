@@ -12,11 +12,10 @@ RUN \
 
 FROM nginx:1.16-alpine
 
-RUN apk add --update bash
+RUN apk add --update bash curl openssh python
 
 WORKDIR /usr/share/nginx/html
 COPY ./ops/root /
 COPY --from=build /src/build ./
-RUN ls
 
-CMD /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'
+CMD bash /heroku-exec.sh && /bin/bash -c "envsubst '\$PORT' < /etc/nginx/conf.d/default.conf > /etc/nginx/conf.d/default.conf" && nginx -g 'daemon off;'

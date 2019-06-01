@@ -17,7 +17,7 @@ FROM alpine:latest
 
 EXPOSE 6001
 
-RUN apk add --update bash
+RUN apk add --update bash curl openssh python
 RUN addgroup -S 997 && adduser -S -g 997 997
 USER 997
 
