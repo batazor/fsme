@@ -21,12 +21,12 @@ class JSONEditor extends Component {
   }
 
   editorDidMount(editor, monaco) {
-    console.log('editorDidMount', editor);
+    // console.log('editorDidMount', editor);
     editor.focus();
   }
 
   onChange(newValue, e) {
-    console.log('onChange', newValue, e);
+    this.props.onChange(JSON.parse(newValue))
   }
 
   render() {

@@ -26,9 +26,17 @@ class MainPage extends Component {
 
     this.state = {
       typeEditor: 'view',
+      newFSM: "",
     }
 
+    // Terminal
     this.onEvent = this.onEvent.bind(this)
+    this.onSave = this.onSave.bind(this)
+
+    // JSONEditor
+    this.onChangeFSM = this.onChangeFSM.bind(this)
+
+    // UI
     this.onChangeTypeEditor = this.onChangeTypeEditor.bind(this)
   }
 
@@ -37,8 +45,17 @@ class MainPage extends Component {
     this.props.sendEvent(args.join(" "))
   }
 
+  onSave(args, print, runCommand) {
+    // const [newFSM, setNewFSM] = useState(0);
+    console.warn('onSave newFSM', this.state.newFSM)
+  }
+
   onChangeTypeEditor(event, typeEditor) {
     this.setState({ typeEditor })
+  }
+
+  onChangeFSM(code) {
+    this.setState({ newFSM: code })
   }
 
   componentDidMount() {
@@ -80,18 +97,26 @@ class MainPage extends Component {
           <Paper className={classes.rootPaper} elevation={1}>
             {
               this.state.typeEditor === "view" && (
-                  <GraphEditor fsm={this.props.fsm['ID_1']} />
+                <GraphEditor
+                  fsm={this.state.newFSM || this.props.fsm['ID_1']}
+                />
               )
             }
             {
               this.state.typeEditor === "json-editor" && (
                 <Paper className={classes.rootPaper} elevation={1}>
-                  <JSONEditor code={this.props.fsm['ID_1']} />
+                  <JSONEditor
+                    code={this.state.newFSM || this.props.fsm['ID_1']}
+                    onChange={this.onChangeFSM}
+                  />
                 </Paper>
               )
             }
 
-            <Terminal onEvent={this.onEvent} />
+            <Terminal
+              onEvent={this.onEvent}
+              onSave={this.onSave}
+            />
           </Paper>
         </main>
       </div>

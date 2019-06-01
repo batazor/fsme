@@ -18,9 +18,11 @@ class Command extends Component {
     this.state = {
       commands: {
         event: props.onEvent,
+        save: props.onSave,
       },
       descriptions: {
         event: 'event [nameEvent] - enter `nameEvent` for send event and change state',
+        save: 'save - save current state FSM',
       },
     }
   }
