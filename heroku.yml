@@ -2,4 +2,4 @@ build:
   docker:
     web: admin/Dockerfile
   config:
-    REACT_APP_API_URL: https://fsme.herokuapp.com/api
+    REACT_APP_API_URL: https://fsme.herokuapp.com/api/
