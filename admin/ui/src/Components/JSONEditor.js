@@ -3,11 +3,17 @@ import MonacoEditor from 'react-monaco-editor'
 
 class JSONEditor extends Component {
 
+  static getDerivedStateFromProps(props, state) {
+    return {
+      code: props.code,
+    }
+  }
+
   constructor(props) {
     super()
 
     this.state = {
-      code: props.code,
+      code: "",
     }
 
     this.onChange = this.onChange.bind(this)
