@@ -30,9 +30,6 @@ RUN CGO_ENABLED=0 \
 # Application image ============================================================
 FROM nginx:1.16-alpine
 
-ARG PORT=80
-ENV PORT=$PORT
-
 RUN apk add --update bash curl openssh python supervisor && \
 	  ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 
