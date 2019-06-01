@@ -1,4 +1,4 @@
-export default {
+export default theme => ({
   root: {
     display: 'grid',
     gridTemplateRows: 'auto 1fr',
@@ -14,6 +14,10 @@ export default {
     display: 'grid',
     gridTemplateColumns: '1fr auto',
     flex: 1,
+    [theme.breakpoints.down('sm')]: {
+      gridTemplateColumns: '1fr',
+      gridTemplateRows: '1fr 1fr',
+    },
   },
   grow: {
     flexGrow: 1,
@@ -22,4 +26,4 @@ export default {
     marginLeft: -12,
     marginRight: 20,
   },
-}
+})
