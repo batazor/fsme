@@ -5,6 +5,10 @@ Finite State Machine Engine for Go
 [![GoDoc](https://godoc.org/github.com/ryanfaerman/fsm?status.png)](https://godoc.org/github.com/batazor/fsme/fsm)
 
 
+### Try it
+
+1. [Demo](https://fsme.herokuapp.com/)
+
 ### Install
 
 `go get github.com/batazor/fsme/fsm`
