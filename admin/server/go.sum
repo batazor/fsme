@@ -2,6 +2,9 @@ github.com/batazor/fsme v0.0.0-20190527131157-573af18a99da h1:i4tsyxF72L9fNSzTg0
 github.com/batazor/fsme v0.0.0-20190527131157-573af18a99da/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20190530153957-7ec9bc33dc96/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20190530173846-7bd791ae78c5/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20190603135738-aae3c1a7f636 h1:XzOy54mcPTk7K0Tw9CdUg1ynpCLo55pbXdjKeE2Jg9w=
+github.com/batazor/fsme v0.0.0-20190603135759-aae3c1a7f636 h1:Y/5vW2Mbtzj/z4qrkNMYa5QaUxk1yawyvhyaeBq6bgE=
+github.com/batazor/fsme v0.0.0-20190603135759-aae3c1a7f636/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/go-chi/chi v4.0.2+incompatible h1:maB6vn6FqCxrpz4FqWdh4+lwpyZIQS7YEAUcHlgXVRs=
 github.com/go-chi/chi v4.0.2+incompatible/go.mod h1:eB3wogJHnLi3x/kFX2A+IbTBlXxmMeXJVKy9tTv1XzQ=
 github.com/go-chi/cors v1.0.0 h1:e6x8k7uWbUwYs+aXDoiUzeQFT6l0cygBYyNhD7/1Tg0=
