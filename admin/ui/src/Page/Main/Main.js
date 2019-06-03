@@ -140,11 +140,13 @@ class MainPage extends Component {
           <Divider />
 
           <List>
-            {['All mail', 'Trash', 'Spam'].map((text, index) => (
-              <ListItem button key={text}>
-                <ListItemText primary={text} />
-              </ListItem>
-            ))}
+            {
+              Object.keys(this.props.fsm).map((key, index) => (
+                <ListItem button key={key}>
+                  <ListItemText primary={this.props.fsm[key].title} />
+                </ListItem>
+              ))
+            }
           </List>
         </Drawer>
       </div>
