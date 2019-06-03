@@ -6,12 +6,16 @@ import { withStyles } from '@material-ui/core/styles'
 import AppBar from '@material-ui/core/AppBar'
 import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
-import Toolbar from '@material-ui/core/Toolbar'
-import Typography from '@material-ui/core/Typography'
-import IconButton from '@material-ui/core/IconButton'
-import MenuIcon from '@material-ui/icons/Menu'
 import Paper from '@material-ui/core/Paper'
+import Drawer from '@material-ui/core/Drawer';
+import List from '@material-ui/core/List';
+import ListItem from '@material-ui/core/ListItem';
+import ListItemText from '@material-ui/core/ListItemText';
+import IconButton from '@material-ui/core/IconButton';
+import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
+import Divider from '@material-ui/core/Divider';
 
+import Toolbar from './UI/ToolBar'
 import Terminal from '../../Containers/Terminal'
 import GraphEditor from '../../Components/GraphEditor'
 import JSONEditor from '../../Components/JSONEditor'
@@ -27,6 +31,7 @@ class MainPage extends Component {
     this.state = {
       typeEditor: 'view',
       newFSM: "",
+      openMenu: false,
     }
 
     // Terminal
@@ -38,6 +43,7 @@ class MainPage extends Component {
 
     // UI
     this.onChangeTypeEditor = this.onChangeTypeEditor.bind(this)
+    this.onChangeOpenDrawer = this.onChangeOpenDrawer.bind(this)
   }
 
   onEvent(args, print, runCommand) {
@@ -58,6 +64,10 @@ class MainPage extends Component {
     this.setState({ newFSM: code })
   }
 
+  onChangeOpenDrawer() {
+    this.setState({ openMenu: !this.state.openMenu })
+  }
+
   componentDidMount() {
     this.props.listActions()
   }
@@ -67,17 +77,9 @@ class MainPage extends Component {
 
     return (
       <div className={classes.root}>
-        <AppBar position="static">
-          <Toolbar>
-            <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-              <MenuIcon />
-            </IconButton>
-
-            <Typography variant="h6" color="inherit" className={classes.grow}>
-              FSME-UI
-            </Typography>
-          </Toolbar>
-        </AppBar>
+        <Toolbar
+          onChangeOpenDrawer={this.onChangeOpenDrawer}
+        />
 
         <main className={classes.main}>
           <AppBar position="static" color="default">
@@ -119,6 +121,32 @@ class MainPage extends Component {
             />
           </Paper>
         </main>
+
+        <Drawer
+          className={classes.drawer}
+          variant="persistent"
+          anchor="left"
+          open={this.state.openMenu}
+          classes={{
+            paper: classes.drawerPaper,
+          }}
+        >
+          <div className={classes.drawerHeader}>
+            <IconButton onClick={this.onChangeOpenDrawer}>
+              <ChevronLeftIcon />
+            </IconButton>
+          </div>
+
+          <Divider />
+
+          <List>
+            {['All mail', 'Trash', 'Spam'].map((text, index) => (
+              <ListItem button key={text}>
+                <ListItemText primary={text} />
+              </ListItem>
+            ))}
+          </List>
+        </Drawer>
       </div>
     )
   }

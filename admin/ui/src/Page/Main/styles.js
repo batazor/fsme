@@ -19,11 +19,18 @@ export default theme => ({
       gridTemplateRows: 'minmax(20em, auto)',
     },
   },
-  grow: {
-    flexGrow: 1,
+  drawer: {
+    width: "20em",
+    flexShrink: 0,
   },
-  menuButton: {
-    marginLeft: -12,
-    marginRight: 20,
+  drawerPaper: {
+    width: "20em",
+  },
+  drawerHeader: {
+    display: 'flex',
+    alignItems: 'center',
+    padding: '0 8px',
+    ...theme.mixins.toolbar,
+    justifyContent: 'flex-end',
   },
 })
