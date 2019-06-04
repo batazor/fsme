@@ -2,7 +2,17 @@ import * as FSM from '../constants/fsm'
 
 const initialState = {
   fsm: {
-    new: {},
+    new: {
+      FSM: {
+        State: null,
+        Transitions: {},
+        Events: {},
+        Callbacks: {}
+      },
+      _id: "new",
+      description: "Description",
+      title: "Title",
+    },
   },
 }
 
@@ -13,7 +23,7 @@ export default function update(state: Object = initialState, action: Object): Ob
         ...state,
         fsm: {
           ...state.fsm,
-          [action.payload[0]._id]: action.payload[0],
+          [action.payload._id]: action.payload[0],
         },
       }
     }
@@ -24,7 +34,7 @@ export default function update(state: Object = initialState, action: Object): Ob
         ...state,
         fsm: {
           ...state.fsm,
-          [action.payload[0]._id]: action.payload,
+          [action.payload._id]: action.payload,
         },
       }
     }

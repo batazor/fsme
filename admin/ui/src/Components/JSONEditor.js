@@ -30,7 +30,7 @@ class JSONEditor extends Component {
       const response = JSON.parse(newValue)
       this.props.onChange(response)
     } catch(e) {
-      this.props.onChange(newValue)
+      // ignore update if it's invalid JSON
     }
   }
 

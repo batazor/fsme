@@ -68,3 +68,10 @@ export function remove(id = 1) {
   // const resp = FsmApi.destroyFSM(id)
   // console.warn('destroyFSM', resp)
 }
+
+export function updateLocale(fsm) {
+  return dispatch => dispatch({
+    type: FSM.UPDATE,
+    payload: fsm,
+  })
+}

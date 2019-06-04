@@ -1,5 +1,7 @@
 import React, { Component } from 'react'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { updateLocale } from '../../actions/fsm'
 
 import JSONEditor from '../../Components/JSONEditor'
 
@@ -13,7 +15,7 @@ class JSONEditorPage extends Component {
   }
 
   onChangeFSM(code) {
-    // this.setState({ newFSM: code })
+    this.props.updateLocaleActions(code)
   }
 
   render() {
@@ -36,7 +38,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    updateLocaleActions: bindActionCreators(updateLocale, dispatch),
+  }
 }
 
 export default connect(
