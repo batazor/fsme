@@ -30,18 +30,21 @@ func List(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// Get list FSM
-	machine, err := db.List()
+	machines, err := db.List()
 	if err != nil {
 		w.Write([]byte(""))
 	}
 
-	response := machine.Export(generateFSM)
+	response := []interface{}{}
+	for _, machine := range machines {
+		response = append(response, machine.Export(generateFSM))
+	}
 
 	b, err := json.Marshal(response)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
-		return;
+		return
 	}
 
 	w.Write([]byte(string(b)))
@@ -54,7 +57,7 @@ func GetById(w http.ResponseWriter, r *http.Request) {
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("Create"))
+	w.Write([]byte("{}"))
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
@@ -67,7 +70,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
-		return;
+		return
 	}
 
 	// Update FSM
@@ -86,7 +89,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
-		return;
+		return
 	}
 
 	w.Write([]byte(string(b)))
@@ -120,7 +123,7 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
-		return;
+		return
 	}
 
 	w.Write([]byte(string(b)))
@@ -129,10 +132,10 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 func generateFSM(f fsm.Export) interface{} {
 	response := []Fsm{}
 	response = append(response, Fsm{
-		ID: "ID_1",
+		ID:          "ID_1",
 		Description: "Description",
-		Title: "Title",
-		FSM: f,
+		Title:       "Title",
+		FSM:         f,
 	})
 
 	return response

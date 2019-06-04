@@ -6,35 +6,37 @@ import (
 )
 
 var (
-	err error
-	state *fsm.FSM
+	err   error
+	state []*fsm.FSM
 )
 
-func List() (*fsm.FSM, error) {
+func List() ([]*fsm.FSM, error) {
 	// Create new FSM
-	state, err = fsm.New()
+	newFSM, err := fsm.New()
 	if err != nil {
 		return nil, err
 	}
 
 	// Add rule
-	state.AddStateTransitionRules("a", "b", "c")
-	state.AddStateTransitionRules("b", "d", "e")
-	state.AddStateTransitionRules("c", "k")
-	state.AddStateTransitionRules("d", "a")
-	state.AddStateTransitionRules("e", "k")
-	state.AddStateTransitionRules("k")
+	newFSM.AddStateTransitionRules("a", "b", "c")
+	newFSM.AddStateTransitionRules("b", "d", "e")
+	newFSM.AddStateTransitionRules("c", "k")
+	newFSM.AddStateTransitionRules("d", "a")
+	newFSM.AddStateTransitionRules("e", "k")
+	newFSM.AddStateTransitionRules("k")
 
 	// Add Events
-	state.AddEvent("start", "a")
-	state.AddEvent("to b", "b")
-	state.AddEvent("to d", "d")
+	newFSM.AddEvent("start", "a")
+	newFSM.AddEvent("to b", "b")
+	newFSM.AddEvent("to d", "d")
 
 	// Init State
-	err = state.SetStateTransition("a")
+	err = newFSM.SetStateTransition("a")
 	if err != nil {
 		return nil, err
 	}
+
+	state := append(state, newFSM)
 
 	return state, nil
 }
@@ -43,5 +45,9 @@ func Get() (*fsm.FSM, error) {
 	if state == nil {
 		return nil, errors.New("Not found state")
 	}
-	return state, nil
+	return nil, nil
+}
+
+func Add(*fsm.FSM, error) {
+
 }
