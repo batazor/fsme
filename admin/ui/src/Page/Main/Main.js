@@ -3,17 +3,15 @@ import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
-import AppBar from '@material-ui/core/AppBar'
-import Tabs from '@material-ui/core/Tabs';
-import Tab from '@material-ui/core/Tab';
 import Paper from '@material-ui/core/Paper'
-import { Link, Route } from "react-router-dom";
+import { Route } from "react-router-dom";
 
 import Home from '../Home'
 import GraphEditorPage from '../GraphEditor'
 import JSONEditorPage from '../JSONEditor'
 import Toolbar from './UI/ToolBar'
 import Menu from './UI/Menu'
+import SubToolBar from './UI/SubToolBar'
 import Terminal from '../../Containers/Terminal'
 import { list, add, update, remove } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
@@ -63,7 +61,7 @@ class MainPage extends Component {
           onChangeOpenDrawer={this.onChangeOpenDrawer}
         />
 
-        <Route path="/fsm/:id" component={SubAppBar} />
+        <Route path="/fsm/:id" component={SubToolBar} />
 
         <main className={classes.main}>
           <Paper className={classes.rootPaper} elevation={1}>
@@ -87,26 +85,6 @@ class MainPage extends Component {
       </div>
     )
   }
-}
-
-function SubAppBar() {
-  return (
-    <AppBar position="static" color="default">
-      <Tabs
-        indicatorColor="primary"
-        textColor="primary"
-        variant="scrollable"
-        scrollButtons="auto"
-      >
-        <Link to="#">
-          <Tab value="view" label="view" />
-        </Link>
-        <Link to="#">
-          <Tab value="json-editor" label="json-editor" />
-        </Link>
-      </Tabs>
-    </AppBar>
-  )
 }
 
 MainPage.propTypes = {
