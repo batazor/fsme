@@ -16,4 +16,9 @@ export default theme => ({
       gridTemplateRows: 'minmax(20em, auto)',
     },
   },
+  speedDial: {
+    position: 'absolute',
+    top: theme.spacing(4),
+    right: theme.spacing(3),
+  },
 })

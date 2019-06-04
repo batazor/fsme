@@ -12,6 +12,7 @@ import JSONEditorPage from '../JSONEditor'
 import Toolbar from './UI/ToolBar'
 import Menu from './UI/Menu'
 import SubToolBar from './UI/SubToolBar'
+import SpeedDial from './UI/SpeedDial';
 import Terminal from '../../Containers/Terminal'
 import { list, add, update, remove } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
@@ -28,7 +29,6 @@ class MainPage extends Component {
 
     // Terminal
     this.onEvent = this.onEvent.bind(this)
-    this.onSave = this.onSave.bind(this)
 
     // UI
     this.onChangeOpenDrawer = this.onChangeOpenDrawer.bind(this)
@@ -37,11 +37,6 @@ class MainPage extends Component {
   onEvent(args, print, runCommand) {
     args.shift()
     this.props.sendEvent(args.join(" "))
-  }
-
-  onSave(args, print, runCommand) {
-    const { _id } = this.state.newFSM
-    this.props.updateActions(_id, this.state.newFSM)
   }
 
   onChangeOpenDrawer() {
@@ -71,7 +66,6 @@ class MainPage extends Component {
 
             <Terminal
               onEvent={this.onEvent}
-              onSave={this.onSave}
             />
           </Paper>
         </main>
@@ -82,6 +76,8 @@ class MainPage extends Component {
 
           onChangeOpenDrawer={this.onChangeOpenDrawer}
         />
+
+        <Route path="/fsm/:id" component={SpeedDial} />
       </div>
     )
   }
