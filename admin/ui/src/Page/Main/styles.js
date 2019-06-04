@@ -9,7 +9,7 @@ export default theme => ({
   },
   rootPaper: {
     display: 'grid',
-    gridTemplateColumns: '1fr auto',
+    gridTemplateColumns: '1fr 1fr',
     flex: 1,
     [theme.breakpoints.down('sm')]: {
       gridTemplateColumns: '1fr',
