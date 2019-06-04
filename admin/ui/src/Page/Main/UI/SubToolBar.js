@@ -4,7 +4,7 @@ import Tabs from '@material-ui/core/Tabs';
 import Tab from '@material-ui/core/Tab';
 import { Link } from "react-router-dom";
 
-export default () => {
+export default ({ match }) => {
   return (
     <AppBar position="static" color="default">
       <Tabs
@@ -13,10 +13,10 @@ export default () => {
         variant="scrollable"
         scrollButtons="auto"
       >
-        <Link to="#">
+        <Link to={`/fsm/${match.params.id}/view`}>
           <Tab label="view" />
         </Link>
-        <Link to="#">
+        <Link to={`/fsm/${match.params.id}/json-editor`}>
           <Tab label="json-editor" />
         </Link>
       </Tabs>

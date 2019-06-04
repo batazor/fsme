@@ -29,10 +29,6 @@ class JSONEditorPage extends Component {
   }
 }
 
-JSONEditorPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
-
 function mapStateToProps(state) {
   return {
     fsm: state.fsm.fsm,
