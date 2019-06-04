@@ -1,7 +1,9 @@
 import * as FSM from '../constants/fsm'
 
 const initialState = {
-  fsm: {},
+  fsm: {
+    new: {},
+  },
 }
 
 export default function update(state: Object = initialState, action: Object): Object {
