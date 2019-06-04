@@ -10,7 +10,7 @@ RUN \
   npm i && \
   npm run build
 
-FROM nginx:1.16-alpine
+FROM nginx:1.17-alpine
 
 RUN apk add --update bash curl openssh python
 
