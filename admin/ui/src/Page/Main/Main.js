@@ -12,7 +12,7 @@ import JSONEditorPage from '../JSONEditor'
 import Toolbar from './UI/ToolBar'
 import Menu from './UI/Menu'
 import SubToolBar from './UI/SubToolBar'
-import SpeedDial from './UI/SpeedDial';
+import SpeedDial from '../../Containers/SpeedDial';
 import Terminal from '../../Containers/Terminal'
 import { list, add, update, remove } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
