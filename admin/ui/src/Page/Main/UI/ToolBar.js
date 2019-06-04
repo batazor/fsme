@@ -1,5 +1,6 @@
 import React from 'react'
 import { makeStyles } from '@material-ui/styles';
+import { Link } from "react-router-dom";
 import AppBar from '@material-ui/core/AppBar'
 import Toolbar from '@material-ui/core/Toolbar'
 import Typography from '@material-ui/core/Typography'
@@ -33,7 +34,7 @@ export default props => {
         </IconButton>
 
         <Typography variant="h6" color="inherit" className={classes.grow}>
-          FSME-UI
+          <Link to="/">FSME-UI</Link>
         </Typography>
       </Toolbar>
     </AppBar>

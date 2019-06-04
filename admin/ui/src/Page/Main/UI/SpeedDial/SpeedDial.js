@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
+import { withRouter } from 'react-router-dom'
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -48,6 +49,11 @@ class SpeedDialButton extends Component {
     });
   };
 
+  onRedirect = url => {
+    console.warn('this.props.history', this.props.history)
+    this.props.history.push(url)
+  }
+
   render() {
     const { classes, match } = this.props;
 
@@ -67,22 +73,25 @@ class SpeedDialButton extends Component {
         direction="left"
       >
         <SpeedDialAction
+          key="New"
           icon={<AddIcon />}
           tooltipTitle="New"
           tooltipPlacement="top-start"
           tooltipOpen
-          onClick={this.handleClick}
+          onClick={() => this.onRedirect('/fsm/new/json-editor')}
         />
         {
           match.params.type && [
             <SpeedDialAction
+              key="Save"
               icon={<SaveIcon />}
               tooltipTitle="Save"
               tooltipPlacement="top-start"
               tooltipOpen
-              onClick={this.handleClick}
+              onClick={() => this.handleClick}
             />,
             <SpeedDialAction
+              key="Copy"
               icon={<FileCopyIcon />}
               tooltipTitle="Copy"
               tooltipPlacement="top-start"
@@ -90,6 +99,7 @@ class SpeedDialButton extends Component {
               onClick={this.handleClick}
             />,
             <SpeedDialAction
+              key="Delete"
               icon={<DeleteIcon />}
               tooltipTitle="Delete"
               tooltipPlacement="top-start"
@@ -99,6 +109,7 @@ class SpeedDialButton extends Component {
           ]
         }
         <SpeedDialAction
+          key="Share"
           icon={<ShareIcon />}
           tooltipTitle="Share"
           tooltipPlacement="top-start"
@@ -110,4 +121,4 @@ class SpeedDialButton extends Component {
   }
 }
 
-export default withStyles(styles)(SpeedDialButton);
+export default withStyles(styles)(withRouter(SpeedDialButton));
