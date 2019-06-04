@@ -12,8 +12,10 @@ class GraphEditorPage extends Component {
   }
 
   render() {
+    const fsm = this.props.fsm[this.props.match.params.id]
+
     return (
-      <GraphEditor fsm={this.props.fsm} />
+      <GraphEditor fsm={fsm} />
     )
   }
 }
@@ -23,11 +25,8 @@ GraphEditorPage.propTypes = {
 };
 
 function mapStateToProps(state) {
-  // Get id current FSM
-  const idFSM = state.router.location.pathname.split('/')[2]
-
   return {
-    fsm: state.fsm.fsm[idFSM],
+    fsm: state.fsm.list,
   }
 }
 

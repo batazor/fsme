@@ -19,9 +19,11 @@ class JSONEditorPage extends Component {
   }
 
   render() {
+    const fsm = this.props.fsm[this.props.match.params.id]
+
     return (
       <JSONEditor
-        code={this.props.fsm}
+        code={fsm}
         onChange={this.onChangeFSM}
       />
     )
@@ -29,11 +31,8 @@ class JSONEditorPage extends Component {
 }
 
 function mapStateToProps(state) {
-  // Get id current FSM
-  const idFSM = state.router.location.pathname.split('/')[2]
-
   return {
-    fsm: state.fsm.fsm[idFSM],
+    fsm: state.fsm.list,
   }
 }
 

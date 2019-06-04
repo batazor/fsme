@@ -1,7 +1,7 @@
 import * as FSM from '../constants/fsm'
 
 const initialState = {
-  fsm: {
+  list: {
     new: {
       FSM: {
         State: null,
@@ -19,7 +19,8 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
-      return push(state, action.payload)
+      action.payload.forEach(fsm => state = push(state, fsm))
+      return state
     }
     case FSM.GET: {
       return push(state, action.payload)
@@ -43,7 +44,7 @@ export default function update(state: Object = initialState, action: Object): Ob
 function push(state, payload) {
   return {
     ...state,
-    fsm: {
+    list: {
       ...state.fsm,
       [payload._id]: payload,
     },
