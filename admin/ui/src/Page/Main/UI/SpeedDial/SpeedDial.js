@@ -5,26 +5,20 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
 import SaveIcon from '@material-ui/icons/Save';
-import PrintIcon from '@material-ui/icons/Print';
 import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
+import AddIcon from '@material-ui/icons/Add';
 
 import styles from './styles'
 
-const actions = [
-  { icon: <FileCopyIcon />, name: 'Copy' },
-  { icon: <SaveIcon />, name: 'Save' },
-  { icon: <PrintIcon />, name: 'Print' },
-  { icon: <ShareIcon />, name: 'Share' },
-  { icon: <DeleteIcon />, name: 'Delete' },
-];
-
 class SpeedDialButton extends Component {
-
   constructor() {
     super()
 
-    this.state = {}
+    this.state = {
+      open: false,
+      hidden: false,
+    }
   }
 
   handleVisibility = () => {
@@ -55,7 +49,7 @@ class SpeedDialButton extends Component {
   };
 
   render() {
-    const { classes } = this.props;
+    const { classes, match } = this.props;
 
     return (
       <SpeedDial
@@ -72,16 +66,45 @@ class SpeedDialButton extends Component {
         open={this.state.open}
         direction="left"
       >
-        {actions.map(action => (
-          <SpeedDialAction
-            key={action.name}
-            icon={action.icon}
-            tooltipTitle={action.name}
-            tooltipPlacement="top-start"
-            tooltipOpen
-            onClick={this.handleClick}
-          />
-        ))}
+        <SpeedDialAction
+          icon={<AddIcon />}
+          tooltipTitle="New"
+          tooltipPlacement="top-start"
+          tooltipOpen
+          onClick={this.handleClick}
+        />
+        {
+          match.params.type && [
+            <SpeedDialAction
+              icon={<SaveIcon />}
+              tooltipTitle="Save"
+              tooltipPlacement="top-start"
+              tooltipOpen
+              onClick={this.handleClick}
+            />,
+            <SpeedDialAction
+              icon={<FileCopyIcon />}
+              tooltipTitle="Copy"
+              tooltipPlacement="top-start"
+              tooltipOpen
+              onClick={this.handleClick}
+            />,
+            <SpeedDialAction
+              icon={<DeleteIcon />}
+              tooltipTitle="Delete"
+              tooltipPlacement="top-start"
+              tooltipOpen
+              onClick={this.handleClick}
+            />,
+          ]
+        }
+        <SpeedDialAction
+          icon={<ShareIcon />}
+          tooltipTitle="Share"
+          tooltipPlacement="top-start"
+          tooltipOpen
+          onClick={this.handleClick}
+        />
       </SpeedDial>
     )
   }

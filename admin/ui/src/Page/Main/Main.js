@@ -77,7 +77,8 @@ class MainPage extends Component {
           onChangeOpenDrawer={this.onChangeOpenDrawer}
         />
 
-        <Route path="/fsm/:id" component={SpeedDial} />
+        <Route path="/" exect component={SpeedDial} />
+        <Route path="/:service/:id/:type" component={SpeedDial} />
       </div>
     )
   }
