@@ -19,24 +19,16 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
-      return {
-        ...state,
-        fsm: {
-          ...state.fsm,
-          [action.payload._id]: action.payload[0],
-        },
-      }
+      return push(state, action.payload)
     }
-    case FSM.GET:
-    case FSM.UPDATE:
+    case FSM.GET: {
+      return push(state, action.payload)
+    }
+    case FSM.UPDATE: {
+      return push(state, action.payload)
+    }
     case FSM.ADD: {
-      return {
-        ...state,
-        fsm: {
-          ...state.fsm,
-          [action.payload._id]: action.payload,
-        },
-      }
+      return push(state, action.payload)
     }
     case FSM.REMOVE: {
       const STATE = state
@@ -45,5 +37,15 @@ export default function update(state: Object = initialState, action: Object): Ob
     }
     default:
       return state
+  }
+}
+
+function push(state, payload) {
+  return {
+    ...state,
+    fsm: {
+      ...state.fsm,
+      [payload._id]: payload,
+    },
   }
 }

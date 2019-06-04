@@ -14,7 +14,7 @@ import Menu from './UI/Menu'
 import SubToolBar from './UI/SubToolBar'
 import SpeedDial from '../../Containers/SpeedDial';
 import Terminal from '../../Containers/Terminal'
-import { list, add, update, remove } from '../../actions/fsm'
+import { list } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
 
 import styles from './styles'
@@ -97,9 +97,6 @@ function mapStateToProps(state) {
 function mapDispatchToProps(dispatch) {
   return {
     listActions: bindActionCreators(list, dispatch),
-    addActions: bindActionCreators(add, dispatch),
-    updateActions: bindActionCreators(update, dispatch),
-    removeActions: bindActionCreators(remove, dispatch),
     sendEvent: bindActionCreators(sendEvent, dispatch),
   }
 }

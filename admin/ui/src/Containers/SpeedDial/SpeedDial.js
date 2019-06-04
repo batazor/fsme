@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
+import { bindActionCreators } from 'redux'
+import { connect } from 'react-redux'
 import SpeedDial from '@material-ui/lab/SpeedDial';
 import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
@@ -9,6 +11,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
+import { add, update } from '../../actions/fsm'
 
 import styles from './styles'
 
@@ -49,9 +52,14 @@ class SpeedDialButton extends Component {
     });
   };
 
-  onRedirect = url => {
-    console.warn('this.props.history', this.props.history)
-    this.props.history.push(url)
+  onRedirect = url => this.props.history.push(url)
+
+  onSave = () => {
+    if (this.props.match.params.id === "new") {
+      this.props.addActions(this.props.match.params.id)
+    } else {
+      this.props.updateAction(this.props.match.params.id)
+    }
   }
 
   render() {
@@ -88,7 +96,7 @@ class SpeedDialButton extends Component {
               tooltipTitle="Save"
               tooltipPlacement="top-start"
               tooltipOpen
-              onClick={() => this.handleClick}
+              onClick={this.onSave}
             />,
             <SpeedDialAction
               key="Copy"
@@ -121,4 +129,20 @@ class SpeedDialButton extends Component {
   }
 }
 
-export default withStyles(styles)(withRouter(SpeedDialButton));
+function mapStateToProps(state) {
+  return {
+    fsm: state.fsm.fsm,
+  }
+}
+
+function mapDispatchToProps(dispatch) {
+  return {
+    addActions: bindActionCreators(add, dispatch),
+    updateActions: bindActionCreators(update, dispatch),
+  }
+}
+
+export default connect(
+  mapStateToProps,
+  mapDispatchToProps,
+)(withStyles(styles)(withRouter(SpeedDialButton)))

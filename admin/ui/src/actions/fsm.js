@@ -39,12 +39,27 @@ export function get(id = 1) {
     .catch(error => console.error('error', error))
 }
 
-export function add(opts = {}) {
-  // const resp = FsmApi.addFSM(opts)
-  // console.warn('addFSM', resp)
+export function add(id) {
+  return (dispatch, getState) => fetch(process.env.REACT_APP_API_URL, {
+    method: 'POST',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+    body: JSON.stringify(getState().fsm.fsm[id]),
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FSM.ADD,
+        payload: response,
+      })
+    })
+    .catch(error => console.error('error', error))
 }
 
-export function update(id = "ID_1", fsm) {
+export function update(id) {
   return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
     method: 'PATCH',
     headers: {
@@ -52,7 +67,7 @@ export function update(id = "ID_1", fsm) {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(fsm),
+    body: JSON.stringify(getState().fsm.fsm[id]),
   })
     .then(response => response.json())
     .then(response => {
