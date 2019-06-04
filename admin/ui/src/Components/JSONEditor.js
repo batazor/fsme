@@ -26,7 +26,12 @@ class JSONEditor extends Component {
   }
 
   onChange(newValue, e) {
-    this.props.onChange(JSON.parse(newValue))
+    try {
+      const response = JSON.parse(newValue)
+      this.props.onChange(response)
+    } catch(e) {
+      this.props.onChange(newValue)
+    }
   }
 
   render() {

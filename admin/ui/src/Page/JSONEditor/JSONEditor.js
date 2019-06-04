@@ -1,5 +1,4 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
 
 import JSONEditor from '../../Components/JSONEditor'
@@ -9,7 +8,7 @@ class JSONEditorPage extends Component {
     super(props)
 
     this.state = {
-      newFSM: "",
+      newFSM: {},
     }
 
     this.onChangeFSM = this.onChangeFSM.bind(this)
