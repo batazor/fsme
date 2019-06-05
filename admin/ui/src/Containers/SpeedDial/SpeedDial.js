@@ -58,7 +58,7 @@ class SpeedDialButton extends Component {
     if (this.props.match.params.id === "new") {
       this.props.addActions(this.props.match.params.id)
     } else {
-      this.props.updateAction(this.props.match.params.id)
+      this.props.updateActions(this.props.match.params.id)
     }
   }
 
