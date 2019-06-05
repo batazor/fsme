@@ -65,6 +65,55 @@ class SpeedDialButton extends Component {
   render() {
     const { classes, match } = this.props;
 
+    const listButton = []
+    if (match.params.id !== "new") {
+      listButton.push(
+        <SpeedDialAction
+          key="New"
+          icon={<AddIcon />}
+          tooltipTitle="New"
+          tooltipPlacement="top-start"
+          tooltipOpen
+          onClick={() => this.onRedirect('/fsm/new/json-editor')}
+        />
+      )
+    }
+    if (match.params.type) {
+      listButton.push(
+        <SpeedDialAction
+          key="Save"
+          icon={<SaveIcon />}
+          tooltipTitle="Save"
+          tooltipPlacement="top-start"
+          tooltipOpen
+          onClick={this.onSave}
+        />
+      )
+
+      if (match.params.id !== "new") {
+        listButton.push(
+          <SpeedDialAction
+            key="Copy"
+            icon={<FileCopyIcon />}
+            tooltipTitle="Copy"
+            tooltipPlacement="top-start"
+            tooltipOpen
+            onClick={this.handleClick}
+          />
+        )
+        listButton.push(
+          <SpeedDialAction
+            key="Delete"
+            icon={<DeleteIcon />}
+            tooltipTitle="Delete"
+            tooltipPlacement="top-start"
+            tooltipOpen
+            onClick={this.handleClick}
+          />
+        )
+      }
+    }
+
     return (
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
@@ -80,42 +129,7 @@ class SpeedDialButton extends Component {
         open={this.state.open}
         direction="left"
       >
-        <SpeedDialAction
-          key="New"
-          icon={<AddIcon />}
-          tooltipTitle="New"
-          tooltipPlacement="top-start"
-          tooltipOpen
-          onClick={() => this.onRedirect('/fsm/new/json-editor')}
-        />
-        {
-          match.params.type && [
-            <SpeedDialAction
-              key="Save"
-              icon={<SaveIcon />}
-              tooltipTitle="Save"
-              tooltipPlacement="top-start"
-              tooltipOpen
-              onClick={this.onSave}
-            />,
-            <SpeedDialAction
-              key="Copy"
-              icon={<FileCopyIcon />}
-              tooltipTitle="Copy"
-              tooltipPlacement="top-start"
-              tooltipOpen
-              onClick={this.handleClick}
-            />,
-            <SpeedDialAction
-              key="Delete"
-              icon={<DeleteIcon />}
-              tooltipTitle="Delete"
-              tooltipPlacement="top-start"
-              tooltipOpen
-              onClick={this.handleClick}
-            />,
-          ]
-        }
+        { listButton.map(item => item) }
         <SpeedDialAction
           key="Share"
           icon={<ShareIcon />}
