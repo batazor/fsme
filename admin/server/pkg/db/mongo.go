@@ -48,6 +48,8 @@ func Get() (*fsm.FSM, error) {
 	return nil, nil
 }
 
-func Add(*fsm.FSM, error) {
+func Add(fsm *fsm.FSM) error {
+	state = append(state, fsm)
 
+	return nil
 }

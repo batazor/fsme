@@ -37,7 +37,7 @@ func List(w http.ResponseWriter, r *http.Request) {
 
 	response := []interface{}{}
 	for _, machine := range machines {
-		response = append(response, machine.Export(generateFSM))
+		response = append(response, machine.Export(generateFSM, 1))
 	}
 
 	b, err := json.Marshal(response)
@@ -57,7 +57,54 @@ func GetById(w http.ResponseWriter, r *http.Request) {
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("{}"))
+
+	// Parse body
+	decoder := json.NewDecoder(r.Body)
+	var newFSM Fsm
+	err := decoder.Decode(&newFSM)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return
+	}
+
+	// Create FSM
+	fsm, err := fsm.New()
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error create a new FSM"))
+		return
+	}
+
+	// Add transition
+	// ...code
+	// as example
+	fsm.AddStateTransitionRules("a", "b", "c")
+	fsm.AddStateTransitionRules("b", "d", "e")
+	// Add event
+	// ...code
+	// Add CB
+	// ...code
+	// Add state
+	// ...code
+
+	err = db.Add(fsm)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error create new FSM"))
+		return
+	}
+
+	response := fsm.Export(generateFSM, 1)
+
+	b, err := json.Marshal(response)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return
+	}
+
+	w.Write([]byte(string(b)))
 }
 
 func Update(w http.ResponseWriter, r *http.Request) {
@@ -83,7 +130,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	// Update FSM
 	machine.SetStateTransition(newFSM.FSM.State)
 
-	response := machine.Export(generateFSM)
+	response := machine.Export(generateFSM, 1)
 
 	b, err := json.Marshal(response)
 	if err != nil {
@@ -117,7 +164,7 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	response := machine.Export(generateFSM)
+	response := machine.Export(generateFSM, 1)
 
 	b, err := json.Marshal(response)
 	if err != nil {
@@ -129,14 +176,11 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
-func generateFSM(f fsm.Export) interface{} {
-	response := []Fsm{}
-	response = append(response, Fsm{
-		ID:          "ID_1",
+func generateFSM(f fsm.Export, args interface{}) interface{} {
+	return Fsm{
+		ID:          fmt.Sprintf("ID_%d", args.(int)),
 		Description: "Description",
 		Title:       "Title",
 		FSM:         f,
-	})
-
-	return response
+	}
 }

@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/batazor/fsme/admin/server/pkg/handler"
 	l "github.com/batazor/fsme/admin/server/pkg/logger"
+	"github.com/batazor/fsme/admin/server/pkg/sentry"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
 	"github.com/go-chi/cors"
@@ -15,6 +16,9 @@ func main() {
 	// Logger ==================================================================
 	logger, _ := zap.NewProduction()
 	defer logger.Sync()
+
+	// Load Sentry =============================================================
+	sentry.Run()
 
 	// Get configuration =======================================================
 	PORT := "6001"
