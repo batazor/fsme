@@ -121,3 +121,13 @@ func (c Config) Add(fsm FSM) (primitive.ObjectID, error) {
 	insertResult, err := collection.InsertOne(context.TODO(), fsm)
 	return insertResult.InsertedID.(primitive.ObjectID), err
 }
+
+func (c Config) Update(fsm FSM) (FSM, error) {
+	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+
+	filter := bson.D{{"_id", fsm.Id}}
+
+	// Passing nil as the filter matches all documents in the collection
+	_, err := collection.UpdateOne(context.TODO(), filter, bson.M{"$set": fsm})
+	return fsm, err
+}

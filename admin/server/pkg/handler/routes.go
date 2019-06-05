@@ -18,7 +18,7 @@ func Routes() chi.Router {
 	r.Get("/", List)
 	//r.Get("/{id}", GetById)
 	r.Post("/", Create)
-	//r.Patch("/{id}", Update)
+	r.Patch("/{id}", Update)
 	//r.Delete("/{id}", Delete)
 
 	//r.Post("/{id}/event/{eventName}", SendEvent)
@@ -103,13 +103,13 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
-/*
+
 func Update(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM Fsm
+	var newFSM mongo.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -117,19 +117,14 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	// Update FSM
-	machine, err := db.Get()
+	newFSM, err = mongo.Cfg.Update(newFSM)
 	if err != nil {
-		w.Write([]byte(err.Error()))
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error update FSM"))
 		return
 	}
 
-	// Update FSM
-	machine.SetStateTransition(newFSM.FSM.State)
-
-	response := machine.Export(generateFSM, 1)
-
-	b, err := json.Marshal(response)
+	b, err := json.Marshal(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
@@ -139,6 +134,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
+/*
 func Delete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte("Delete"))
