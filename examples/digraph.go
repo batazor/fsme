@@ -5,7 +5,7 @@ import (
 	"github.com/batazor/fsme/fsm"
 )
 
-func genereateDigraph(f fsm.Export) interface{} {
+func genereateDigraph(f fsm.Export, arg interface{}) interface{} {
 	str := `digraph StateMachine {
 	rankdir=LR
     node[width=1 fixedsize=true shape=circle style=filled fillcolor="darkorchid1" ]
@@ -36,6 +36,6 @@ func main() {
 	machine.AddStateTransitionRules("e", "k")
 	machine.AddStateTransitionRules("k", "k")
 
-	digraph := machine.Export(genereateDigraph)
+	digraph := machine.Export(genereateDigraph, nil)
 	fmt.Println(digraph)
 }
