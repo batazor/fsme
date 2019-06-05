@@ -19,7 +19,7 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
-      action.payload.forEach(fsm => state.list[fsm._id] = fsm)
+      action.payload.forEach(fsm => state = push(state, fsm))
       return state
     }
     case FSM.GET: {
