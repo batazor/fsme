@@ -3,7 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/batazor/fsme/admin/server/pkg/db"
+	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"github.com/batazor/fsme/fsm"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -16,12 +16,12 @@ func Routes() chi.Router {
 	r.Use(middleware.AllowContentType("application/json"))
 
 	r.Get("/", List)
-	r.Get("/{id}", GetById)
+	//r.Get("/{id}", GetById)
 	r.Post("/", Create)
-	r.Patch("/{id}", Update)
-	r.Delete("/{id}", Delete)
+	//r.Patch("/{id}", Update)
+	//r.Delete("/{id}", Delete)
 
-	r.Post("/{id}/event/{eventName}", SendEvent)
+	//r.Post("/{id}/event/{eventName}", SendEvent)
 
 	return r
 }
@@ -30,17 +30,12 @@ func List(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// Get list FSM
-	machines, err := db.List()
+	machines, err := mongo.Cfg.List()
 	if err != nil {
 		w.Write([]byte(""))
 	}
 
-	response := []interface{}{}
-	for _, machine := range machines {
-		response = append(response, machine.Export(generateFSM, 1))
-	}
-
-	b, err := json.Marshal(response)
+	b, err := json.Marshal(machines)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
@@ -50,17 +45,20 @@ func List(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
+/*
 func GetById(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 	w.Write([]byte("GetById"))
 }
+
+*/
 
 func Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM Fsm
+	var newFSM mongo.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -69,7 +67,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	}
 
 	// Create FSM
-	fsm, err := fsm.New()
+	newFSM.FSM, err = fsm.New()
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error create a new FSM"))
@@ -79,8 +77,8 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	// Add transition
 	// ...code
 	// as example
-	fsm.AddStateTransitionRules("a", "b", "c")
-	fsm.AddStateTransitionRules("b", "d", "e")
+	newFSM.FSM.AddStateTransitionRules("a", "b", "c")
+	newFSM.FSM.AddStateTransitionRules("b", "d", "e")
 	// Add event
 	// ...code
 	// Add CB
@@ -88,16 +86,14 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	// Add state
 	// ...code
 
-	err = db.Add(fsm)
+	newFSM.Id, err = mongo.Cfg.Add(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error create new FSM"))
 		return
 	}
 
-	response := fsm.Export(generateFSM, 1)
-
-	b, err := json.Marshal(response)
+	b, err := json.Marshal(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error parse JSON"))
@@ -107,6 +103,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
+/*
 func Update(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
@@ -176,11 +173,5 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
-func generateFSM(f fsm.Export, args interface{}) interface{} {
-	return Fsm{
-		ID:          fmt.Sprintf("ID_%d", args.(int)),
-		Description: "Description",
-		Title:       "Title",
-		FSM:         f,
-	}
-}
+ */
+

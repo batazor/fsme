@@ -3,6 +3,7 @@ package main
 import (
 	"github.com/batazor/fsme/admin/server/pkg/handler"
 	l "github.com/batazor/fsme/admin/server/pkg/logger"
+	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"github.com/batazor/fsme/admin/server/pkg/sentry"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -19,6 +20,12 @@ func main() {
 
 	// Load Sentry =============================================================
 	sentry.Run()
+
+	// Load MongoDB
+	_, err := mongo.Run()
+	if err != nil {
+		logger.Fatal(err.Error())
+	}
 
 	// Get configuration =======================================================
 	PORT := "6001"
@@ -50,7 +57,7 @@ func main() {
 	logger.Info("Run on port " + PORT)
 
 	// start HTTP-server
-	err := http.ListenAndServe(":"+PORT, r)
+	err = http.ListenAndServe(":"+PORT, r)
 	if err != nil {
 		logger.Fatal(err.Error())
 	}

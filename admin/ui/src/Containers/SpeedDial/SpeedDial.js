@@ -131,7 +131,7 @@ class SpeedDialButton extends Component {
 
 function mapStateToProps(state) {
   return {
-    fsm: state.fsm.fsm,
+    fsm: state.fsm.list,
   }
 }
 

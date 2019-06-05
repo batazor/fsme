@@ -28,7 +28,9 @@ class JSONEditor extends Component {
   onChange(newValue, e) {
     try {
       const response = JSON.parse(newValue)
-      this.props.onChange(response)
+      if (response._id !== undefined) {
+        this.props.onChange(response)
+      }
     } catch(e) {
       // ignore update if it's invalid JSON
     }

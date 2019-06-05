@@ -58,10 +58,10 @@ class Graph extends Component {
       let nodes = []
 
       if (props.fsm) {
-        Object.keys(props.fsm.FSM.Transitions).forEach((item, index) => mapNode[item] = index + 1)
+        Object.keys(props.fsm.list.Transitions).forEach((item, index) => mapNode[item] = index + 1)
 
-        Object.keys(props.fsm.FSM.Transitions).forEach(item => {
-          Object.keys(props.fsm.FSM.Transitions[item]).forEach(edge => {
+        Object.keys(props.fsm.list.Transitions).forEach(item => {
+          Object.keys(props.fsm.list.Transitions[item]).forEach(edge => {
             edges.push({
               "source": mapNode[item],
               "target": mapNode[edge],
@@ -69,12 +69,12 @@ class Graph extends Component {
           })
         })
 
-        nodes = Object.keys(props.fsm.FSM.Transitions).map((item, index) => ({
+        nodes = Object.keys(props.fsm.list.Transitions).map((item, index) => ({
           "id": index + 1,
           "title": item,
           "x": 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
           "y": 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
-          "type": item === props.fsm.FSM.State ? "custom" : "empty",
+          "type": item === props.fsm.list.State ? "custom" : "empty",
         }))
       }
 

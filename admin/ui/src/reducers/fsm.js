@@ -11,7 +11,7 @@ const initialState = {
       },
       _id: "new",
       description: "Description",
-      title: "Title",
+      name: "Title",
     },
   },
 }
@@ -19,7 +19,7 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
-      action.payload.forEach(fsm => state = push(state, fsm))
+      action.payload.forEach(fsm => state.list[fsm._id] = fsm)
       return state
     }
     case FSM.GET: {
@@ -45,7 +45,7 @@ function push(state, payload) {
   return {
     ...state,
     list: {
-      ...state.fsm,
+      ...state.list,
       [payload._id]: payload,
     },
   }

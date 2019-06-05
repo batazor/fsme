@@ -54,7 +54,7 @@ export default props => {
             .map((key, index) => (
               <Link key={`/fsm/${props.fsm[key]._id}`} to={`/fsm/${props.fsm[key]._id}/view`}>
                 <ListItem button key={key}>
-                  <ListItemText primary={props.fsm[key].title} />
+                  <ListItemText primary={props.fsm[key].Name} />
                 </ListItem>
               </Link>
             ))

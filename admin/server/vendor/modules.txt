@@ -1,4 +1,4 @@
-# github.com/batazor/fsme v0.0.0-20190604082407-a51c2e73f954
+# github.com/batazor/fsme v0.0.0-20190605102528-31881c9ce41c
 github.com/batazor/fsme/fsm
 # github.com/certifi/gocertifi v0.0.0-20190506164543-d2eda7129713
 github.com/certifi/gocertifi
@@ -13,6 +13,10 @@ github.com/go-chi/chi/middleware
 github.com/go-chi/cors
 # github.com/go-chi/render v1.0.1
 github.com/go-chi/render
+# github.com/go-stack/stack v1.8.0
+github.com/go-stack/stack
+# github.com/golang/snappy v0.0.1
+github.com/golang/snappy
 # github.com/hashicorp/hcl v1.0.0
 github.com/hashicorp/hcl
 github.com/hashicorp/hcl/hcl/printer
@@ -41,6 +45,41 @@ github.com/spf13/jwalterweatherman
 github.com/spf13/pflag
 # github.com/spf13/viper v1.4.0
 github.com/spf13/viper
+# github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c
+github.com/xdg/scram
+# github.com/xdg/stringprep v1.0.0
+github.com/xdg/stringprep
+# go.mongodb.org/mongo-driver v1.0.2
+go.mongodb.org/mongo-driver/mongo
+go.mongodb.org/mongo-driver/mongo/options
+go.mongodb.org/mongo-driver/bson
+go.mongodb.org/mongo-driver/bson/bsoncodec
+go.mongodb.org/mongo-driver/bson/bsontype
+go.mongodb.org/mongo-driver/bson/primitive
+go.mongodb.org/mongo-driver/event
+go.mongodb.org/mongo-driver/mongo/readconcern
+go.mongodb.org/mongo-driver/mongo/readpref
+go.mongodb.org/mongo-driver/mongo/writeconcern
+go.mongodb.org/mongo-driver/x/bsonx
+go.mongodb.org/mongo-driver/x/bsonx/bsoncore
+go.mongodb.org/mongo-driver/x/mongo/driver
+go.mongodb.org/mongo-driver/x/mongo/driver/auth
+go.mongodb.org/mongo-driver/x/mongo/driver/session
+go.mongodb.org/mongo-driver/x/mongo/driver/topology
+go.mongodb.org/mongo-driver/x/mongo/driver/uuid
+go.mongodb.org/mongo-driver/x/network/command
+go.mongodb.org/mongo-driver/x/network/connection
+go.mongodb.org/mongo-driver/x/network/connstring
+go.mongodb.org/mongo-driver/x/network/description
+go.mongodb.org/mongo-driver/x/network/result
+go.mongodb.org/mongo-driver/tag
+go.mongodb.org/mongo-driver/bson/bsonrw
+go.mongodb.org/mongo-driver/x/network/wiremessage
+go.mongodb.org/mongo-driver/x/mongo/driver/auth/internal/gssapi
+go.mongodb.org/mongo-driver/x/network/address
+go.mongodb.org/mongo-driver/version
+go.mongodb.org/mongo-driver/x/network/compressor
+go.mongodb.org/mongo-driver/internal
 # go.uber.org/atomic v1.4.0
 go.uber.org/atomic
 # go.uber.org/multierr v1.1.0
@@ -52,6 +91,10 @@ go.uber.org/zap/zapcore
 go.uber.org/zap/buffer
 go.uber.org/zap/internal/color
 go.uber.org/zap/internal/exit
+# golang.org/x/crypto v0.0.0-20190308221718-c2843e01d9a2
+golang.org/x/crypto/pbkdf2
+# golang.org/x/sync v0.0.0-20181221193216-37e7f081c4d4
+golang.org/x/sync/semaphore
 # golang.org/x/sys v0.0.0-20190215142949-d0b11bdaac8a
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.0

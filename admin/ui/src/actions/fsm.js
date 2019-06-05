@@ -47,7 +47,10 @@ export function add(id) {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(getState().fsm.fsm[id]),
+    body: JSON.stringify({
+      ...getState().fsm.list[id],
+      _id: undefined, // Delete id for new FSM
+    }),
   })
     .then(response => response.json())
     .then(response => {
@@ -67,7 +70,7 @@ export function update(id) {
       'Content-Type': 'application/json',
     },
     credentials: 'include',
-    body: JSON.stringify(getState().fsm.fsm[id]),
+    body: JSON.stringify(getState().fsm.list[id]),
   })
     .then(response => response.json())
     .then(response => {
