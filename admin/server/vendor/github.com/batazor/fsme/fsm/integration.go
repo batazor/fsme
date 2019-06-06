@@ -24,7 +24,13 @@ type Export struct {
 	Callbacks Callbacks
 }
 
-func (f *FSM) Export(exec func(*FSM, interface{}) interface{}, args interface{}) interface{} {
-	str := exec(f, args)
+func (f *FSM) Export(exec func(Export, interface{}) interface{}, args interface{}) interface{} {
+	str := exec(Export{
+		State:       f.state,
+		Transitions: f.transitions,
+		Events:      f.events,
+		Callbacks:   f.callbacks,
+	}, args)
+
 	return str
 }
