@@ -5,6 +5,9 @@ import (
 	"time"
 )
 
+// Version Sentry-Go SDK Version
+const Version = "0.0.1-beta.3"
+
 // Init initializes whole SDK by creating new `Client` and binding it to the current `Hub`
 func Init(options ClientOptions) error {
 	hub := CurrentHub()
@@ -48,15 +51,16 @@ func CaptureEvent(event *Event) *EventID {
 }
 
 // Recover captures a panic.
-func Recover() {
+func Recover() *EventID {
 	if err := recover(); err != nil {
 		hub := CurrentHub()
-		hub.Recover(err)
+		return hub.Recover(err)
 	}
+	return nil
 }
 
 // Recover captures a panic and passes relevant context object.
-func RecoverWithContext(ctx context.Context) {
+func RecoverWithContext(ctx context.Context) *EventID {
 	if err := recover(); err != nil {
 		var hub *Hub
 
@@ -66,8 +70,9 @@ func RecoverWithContext(ctx context.Context) {
 			hub = CurrentHub()
 		}
 
-		hub.RecoverWithContext(ctx, err)
+		return hub.RecoverWithContext(ctx, err)
 	}
+	return nil
 }
 
 // WithScope temporarily pushes a scope for a single call.

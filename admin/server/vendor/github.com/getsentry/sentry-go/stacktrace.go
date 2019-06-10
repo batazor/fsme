@@ -202,6 +202,7 @@ func extractFrames(pcs []uintptr) []Frame {
 
 func filterFrames(frames []Frame) []Frame {
 	isTestFileRegexp := regexp.MustCompile(`getsentry/sentry-go/.+_test.go`)
+	isExampleFileRegexp := regexp.MustCompile(`getsentry/sentry-go/example/`)
 	filteredFrames := make([]Frame, 0, len(frames))
 
 	for _, frame := range frames {
@@ -211,7 +212,10 @@ func filterFrames(frames []Frame) []Frame {
 		}
 		// sentry internal frames
 		isTestFile := isTestFileRegexp.MatchString(frame.AbsPath)
-		if strings.Contains(frame.Module, "getsentry/sentry-go") && !isTestFile {
+		isExampleFile := isExampleFileRegexp.MatchString(frame.AbsPath)
+		if strings.Contains(frame.AbsPath, "github.com/getsentry/sentry-go") &&
+			!isTestFile &&
+			!isExampleFile {
 			continue
 		}
 		filteredFrames = append(filteredFrames, frame)
@@ -226,7 +230,21 @@ func contextifyFrames(frames []Frame) []Frame {
 	contextifiedFrames := make([]Frame, 0, len(frames))
 
 	for _, frame := range frames {
-		lines, initial := sr.readContextLines(frame.AbsPath, frame.Lineno, contextLines)
+		var path string
+
+		// If we are not able to read the source code from either absolute or relative path (root dir only)
+		// Skip this part and return the original frame
+		switch {
+		case fileExists(frame.AbsPath):
+			path = frame.AbsPath
+		case fileExists(frame.Filename):
+			path = frame.Filename
+		default:
+			contextifiedFrames = append(contextifiedFrames, frame)
+			continue
+		}
+
+		lines, initial := sr.readContextLines(path, frame.Lineno, contextLines)
 
 		for i, line := range lines {
 			switch {

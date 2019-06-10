@@ -9,8 +9,6 @@ import (
 	"strconv"
 	"sync"
 	"time"
-
-	"github.com/certifi/gocertifi"
 )
 
 const defaultBufferSize = 30
@@ -115,8 +113,10 @@ func (t *httpTransport) Flush(timeout time.Duration) bool {
 
 	select {
 	case <-c:
+		Logger.Println("Buffer flushed successfully")
 		return true
 	case <-time.After(timeout):
+		Logger.Println("Buffer flushing reached the timeout")
 		return false
 	}
 }
@@ -142,13 +142,7 @@ func (t *httpTransport) getTLSConfig(options ClientOptions) *tls.Config {
 		}
 	}
 
-	rootCAs, err := gocertifi.CACerts()
-	if err != nil {
-		Logger.Printf("Coudnt load CA Certificates: %v\n", err)
-	}
-	return &tls.Config{
-		RootCAs: rootCAs,
-	}
+	return nil
 }
 
 func (t *httpTransport) worker() {

@@ -12,9 +12,6 @@ import (
 // Protocol Docs (kinda)
 // https://github.com/getsentry/rust-sentry-types/blob/master/src/protocol/v7.rs
 
-// Version Sentry-Go SDK Version
-const Version = "0.0.0-beta"
-
 // Level marks the severity of the event
 type Level string
 
@@ -104,8 +101,13 @@ func (r Request) FromHTTPRequest(request *http.Request) Request {
 	r.QueryString = request.URL.RawQuery
 
 	// Body
-	if body, err := ioutil.ReadAll(request.Body); err == nil {
-		r.Data = string(body)
+	if request.GetBody != nil {
+		if bodyCopy, err := request.GetBody(); err == nil && bodyCopy != nil {
+			body, err := ioutil.ReadAll(bodyCopy)
+			if err == nil {
+				r.Data = string(body)
+			}
+		}
 	}
 
 	return r
@@ -146,6 +148,16 @@ type Event struct {
 	Modules     map[string]string      `json:"modules,omitempty"`
 	Request     Request                `json:"request,omitempty"`
 	Exception   []Exception            `json:"exception,omitempty"`
+}
+
+func NewEvent() *Event {
+	event := Event{
+		Contexts: make(map[string]interface{}),
+		Extra:    make(map[string]interface{}),
+		Tags:     make(map[string]string),
+		Modules:  make(map[string]string),
+	}
+	return &event
 }
 
 type Thread struct {
