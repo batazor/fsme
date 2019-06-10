@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
+import { withRouter } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
@@ -14,7 +15,7 @@ import Menu from './UI/Menu'
 import SubToolBar from './UI/SubToolBar'
 import SpeedDial from '../../Containers/SpeedDial';
 import Terminal from '../../Containers/Terminal'
-import { list } from '../../actions/fsm'
+import { list, remove } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
 
 import styles from './styles'
@@ -29,6 +30,7 @@ class MainPage extends Component {
 
     // Terminal
     this.onEvent = this.onEvent.bind(this)
+    this.onDelete = this.onDelete.bind(this)
 
     // UI
     this.onChangeOpenDrawer = this.onChangeOpenDrawer.bind(this)
@@ -37,6 +39,15 @@ class MainPage extends Component {
   onEvent(args, print, runCommand) {
     args.shift()
     this.props.sendEvent(args.join(" "))
+  }
+
+  onDelete(args, print, runCommand) {
+    const { id } = this.props.match.params
+
+    if (id && id !== "new") {
+      this.props.deleteFsmAction(id)
+        .then(res => console.warn('S:', res))
+    }
   }
 
   onChangeOpenDrawer() {
@@ -66,6 +77,7 @@ class MainPage extends Component {
 
             <Terminal
               onEvent={this.onEvent}
+              onDelete={this.onDelete}
             />
           </Paper>
         </main>
@@ -98,10 +110,11 @@ function mapDispatchToProps(dispatch) {
   return {
     listActions: bindActionCreators(list, dispatch),
     sendEvent: bindActionCreators(sendEvent, dispatch),
+    deleteFsmAction: bindActionCreators(remove, dispatch),
   }
 }
 
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(MainPage));
+)(withStyles(styles)(withRouter(MainPage)));

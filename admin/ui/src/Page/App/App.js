@@ -1,5 +1,6 @@
 import React, { Component } from 'react';
 import { BrowserRouter as Router } from "react-router-dom";
+import { Route } from "react-router-dom";
 import Main from '../Main'
 
 class App extends Component {
@@ -7,7 +8,8 @@ class App extends Component {
     return (
       <div className="App">
         <Router>
-          <Main />
+          <Route path="/" exact component={Main} />
+          <Route path="/:service/:id/:type" exact component={Main} />
         </Router>
       </div>
     );

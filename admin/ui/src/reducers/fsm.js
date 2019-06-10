@@ -19,6 +19,7 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
+      delete state.list // clear old data
       action.payload.forEach(fsm => state = push(state, fsm))
       return state
     }
@@ -33,7 +34,7 @@ export default function update(state: Object = initialState, action: Object): Ob
     }
     case FSM.REMOVE: {
       const STATE = state
-      delete STATE.fsm[action.payload.id]
+      delete STATE.list[action.payload.id]
       return STATE
     }
     default:

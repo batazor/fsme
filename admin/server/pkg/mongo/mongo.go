@@ -131,3 +131,19 @@ func (c Config) Update(fsm FSM) (FSM, error) {
 	_, err := collection.UpdateOne(context.TODO(), filter, bson.M{"$set": fsm})
 	return fsm, err
 }
+
+func (c Config) Delete(idFSM string) error {
+	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+
+	id, err := primitive.ObjectIDFromHex(idFSM)
+	if err != nil {
+		return err
+	}
+
+	filter := bson.D{{"_id", id}}
+
+	// Passing nil as the filter matches all documents in the collection
+	_, err = collection.DeleteOne(context.TODO(), filter)
+
+	return err
+}

@@ -82,9 +82,23 @@ export function update(id) {
     .catch(error => console.error('error', error))
 }
 
-export function remove(id = 1) {
-  // const resp = FsmApi.destroyFSM(id)
-  // console.warn('destroyFSM', resp)
+export function remove(id) {
+  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+    method: 'DELETE',
+    headers: {
+      Accept: 'application/json',
+      'Content-Type': 'application/json',
+    },
+    credentials: 'include',
+  })
+    .then(response => response.json())
+    .then(response => {
+      dispatch({
+        type: FSM.REMOVE,
+        payload: { id },
+      })
+    })
+    .catch(error => console.error('error', error))
 }
 
 export function updateLocale(fsm) {

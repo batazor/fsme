@@ -18,9 +18,11 @@ class Command extends Component {
     this.state = {
       commands: {
         event: props.onEvent,
+        delete: props.onDelete,
       },
       descriptions: {
-        event: 'event [nameEvent] - enter `nameEvent` for send event and change state',
+        event: 'enter `event [nameEvent]` for send event and change state',
+        delete: 'enter `delete` for delete current FSM',
       },
     }
   }

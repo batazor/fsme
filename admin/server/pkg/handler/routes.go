@@ -19,7 +19,7 @@ func Routes() chi.Router {
 	//r.Get("/{id}", GetById)
 	r.Post("/", Create)
 	r.Patch("/{id}", Update)
-	//r.Delete("/{id}", Delete)
+	r.Delete("/{id}", Delete)
 
 	//r.Post("/{id}/event/{eventName}", SendEvent)
 
@@ -133,12 +133,23 @@ func Update(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
-/*
 func Delete(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("Delete"))
+
+	// Parse body
+	idFSM := chi.URLParam(r, "id")
+
+	err := mongo.Cfg.Delete(idFSM)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error delete FSM"))
+		return
+	}
+
+	w.Write([]byte(string("{}")))
 }
 
+/*
 func SendEvent(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
