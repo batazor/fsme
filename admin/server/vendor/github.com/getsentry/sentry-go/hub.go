@@ -13,9 +13,6 @@ const HubContextKey = contextKey(1)
 // RequestContextKey is a context key used to store http.Request on the context passed to RecoverWithContext
 const RequestContextKey = contextKey(2)
 
-// ResponseContextKey is a context key used to store http.Response on the context passed to RecoverWithContext
-const ResponseContextKey = contextKey(3)
-
 // Default maximum number of breadcrumbs added to an event. Can be overwritten `maxBreadcrumbs` option.
 const defaultMaxBreadcrumbs = 30
 
@@ -24,7 +21,7 @@ const defaultMaxBreadcrumbs = 30
 const maxBreadcrumbs = 100
 
 // Initial instance of the Hub that has no `Client` bound and an empty `Scope`
-var currentHub = NewHub(nil, &Scope{})
+var currentHub = NewHub(nil, NewScope())
 
 // Hub is the central object that can manages scopes and clients.
 //
@@ -50,12 +47,13 @@ type stack []*layer
 
 // NewHub returns an instance of a `Hub` with provided `Client` and `Scope` bound.
 func NewHub(client *Client, scope *Scope) *Hub {
-	return &Hub{
+	hub := Hub{
 		stack: &stack{{
 			client: client,
 			scope:  scope,
 		}},
 	}
+	return &hub
 }
 
 // CurrentHub returns an instance of previously initialized `Hub` stored in the global namespace.
@@ -74,6 +72,11 @@ func (hub *Hub) stackTop() *layer {
 		return nil
 	}
 	return (*stack)[len(*stack)-1]
+}
+
+// Clone returns a copy of the current Hub with top-most scope and client copied over.
+func (hub *Hub) Clone() *Hub {
+	return NewHub(hub.Client(), hub.Scope().Clone())
 }
 
 // Scope returns top-level `Scope` of the current `Hub` or `nil` if no `Scope` is bound.
@@ -209,22 +212,30 @@ func (hub *Hub) AddBreadcrumb(breadcrumb *Breadcrumb, hint *BreadcrumbHint) {
 
 // Recover calls the method of a same name on currently bound `Client` instance
 // passing it a top-level `Scope`.
-func (hub *Hub) Recover(err interface{}) {
+// Returns `EventID` if successfully, or `nil` if there's no `Scope` or `Client` available.
+func (hub *Hub) Recover(err interface{}) *EventID {
+	if err == nil {
+		err = recover()
+	}
 	client, scope := hub.Client(), hub.Scope()
 	if client == nil || scope == nil {
-		return
+		return nil
 	}
-	client.Recover(err, &EventHint{RecoveredException: err}, scope)
+	return client.Recover(err, &EventHint{RecoveredException: err}, scope)
 }
 
 // RecoverWithContext calls the method of a same name on currently bound `Client` instance
 // passing it a top-level `Scope`.
-func (hub *Hub) RecoverWithContext(ctx context.Context, err interface{}) {
+// Returns `EventID` if successfully, or `nil` if there's no `Scope` or `Client` available.
+func (hub *Hub) RecoverWithContext(ctx context.Context, err interface{}) *EventID {
+	if err == nil {
+		err = recover()
+	}
 	client, scope := hub.Client(), hub.Scope()
 	if client == nil || scope == nil {
-		return
+		return nil
 	}
-	client.RecoverWithContext(ctx, err, &EventHint{RecoveredException: err}, scope)
+	return client.RecoverWithContext(ctx, err, &EventHint{RecoveredException: err}, scope)
 }
 
 // Flush calls the method of a same name on currently bound `Client` instance.
@@ -236,18 +247,6 @@ func (hub *Hub) Flush(timeout time.Duration) bool {
 	}
 
 	return client.Flush(timeout)
-}
-
-// GetIntegration returns an instance of the integration for a given name
-// or `nil` if integration was not found.
-func (hub *Hub) GetIntegration(name string) Integration {
-	client := hub.Client()
-
-	if client == nil || client.integrations == nil {
-		return nil
-	}
-
-	return client.integrations[name]
 }
 
 // HasHubOnContext checks whether `Hub` instance is bound to a given `Context` struct.

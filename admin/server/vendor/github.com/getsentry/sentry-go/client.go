@@ -19,10 +19,22 @@ import (
 // can be enabled by either using `Logger.SetOutput` directly or with `Debug` client option
 var Logger = log.New(ioutil.Discard, "[Sentry] ", log.LstdFlags)
 
+type EventProcessor func(event *Event, hint *EventHint) *Event
+
+type EventModifier interface {
+	ApplyToEvent(event *Event, hint *EventHint) *Event
+}
+
+var globalEventProcessors []EventProcessor
+
+func AddGlobalEventProcessor(processor EventProcessor) {
+	globalEventProcessors = append(globalEventProcessors, processor)
+}
+
 // Integration allows for registering a functions that modify or discard captured events.
 type Integration interface {
 	Name() string
-	SetupOnce()
+	SetupOnce(client *Client)
 }
 
 // ClientOptions that configures a SDK Client
@@ -77,10 +89,11 @@ type ClientOptions struct {
 
 // Client is the underlying processor that's used by the main API and `Hub` instances.
 type Client struct {
-	options      ClientOptions
-	dsn          *Dsn
-	integrations map[string]Integration
-	Transport    Transport
+	options         ClientOptions
+	dsn             *Dsn
+	eventProcessors []EventProcessor
+	integrations    []Integration
+	Transport       Transport
 }
 
 // NewClient creates and returns an instance of `Client` configured using `ClientOptions`.
@@ -147,17 +160,20 @@ func (client *Client) setupIntegrations() {
 		integrations = client.options.Integrations(integrations)
 	}
 
-	client.integrations = make(map[string]Integration)
-
 	for _, integration := range integrations {
-		if _, ok := client.integrations[integration.Name()]; ok {
+		if client.integrationAlreadyInstalled(integration.Name()) {
 			Logger.Printf("Integration %s is already installed\n", integration.Name())
 			continue
 		}
-		client.integrations[integration.Name()] = integration
-		integration.SetupOnce()
+		client.integrations = append(client.integrations, integration)
+		integration.SetupOnce(client)
 		Logger.Printf("Integration installed: %s\n", integration.Name())
 	}
+}
+
+// AddEventProcessor adds an event processor to the client.
+func (client *Client) AddEventProcessor(processor EventProcessor) {
+	client.eventProcessors = append(client.eventProcessors, processor)
 }
 
 // Options return `ClientOptions` for the current `Client`.
@@ -187,7 +203,8 @@ func (client *Client) CaptureEvent(event *Event, hint *EventHint, scope EventMod
 }
 
 // Recover captures a panic.
-func (client *Client) Recover(err interface{}, hint *EventHint, scope EventModifier) {
+// Returns `EventID` if successfully, or `nil` if there's no error to recover from.
+func (client *Client) Recover(err interface{}, hint *EventHint, scope EventModifier) *EventID {
 	if err == nil {
 		err = recover()
 	}
@@ -195,18 +212,26 @@ func (client *Client) Recover(err interface{}, hint *EventHint, scope EventModif
 	if err != nil {
 		if err, ok := err.(error); ok {
 			event := client.eventFromException(err, LevelFatal)
-			client.CaptureEvent(event, hint, scope)
+			return client.CaptureEvent(event, hint, scope)
 		}
 
 		if err, ok := err.(string); ok {
 			event := client.eventFromMessage(err, LevelFatal)
-			client.CaptureEvent(event, hint, scope)
+			return client.CaptureEvent(event, hint, scope)
 		}
 	}
+
+	return nil
 }
 
 // Recover captures a panic and passes relevant context object.
-func (client *Client) RecoverWithContext(ctx context.Context, err interface{}, hint *EventHint, scope EventModifier) {
+// Returns `EventID` if successfully, or `nil` if there's no error to recover from.
+func (client *Client) RecoverWithContext(
+	ctx context.Context,
+	err interface{},
+	hint *EventHint,
+	scope EventModifier,
+) *EventID {
 	if err == nil {
 		err = recover()
 	}
@@ -218,14 +243,16 @@ func (client *Client) RecoverWithContext(ctx context.Context, err interface{}, h
 
 		if err, ok := err.(error); ok {
 			event := client.eventFromException(err, LevelFatal)
-			client.CaptureEvent(event, hint, scope)
+			return client.CaptureEvent(event, hint, scope)
 		}
 
 		if err, ok := err.(string); ok {
 			event := client.eventFromMessage(err, LevelFatal)
-			client.CaptureEvent(event, hint, scope)
+			return client.CaptureEvent(event, hint, scope)
 		}
 	}
+
+	return nil
 }
 
 // Flush notifies when all the buffered events have been sent by returning `true`
@@ -235,10 +262,9 @@ func (client *Client) Flush(timeout time.Duration) bool {
 }
 
 func (client *Client) eventFromMessage(message string, level Level) *Event {
-	event := Event{
-		Level:   level,
-		Message: message,
-	}
+	event := NewEvent()
+	event.Level = level
+	event.Message = message
 
 	if client.Options().AttachStacktrace {
 		event.Threads = []Thread{{
@@ -248,15 +274,15 @@ func (client *Client) eventFromMessage(message string, level Level) *Event {
 		}}
 	}
 
-	return &event
+	return event
 }
 
 func (client *Client) eventFromException(exception error, level Level) *Event {
 	if exception == nil {
-		return &Event{
-			Level:   level,
-			Message: fmt.Sprintf("Called %s with nil value", callerFunctionName()),
-		}
+		event := NewEvent()
+		event.Level = level
+		event.Message = fmt.Sprintf("Called %s with nil value", callerFunctionName())
+		return event
 	}
 
 	stacktrace := ExtractStacktrace(exception)
@@ -265,14 +291,14 @@ func (client *Client) eventFromException(exception error, level Level) *Event {
 		stacktrace = NewStacktrace()
 	}
 
-	return &Event{
-		Level: level,
-		Exception: []Exception{{
-			Value:      exception.Error(),
-			Type:       reflect.TypeOf(exception).String(),
-			Stacktrace: stacktrace,
-		}},
-	}
+	event := NewEvent()
+	event.Level = level
+	event.Exception = []Exception{{
+		Value:      exception.Error(),
+		Type:       reflect.TypeOf(exception).String(),
+		Stacktrace: stacktrace,
+	}}
+	return event
 }
 
 func (client *Client) processEvent(event *Event, hint *EventHint, scope EventModifier) *EventID {
@@ -355,14 +381,43 @@ func (client *Client) prepareEvent(event *Event, hint *EventHint, scope EventMod
 		}},
 	}
 
-	return scope.ApplyToEvent(event, hint)
+	event = scope.ApplyToEvent(event, hint)
+
+	for _, processor := range client.eventProcessors {
+		id := event.EventID
+		event = processor(event, hint)
+		if event == nil {
+			Logger.Printf("event dropped by one of the Client EventProcessors: %s\n", id)
+			return nil
+		}
+	}
+
+	for _, processor := range globalEventProcessors {
+		id := event.EventID
+		event = processor(event, hint)
+		if event == nil {
+			Logger.Printf("event dropped by one of the Global EventProcessors: %s\n", id)
+			return nil
+		}
+	}
+
+	return event
 }
 
 func (client Client) listIntegrations() []string {
 	integrations := make([]string, 0, len(client.integrations))
-	for key := range client.integrations {
-		integrations = append(integrations, key)
+	for _, integration := range client.integrations {
+		integrations = append(integrations, integration.Name())
 	}
 	sort.Strings(integrations)
 	return integrations
+}
+
+func (client Client) integrationAlreadyInstalled(name string) bool {
+	for _, integration := range client.integrations {
+		if integration.Name() == name {
+			return true
+		}
+	}
+	return false
 }

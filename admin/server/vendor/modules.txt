@@ -1,10 +1,8 @@
 # github.com/batazor/fsme v0.0.0-20190605102528-31881c9ce41c
 github.com/batazor/fsme/fsm
-# github.com/certifi/gocertifi v0.0.0-20190506164543-d2eda7129713
-github.com/certifi/gocertifi
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
-# github.com/getsentry/sentry-go v0.0.1-beta.2
+# github.com/getsentry/sentry-go v0.0.1-beta.3
 github.com/getsentry/sentry-go
 # github.com/go-chi/chi v4.0.2+incompatible
 github.com/go-chi/chi
