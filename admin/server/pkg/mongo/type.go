@@ -11,8 +11,8 @@ type Config struct {
 }
 
 type FSM struct {
-	FSM  *fsm.FSM
-	Id   primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
+	FSM         *fsm.FSM
+	Id          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Description string
-	Name       string
+	Name        string
 }
