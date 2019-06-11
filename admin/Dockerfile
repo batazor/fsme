@@ -34,6 +34,10 @@ FROM nginx:1.17-alpine
 
 ARG PORT=80
 ENV PORT=$PORT
+ARG MONGODB_URI
+ENV MONGODB_URI=$MONGODB_URI
+ARG SENTRY_DSN
+ENV SENTRY_DSN=$SENTRY_DSN
 
 RUN apk add --update bash curl openssh python supervisor && \
 	  ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
