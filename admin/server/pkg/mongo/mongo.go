@@ -55,7 +55,7 @@ func (c Config) List() ([]*FSM, error) {
 	filter := bson.D{}
 
 	// Here's an array in which you can store the decoded documents
-	var results []*FSM
+	results := make([]*FSM, 0)
 
 	// Passing nil as the filter matches all documents in the collection
 	cur, err := collection.Find(context.TODO(), filter, &findOptions)

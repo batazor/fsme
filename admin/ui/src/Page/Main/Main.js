@@ -46,13 +46,15 @@ class MainPage extends Component {
 
     if (id && id !== "new") {
       this.props.deleteFsmAction(id)
-        .then(res => console.warn('S:', res))
+        .then(res => this.onRedirect('/fsm/new/json-editor'))
     }
   }
 
   onChangeOpenDrawer() {
     this.setState({ isOpenMenu: !this.state.isOpenMenu })
   }
+
+  onRedirect = url => this.props.history.push(url)
 
   componentDidMount() {
     this.props.listActions()

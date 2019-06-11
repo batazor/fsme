@@ -8,6 +8,7 @@ import ListItem from '@material-ui/core/ListItem';
 import ListItemText from '@material-ui/core/ListItemText';
 import ChevronLeftIcon from '@material-ui/icons/ChevronLeft';
 import Divider from '@material-ui/core/Divider';
+import Typography from '@material-ui/core/Typography'
 
 const useStyles = makeStyles({
   drawer: {
@@ -21,8 +22,7 @@ const useStyles = makeStyles({
     display: 'flex',
     alignItems: 'center',
     padding: '0 8px',
-    // ...theme.mixins.toolbar,
-    justifyContent: 'flex-end',
+    justifyContent: 'space-between',
   },
 });
 
@@ -40,6 +40,10 @@ export default props => {
       }}
     >
       <div className={classes.drawerHeader}>
+        <Typography variant="h3" color="inherit">
+          FSME-UI
+        </Typography>
+
         <IconButton onClick={props.onChangeOpenDrawer}>
           <ChevronLeftIcon />
         </IconButton>

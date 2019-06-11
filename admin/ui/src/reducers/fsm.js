@@ -10,8 +10,8 @@ const initialState = {
         Callbacks: {}
       },
       _id: "new",
-      description: "Description",
-      name: "Title",
+      Description: "Description",
+      Name: "Title",
     },
   },
 }
@@ -19,7 +19,7 @@ const initialState = {
 export default function update(state: Object = initialState, action: Object): Object {
   switch (action.type) {
     case FSM.LIST: {
-      delete state.list // clear old data
+      state.list = initialState.list // clear old data
       action.payload.forEach(fsm => state = push(state, fsm))
       return state
     }

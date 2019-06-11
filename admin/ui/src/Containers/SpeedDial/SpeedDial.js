@@ -11,7 +11,7 @@ import SaveIcon from '@material-ui/icons/Save';
 import ShareIcon from '@material-ui/icons/Share';
 import DeleteIcon from '@material-ui/icons/Delete';
 import AddIcon from '@material-ui/icons/Add';
-import { add, update } from '../../actions/fsm'
+import { add, update, remove } from '../../actions/fsm'
 
 import styles from './styles'
 
@@ -62,6 +62,18 @@ class SpeedDialButton extends Component {
     }
   }
 
+  onDelete = () => {
+    const { id } = this.props.match.params
+
+    if (id && id !== "new") {
+      this.props.deleteFsmAction(id)
+        .then(res => {
+          this.setState({ open: false })
+          this.onRedirect('/fsm/new/json-editor')
+        })
+    }
+  }
+
   render() {
     const { classes, match } = this.props;
 
@@ -108,7 +120,7 @@ class SpeedDialButton extends Component {
             tooltipTitle="Delete"
             tooltipPlacement="top-start"
             tooltipOpen
-            onClick={this.handleClick}
+            onClick={this.onDelete}
           />
         )
       }
@@ -153,6 +165,7 @@ function mapDispatchToProps(dispatch) {
   return {
     addActions: bindActionCreators(add, dispatch),
     updateActions: bindActionCreators(update, dispatch),
+    deleteFsmAction: bindActionCreators(remove, dispatch),
   }
 }
 

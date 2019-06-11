@@ -14,10 +14,10 @@ export default ({ match }) => {
         scrollButtons="auto"
       >
         <Link to={`/fsm/${match.params.id}/view`}>
-          <Tab label="view" />
+          <Tab label="view" value="view" />
         </Link>
         <Link to={`/fsm/${match.params.id}/json-editor`}>
-          <Tab label="json-editor" />
+          <Tab label="json-editor" value="json-editor" />
         </Link>
       </Tabs>
     </AppBar>
