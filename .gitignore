@@ -13,3 +13,10 @@
 
 # IDE
 .idea
+
+# Secret
+.env
+*.pem
+*.key
+*.pub
+id_rsa
