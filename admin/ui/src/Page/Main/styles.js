@@ -1,6 +1,9 @@
 export default theme => ({
   root: {
     flex: 1,
+    display: "flex",
+    flexDirection: "column",
+    overflow: "auto",
   },
   main: {
     overflow: "auto",
@@ -15,10 +18,5 @@ export default theme => ({
       gridTemplateColumns: '1fr',
       gridTemplateRows: 'minmax(20em, auto)',
     },
-  },
-  speedDial: {
-    position: 'absolute',
-    top: theme.spacing(4),
-    right: theme.spacing(3),
   },
 })
