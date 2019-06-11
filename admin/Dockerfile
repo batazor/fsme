@@ -40,8 +40,7 @@ ARG SENTRY_DSN
 ENV SENTRY_DSN=$SENTRY_DSN
 
 RUN apk add --update bash curl openssh python supervisor && \
-	  ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log && \
-    env > /.env
+	  ln -sf /dev/stdout /var/log/nginx/access.log && ln -sf /dev/stderr /var/log/nginx/error.log
 
 WORKDIR /usr/share/nginx/html
 COPY ./heroku/ops/root /
