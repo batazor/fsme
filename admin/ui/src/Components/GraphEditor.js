@@ -57,7 +57,7 @@ class Graph extends Component {
       const edges = []
       let nodes = []
 
-      if (props.fsm) {
+      if (props.fsm.list) {
         Object.keys(props.fsm.list.Transitions).forEach((item, index) => mapNode[item] = index + 1)
 
         Object.keys(props.fsm.list.Transitions).forEach(item => {
