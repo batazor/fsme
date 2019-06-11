@@ -12,10 +12,10 @@ import (
 )
 
 func init() {
-	viper.SetDefault("MONGO_URI", "mongodb://127.0.0.1:27017")
-	viper.SetDefault("MONGO_DATABASE", "fsme")
-	viper.SetDefault("MONGO_COLLECTION", "fsm")
-	viper.SetDefault("MONGO_SINGLE", false)
+	viper.SetDefault("MONGODB_URI", "mongodb://127.0.0.1:27017")
+	viper.SetDefault("MONGODB_DATABASE", "fsme")
+	viper.SetDefault("MONGODB_COLLECTION", "fsm")
+	viper.SetDefault("MONGODB_SINGLE", false)
 }
 
 var Cfg Config
@@ -27,8 +27,8 @@ func Run() (*mongo.Client, error) {
 	logger, _ := zap.NewProduction()
 	defer logger.Sync()
 
-	mongoCfg := options.Client().ApplyURI(viper.GetString("MONGO_URI"))
-	mongoCfg.SetDirect(viper.GetBool("MONGO_SINGLE")) // for work with single node
+	mongoCfg := options.Client().ApplyURI(viper.GetString("MONGODB_URI"))
+	mongoCfg.SetDirect(viper.GetBool("MONGODB_SINGLE")) // for work with single node
 	Cfg.Client, err = mongo.Connect(context.TODO(), mongoCfg)
 
 	if err != nil {
@@ -48,7 +48,7 @@ func Run() (*mongo.Client, error) {
 }
 
 func (c Config) List() ([]*FSM, error) {
-	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	// Pass these options to the Find method
 	findOptions := options.FindOptions{}
@@ -117,13 +117,13 @@ func (c Config) List() ([]*FSM, error) {
 }
 
 func (c Config) Add(fsm FSM) (primitive.ObjectID, error) {
-	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
 	insertResult, err := collection.InsertOne(context.TODO(), fsm)
 	return insertResult.InsertedID.(primitive.ObjectID), err
 }
 
 func (c Config) Update(fsm FSM) (FSM, error) {
-	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	filter := bson.D{{"_id", fsm.Id}}
 
@@ -133,7 +133,7 @@ func (c Config) Update(fsm FSM) (FSM, error) {
 }
 
 func (c Config) Delete(idFSM string) error {
-	collection := c.Client.Database(viper.GetString("MONGO_DATABASE")).Collection(viper.GetString("MONGO_COLLECTION"))
+	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	id, err := primitive.ObjectIDFromHex(idFSM)
 	if err != nil {
