@@ -13,4 +13,5 @@
 | MONGODB_SINGLE     | false |
 
 Set `.env` file for:
+- SENTRY
 - MONGODB
