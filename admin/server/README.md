@@ -11,3 +11,6 @@
 | MONGODB_DATABASE   | data  |
 | MONGODB_COLLECTION | smpp  |
 | MONGODB_SINGLE     | false |
+
+Set `.env` file for:
+- MONGODB

@@ -1,21 +1,41 @@
 package mongo
 
 import (
+	"bytes"
 	"context"
+	"fmt"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
 	"go.mongodb.org/mongo-driver/mongo"
 	"go.mongodb.org/mongo-driver/mongo/options"
 	"go.uber.org/zap"
+	"io/ioutil"
 	"log"
+	"os"
 )
 
 func init() {
+	// Logger
+	logger, _ := zap.NewProduction()
+	defer logger.Sync()
+
 	viper.SetDefault("MONGODB_URI", "mongodb://127.0.0.1:27017")
 	viper.SetDefault("MONGODB_DATABASE", "fsme")
 	viper.SetDefault("MONGODB_COLLECTION", "fsm")
 	viper.SetDefault("MONGODB_SINGLE", false)
+
+	// Set config from .ENV
+	if _, err := os.Stat(".env"); err == nil {
+		config, err := ioutil.ReadFile(".env")
+		if err != nil {
+			logger.Error("Error read .env file", zap.Error(err))
+		}
+
+		viper.SetConfigType("env")
+		viper.ReadConfig(bytes.NewBuffer(config))
+		fmt.Println("TEST", viper.Get("MONGODB_URI"))
+	}
 }
 
 var Cfg Config

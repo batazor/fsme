@@ -15,6 +15,10 @@ Many Go projects are built using Viper including:
 
 [![Build Status](https://travis-ci.org/spf13/viper.svg)](https://travis-ci.org/spf13/viper) [![Join the chat at https://gitter.im/spf13/viper](https://badges.gitter.im/Join%20Chat.svg)](https://gitter.im/spf13/viper?utm_source=badge&utm_medium=badge&utm_campaign=pr-badge&utm_content=badge) [![GoDoc](https://godoc.org/github.com/spf13/viper?status.svg)](https://godoc.org/github.com/spf13/viper)
 
+## Install
+```console
+go get -u github.com/spf13/viper
+```
 
 ## What is Viper?
 
@@ -103,6 +107,28 @@ if err != nil { // Handle errors reading the config file
 }
 ```
 
+### Writing Config Files
+
+Reading from config files is useful, but at times you want to store all modifications made at run time.
+For that, a bunch of commands are available, each with its own purpose:
+
+* WriteConfig - writes the current viper configuration to the predefined path, if exists. Errors if no predefined path. Will overwrite the current config file, if it exists.
+* SafeWriteConfig - writes the current viper configuration to the predefined path. Errors if no predefined path. Will not overwrite the current config file, if it exists.
+* WriteConfigAs - writes the current viper configuration to the given filepath. Will overwrite the given file, if it exists.
+* SafeWriteConfigAs - writes the current viper configuration to the given filepath. Will not overwrite the given file, if it exists.
+
+As a rule of the thumb, everything marked with safe won't overwrite any file, but just create if not existent, whilst the default behavior is to create or truncate.
+
+A small examples section:
+
+```go
+viper.WriteConfig() // writes current config to predefined path set by 'viper.AddConfigPath()' and 'viper.SetConfigName'
+viper.SafeWriteConfig()
+viper.WriteConfigAs("/path/to/my/.config")
+viper.SafeWriteConfigAs("/path/to/my/.config") // will error since it has already been written
+viper.SafeWriteConfigAs("/path/to/my/.other_config")
+```
+
 ### Watching and re-reading config files
 
 Viper supports the ability to have your application live read a config file while running.
@@ -186,7 +212,7 @@ with ENV:
  * `BindEnv(string...) : error`
  * `SetEnvPrefix(string)`
  * `SetEnvKeyReplacer(string...) *strings.Replacer`
-  * `AllowEmptyEnvVar(bool)`
+ * `AllowEmptyEnv(bool)`
 
 _When working with ENV variables, it’s important to recognize that Viper
 treats ENV variables as case sensitive._
@@ -611,7 +637,7 @@ type config struct {
 
 var C config
 
-err := Unmarshal(&C)
+err := viper.Unmarshal(&C)
 if err != nil {
 	t.Fatalf("unable to decode into struct, %v", err)
 }
@@ -619,7 +645,7 @@ if err != nil {
 
 ### Marshalling to string
 
-You may need to marhsal all the settings held in viper into a string rather than write them to a file. 
+You may need to marshal all the settings held in viper into a string rather than write them to a file. 
 You can use your favorite format's marshaller with the config returned by `AllSettings()`.
 
 ```go
@@ -630,11 +656,11 @@ import (
 
 func yamlStringSettings() string {
     c := viper.AllSettings()
-	bs, err := yaml.Marshal(c)
-	if err != nil {
-        t.Fatalf("unable to marshal config to YAML: %v", err)
+    bs, err := yaml.Marshal(c)
+    if err != nil {
+        log.Fatalf("unable to marshal config to YAML: %v", err)
     }
-	return string(bs)
+    return string(bs)
 }
 ```
 

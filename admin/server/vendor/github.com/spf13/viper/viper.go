@@ -45,6 +45,7 @@ import (
 	"github.com/spf13/cast"
 	jww "github.com/spf13/jwalterweatherman"
 	"github.com/spf13/pflag"
+	"github.com/subosito/gotenv"
 )
 
 // ConfigMarshalError happens when failing to marshal the configuration.
@@ -230,7 +231,7 @@ func New() *Viper {
 // can use it in their testing as well.
 func Reset() {
 	v = New()
-	SupportedExts = []string{"json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl"}
+	SupportedExts = []string{"json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "dotenv", "env"}
 	SupportedRemoteProviders = []string{"etcd", "consul"}
 }
 
@@ -269,7 +270,7 @@ type RemoteProvider interface {
 }
 
 // SupportedExts are universally supported extensions.
-var SupportedExts = []string{"json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl"}
+var SupportedExts = []string{"json", "toml", "yaml", "yml", "properties", "props", "prop", "hcl", "dotenv", "env"}
 
 // SupportedRemoteProviders are universally supported remote providers.
 var SupportedRemoteProviders = []string{"etcd", "consul"}
@@ -705,6 +706,8 @@ func (v *Viper) Get(key string) interface{} {
 			return cast.ToDuration(val)
 		case []string:
 			return cast.ToStringSlice(val)
+		case []int:
+			return cast.ToIntSlice(val)
 		}
 	}
 
@@ -1012,6 +1015,11 @@ func (v *Viper) find(lcaseKey string) interface{} {
 			s = strings.TrimSuffix(s, "]")
 			res, _ := readAsCSV(s)
 			return res
+		case "intSlice":
+			s := strings.TrimPrefix(flag.ValueString(), "[")
+			s = strings.TrimSuffix(s, "]")
+			res, _ := readAsCSV(s)
+			return cast.ToIntSlice(res)
 		default:
 			return flag.ValueString()
 		}
@@ -1081,6 +1089,11 @@ func (v *Viper) find(lcaseKey string) interface{} {
 			s = strings.TrimSuffix(s, "]")
 			res, _ := readAsCSV(s)
 			return res
+		case "intSlice":
+			s := strings.TrimPrefix(flag.ValueString(), "[")
+			s = strings.TrimSuffix(s, "]")
+			res, _ := readAsCSV(s)
+			return cast.ToIntSlice(res)
 		default:
 			return flag.ValueString()
 		}
@@ -1400,6 +1413,15 @@ func (v *Viper) unmarshalReader(in io.Reader, c map[string]interface{}) error {
 			c[k] = v
 		}
 
+	case "dotenv", "env":
+		env, err := gotenv.StrictParse(buf)
+		if err != nil {
+			return ConfigParseError{err}
+		}
+		for k, v := range env {
+			c[k] = v
+		}
+
 	case "properties", "props", "prop":
 		v.properties = properties.NewProperties()
 		var err error
@@ -1462,6 +1484,18 @@ func (v *Viper) marshalWriter(f afero.File, configType string) error {
 		}
 		_, err := p.WriteComment(f, "#", properties.UTF8)
 		if err != nil {
+			return ConfigMarshalError{err}
+		}
+
+	case "dotenv", "env":
+		lines := []string{}
+		for _, key := range v.AllKeys() {
+			envName := strings.ToUpper(strings.Replace(key, ".", "_", -1))
+			val := v.Get(key)
+			lines = append(lines, fmt.Sprintf("%v=%v", envName, val))
+		}
+		s := strings.Join(lines, "\n")
+		if _, err := f.WriteString(s); err != nil {
 			return ConfigMarshalError{err}
 		}
 
