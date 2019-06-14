@@ -136,10 +136,15 @@ func (c Config) List() ([]*FSM, error) {
 	//// Ce, nil
 }
 
-func (c Config) Add(fsm FSM) (primitive.ObjectID, error) {
+func (c Config) Add(fsm FSM) (*primitive.ObjectID, error) {
 	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
 	insertResult, err := collection.InsertOne(context.TODO(), fsm)
-	return insertResult.InsertedID.(primitive.ObjectID), err
+	if err != nil {
+		return nil, err
+	}
+
+	objectId := insertResult.InsertedID.(primitive.ObjectID)
+	return &objectId, err
 }
 
 func (c Config) Update(fsm FSM) (FSM, error) {
