@@ -3,7 +3,6 @@ package mongo
 import (
 	"bytes"
 	"context"
-	"fmt"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -34,7 +33,6 @@ func init() {
 
 		viper.SetConfigType("env")
 		viper.ReadConfig(bytes.NewBuffer(config))
-		fmt.Println("TEST", viper.Get("MONGODB_URI"))
 	}
 }
 
