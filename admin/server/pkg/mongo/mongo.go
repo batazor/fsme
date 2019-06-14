@@ -3,6 +3,7 @@ package mongo
 import (
 	"bytes"
 	"context"
+	"fmt"
 	"github.com/spf13/viper"
 	"go.mongodb.org/mongo-driver/bson"
 	"go.mongodb.org/mongo-driver/bson/primitive"
@@ -134,8 +135,33 @@ func (c Config) List() ([]*FSM, error) {
 	//// Ce, nil
 }
 
+func (c Config) Get(id string) (*FSM, error) {
+	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
+	idFSM, err := primitive.ObjectIDFromHex(id)
+	if err != nil {
+		return nil, err
+	}
+
+	filter := bson.D{{"_id", idFSM}}
+
+	// Passing nil as the filter matches all documents in the collection
+	response := collection.FindOne(context.TODO(), filter)
+
+	if response.Err() != nil {
+		return nil, response.Err()
+	}
+
+	var fsm FSM
+	response.Decode(&fsm)
+
+	return &fsm, nil
+}
+
 func (c Config) Add(fsm FSM) (*primitive.ObjectID, error) {
 	collection := c.Client.Database(viper.GetString("MONGODB_DATABASE")).Collection(viper.GetString("MONGODB_COLLECTION"))
+
+	fmt.Println("fsm", fsm)
+
 	insertResult, err := collection.InsertOne(context.TODO(), fsm)
 	if err != nil {
 		return nil, err
@@ -170,3 +196,15 @@ func (c Config) Delete(idFSM string) error {
 
 	return err
 }
+
+// userDocument is the middle-man that allows
+// unexported User fields to be marshalled and unmarshalled.
+//type userDocument struct {
+//	State string `json:"state"`
+//}
+//
+//func MarshalJSON(fsm FSM) ([]byte, error) {
+//	return json.Marshal(userDocument{
+//		State:    fsm.FSM.,
+//	})
+//}

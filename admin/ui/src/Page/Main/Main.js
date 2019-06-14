@@ -37,8 +37,10 @@ class MainPage extends Component {
   }
 
   onEvent(args, print, runCommand) {
+    const { id } = this.props.match.params
+
     args.shift()
-    this.props.sendEvent(args.join(" "))
+    this.props.sendEvent(id, args.join(" "))
   }
 
   onDelete(args, print, runCommand) {

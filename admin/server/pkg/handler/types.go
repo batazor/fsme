@@ -5,7 +5,7 @@ import "github.com/batazor/fsme/fsm"
 // Fsm fsm
 // swagger:model fsm
 type Fsm struct {
-	FSM fsm.Export
+	FSM fsm.FSM
 
 	// Identity record
 	// Read Only: true
@@ -13,10 +13,10 @@ type Fsm struct {
 	ID string `json:"_id,omitempty"`
 
 	// description
-	Description string `json:"description,omitempty"`
+	Description string `json:"description"`
 
 	// title
-	Title string `json:"title,omitempty"`
+	Title string `json:"title"`
 }
 
 // Event event
@@ -29,5 +29,5 @@ type Event struct {
 	ID string `json:"_id,omitempty"`
 
 	// state
-	State string `json:"state,omitempty"`
+	State string `json:"state"`
 }

@@ -16,3 +16,13 @@ type FSM struct {
 	Description string
 	Name        string
 }
+
+type PublicFSM struct {
+	// current is the state that the FSM is currently in.
+	State fsm.State
+
+	// transitions maps events and source states to destination statef.
+	Transitions fsm.TransitionRuleSet
+
+	Events map[fsm.State]fsm.State
+}

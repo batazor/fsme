@@ -1,7 +1,7 @@
 ### Version 0.1.0
 
 - SERVER:
-  - [ ] CRUD FSM
+  - [x] CRUD FSM
   - [ ] Change state method
 - UI:
   - [ ] CRUD FSM
