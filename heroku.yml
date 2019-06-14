@@ -3,11 +3,6 @@ build:
     web: admin/Dockerfile
   config:
     REACT_APP_API_URL: https://fsme.herokuapp.com/api/
-    MONGODB_URI: $MONGODB_URI
-    SENTRY_DSN: $SENTRY_DSN
 setup:
   addons:
   - plan: mongolab
-  config:
-    MONGODB_URI: $MONGODB_URI
-    SENTRY_DSN: $SENTRY_DSN
