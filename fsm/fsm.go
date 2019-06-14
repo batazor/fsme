@@ -18,9 +18,9 @@ type FSM struct {
 	state State
 
 	// transitions maps events and source states to destination statef.
-	transitions map[State]TransitionRuleSet `bson:"transitions,omitempty" json:"transitions"`
+	transitions map[State]TransitionRuleSet `bson:"transitions,omitempty" json:"transitions,omitempty"`
 
-	events map[State]State `bson:"events,omitempty" json:"events"`
+	events map[State]State `bson:"events,omitempty" json:"events,omitempty"`
 
 	// callbacks maps events and source states to destination statef.
 	callbacks Callbacks
