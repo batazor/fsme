@@ -86,12 +86,13 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	// Add state
 	// ...code
 
-	newFSM.Id, err = mongo.Cfg.Add(newFSM)
+	id, err := mongo.Cfg.Add(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error create new FSM"))
 		return
 	}
+	newFSM.Id = *id
 
 	b, err := json.Marshal(newFSM)
 	if err != nil {
