@@ -36,6 +36,6 @@ func main() {
 	machine.AddStateTransitionRules("e", "k")
 	machine.AddStateTransitionRules("k", "k")
 
-	digraph := machine.Export(genereateDigraph, nil)
+	digraph := machine.ExportFunc(genereateDigraph, nil)
 	fmt.Println(digraph)
 }

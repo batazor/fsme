@@ -26,7 +26,7 @@ type Export struct {
 	Callbacks Callbacks
 }
 
-func (f *FSM) Export(exec func(Export, interface{}) interface{}, args interface{}) interface{} {
+func (f *FSM) ExportFunc(exec func(Export, interface{}) interface{}, args interface{}) interface{} {
 	str := exec(Export{
 		State:       f.state,
 		Transitions: f.transitions,
@@ -38,12 +38,7 @@ func (f *FSM) Export(exec func(Export, interface{}) interface{}, args interface{
 }
 
 func (f *FSM) MarshalJSON() ([]byte, error) {
-	return json.Marshal(Export{
-		State:       f.state,
-		Transitions: f.transitions,
-		Events:      f.events,
-		Callbacks:   f.callbacks,
-	})
+	return json.Marshal(f.Export())
 }
 
 func (f *FSM) UnmarshalJSON(data []byte) error {
@@ -67,10 +62,19 @@ func (f *FSM) UnmarshalJSON(data []byte) error {
 }
 
 func (f *FSM) Import(data Export) error {
-  f.state = data.State
-  f.transitions = data.Transitions
-  f.events = data.Events
-  f.callbacks = data.Callbacks
+	f.state = data.State
+	f.transitions = data.Transitions
+	f.events = data.Events
+	f.callbacks = data.Callbacks
 
-  return nil
+	return nil
+}
+
+func (f *FSM) Export() Export {
+	return Export{
+		State:       f.state,
+		Transitions: f.transitions,
+		Events:      f.events,
+		Callbacks:   f.callbacks,
+	}
 }
