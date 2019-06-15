@@ -62,10 +62,15 @@ func (f *FSM) UnmarshalJSON(data []byte) error {
 		return err
 	}
 
-	f.state = fsm.State
-	f.transitions = fsm.Transitions
-	f.events = fsm.Events
-	f.callbacks = fsm.Callbacks
+	err = f.Import(fsm)
+	return err
+}
 
-	return nil
+func (f *FSM) Import(data Export) error {
+  f.state = data.State
+  f.transitions = data.Transitions
+  f.events = data.Events
+  f.callbacks = data.Callbacks
+
+  return nil
 }
