@@ -2,18 +2,27 @@
 
 - SERVER:
   - [x] CRUD FSM
-  - [ ] Change state method
+  - [x] Change state method
 - UI:
-  - [ ] CRUD FSM
+  - [x] CRUD FSM
+- CORE:
+  - [x] Base work
+- DOCS:
+  - [x] Demo-online (on heroku)
+- DEPLOY:
+  - [x] Deploy to heroku
+
+### Version 0.2.0
+
+- SERVER:
+- UI:
   - [ ] GA
   - [ ] Sentry
 - CORE:
-  - [x] Base work
   - [ ] Test
 - DOCS:
-  - [x] Demo-online (on heroku)
   - [ ] Docs page
 - DEPLOY:
-  - [ ] CI/CD
-    - [ ] Deploy to heroku
+  - [ ] CI/CD (use GitHub workflow)
     - [ ] Run test/linters
+    - [ ] Deploy to heroku (auto)
