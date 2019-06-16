@@ -15,6 +15,12 @@ github.com/batazor/fsme v0.0.0-20190614122840-8033303a4660 h1:1cI4zYUk2FDefEiX6U
 github.com/batazor/fsme v0.0.0-20190614122840-8033303a4660/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20190614123221-6287cb361447 h1:S/SqC1IqUTsOs+uFFfn4+sOxdA5pb9sBtXhd52nE8sA=
 github.com/batazor/fsme v0.0.0-20190614123221-6287cb361447/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20190615230338-e0c8d1635cdf h1:Ftp/OgvvVwfDeYzQqeQOI20T19sYCuVdLWdmYDfHvPE=
+github.com/batazor/fsme v0.0.0-20190615230338-e0c8d1635cdf/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20190615231424-3d568a62b578 h1:3abv0ubE/kNr+rYsdDUnZDVS/u0ANmFwL79nfXNJbVk=
+github.com/batazor/fsme v0.0.0-20190615231424-3d568a62b578/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20190615235436-dc7e805cdb97 h1:tev8SUSfor9IrrApXPsiIQZPenVEeuY8ldo71AuD8ek=
+github.com/batazor/fsme v0.0.0-20190615235436-dc7e805cdb97/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=

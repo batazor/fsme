@@ -3,7 +3,7 @@ package main
 import (
 	"github.com/batazor/fsme/admin/server/pkg/handler"
 	l "github.com/batazor/fsme/admin/server/pkg/logger"
-	"github.com/batazor/fsme/admin/server/pkg/mongo"
+	modelFSM "github.com/batazor/fsme/admin/server/pkg/model/fsm"
 	"github.com/batazor/fsme/admin/server/pkg/sentry"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -22,7 +22,7 @@ func main() {
 	sentry.Run()
 
 	// Load MongoDB
-	_, err := mongo.Run()
+	_, err := modelFSM.Run()
 	if err != nil {
 		logger.Fatal(err.Error())
 	}

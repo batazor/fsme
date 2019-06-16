@@ -1,4 +1,4 @@
-package mongo
+package fsm
 
 import (
 	"github.com/batazor/fsme/fsm"
@@ -11,7 +11,7 @@ type Config struct {
 }
 
 type FSM struct {
-	FSM         *fsm.FSM
+	FSM         fsm.Export
 	Id          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Description string
 	Name        string
