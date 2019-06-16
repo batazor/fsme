@@ -21,7 +21,7 @@ func Routes() chi.Router {
 	r.Patch("/{id}", Update)
 	r.Delete("/{id}", Delete)
 
-	//r.Post("/{id}/event/{eventName}", SendEvent)
+	r.Post("/{id}/event/{eventName}", SendEvent)
 
 	return r
 }
@@ -155,42 +155,54 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string("{}")))
 }
 
-//func SendEvent(w http.ResponseWriter, r *http.Request) {
-//	w.Header().Set("Content-Type", "application/json")
-//
-//	// Parse body
-//	id := chi.URLParam(r, "id")
-//	eventName := chi.URLParam(r, "eventName")
-//
-//	// Get FSM
-//	FSM, err := modelFSM.Cfg.Get(id)
-//	if err != nil {
-//		fmt.Printf("Error: %s", err)
-//		w.Write([]byte("Error get FSM"))
-//		return
-//	}
-//
-//	state := fsm.State(eventName)
-//	err = FSM.FSM.SendEvent(state)
-//	if err != nil {
-//		w.Write([]byte(err.Error()))
-//		return
-//	}
-//
-//	// Update state
-//	newFSM, err := modelFSM.Cfg.Update(*FSM)
-//	if err != nil {
-//		fmt.Printf("Error: %s", err)
-//		w.Write([]byte("Error update FSM"))
-//		return
-//	}
-//
-//	b, err := json.Marshal(newFSM)
-//	if err != nil {
-//		fmt.Printf("Error: %s", err)
-//		w.Write([]byte("Error parse JSON"))
-//		return
-//	}
-//
-//	w.Write([]byte(string(b)))
-//}
+func SendEvent(w http.ResponseWriter, r *http.Request) {
+	w.Header().Set("Content-Type", "application/json")
+
+	// Parse body
+	id := chi.URLParam(r, "id")
+	eventName := chi.URLParam(r, "eventName")
+
+	// Get FSM
+	newFSM, err := modelFSM.Cfg.Get(id)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error get FSM"))
+		return
+	}
+
+	// Create FSM
+	FSM, err := fsm.New()
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error create a new FSM"))
+		return
+	}
+
+	FSM.Import(newFSM.FSM)
+
+	state := fsm.State(eventName)
+	err = FSM.SendEvent(state)
+	if err != nil {
+		w.Write([]byte(err.Error()))
+		return
+	}
+
+	newFSM.FSM = FSM.Export()
+
+	// Update state
+	resultFSM, err := modelFSM.Cfg.Update(*newFSM)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error update FSM"))
+		return
+	}
+
+	b, err := json.Marshal(resultFSM)
+	if err != nil {
+		fmt.Printf("Error: %s", err)
+		w.Write([]byte("Error parse JSON"))
+		return
+	}
+
+	w.Write([]byte(string(b)))
+}
