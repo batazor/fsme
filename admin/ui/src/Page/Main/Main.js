@@ -8,7 +8,8 @@ import Paper from '@material-ui/core/Paper'
 import { Route } from "react-router-dom";
 
 import Home from '../Home'
-import GraphEditorPage from '../GraphEditor'
+import GraphEditor from '../GraphEditor'
+import ViewEditorPage from '../ViewEditor'
 import JSONEditorPage from '../JSONEditor'
 import Toolbar from './UI/ToolBar'
 import Menu from './UI/Menu'
@@ -76,7 +77,8 @@ class MainPage extends Component {
         <main className={classes.main}>
           <Paper className={classes.rootPaper} elevation={1}>
             <Route path="/" exact component={Home} />
-            <Route path="/fsm/:id/view" exact component={GraphEditorPage} />
+            <Route path="/fsm/:id/view" exact component={GraphEditor} />
+            <Route path="/fsm/:id/view-editor" exact component={ViewEditorPage} />
             <Route path="/fsm/:id/json-editor" exact component={JSONEditorPage} />
 
             <Terminal

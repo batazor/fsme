@@ -16,6 +16,9 @@ export default ({ match }) => {
         <Link to={`/fsm/${match.params.id}/view`}>
           <Tab label="view" value="view" />
         </Link>
+        <Link to={`/fsm/${match.params.id}/view-editor`}>
+          <Tab label="view-editor" value="view-editor" />
+        </Link>
         <Link to={`/fsm/${match.params.id}/json-editor`}>
           <Tab label="json-editor" value="json-editor" />
         </Link>
