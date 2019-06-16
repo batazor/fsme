@@ -13,7 +13,7 @@ export function sendEvent(id, nameEveent = "") {
     .then(response => {
       dispatch({
         type: FSM.UPDATE,
-        payload: response[0],
+        payload: response,
       })
     })
     .catch(error => console.error(error))
