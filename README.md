@@ -10,12 +10,14 @@ Finite State Machine Engine for Go
 1. [Demo](https://fsme.herokuapp.com/)
 
 -----
-<img src="./docs/go.png" width="80">
-<img src="./docs/material-ui.svg" width="80">
-<img src="./docs/mongo-gopher.png" width="80">
-<img src="./docs/react.png" width="80">
-<img src="./docs/redux.png" width="80">
-<img src="./docs/react-router.png" width="80">
+<p align="center">
+  <img src="./docs/go.png" width="80">
+  <img src="./docs/material-ui.svg" width="80">
+  <img src="./docs/mongo-gopher.png" width="80">
+  <img src="./docs/react.png" width="80">
+  <img src="./docs/redux.svg" width="80">
+  <img src="./docs/react-router.png" width="80">
+</p>
 -----
 
 ### Install
