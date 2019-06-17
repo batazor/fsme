@@ -26,3 +26,17 @@
   - [ ] CI/CD (use GitHub workflow)
     - [ ] Run test/linters
     - [ ] Deploy to heroku (auto)
+
+### Version 0.3.0
+
+- SERVER && UI"
+  - [ ] Add first module http-endpoint
+
+```
+http-endpoint:
+
+type HttpEndpoint interface {
+  URL string // http://example.com
+  TYPE string // GET
+}
+```
