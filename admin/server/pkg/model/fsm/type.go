@@ -1,4 +1,4 @@
-package model
+package fsm
 
 import (
 	"github.com/batazor/fsme/fsm"

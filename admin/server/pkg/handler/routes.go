@@ -3,7 +3,7 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	"github.com/batazor/fsme/admin/server/pkg/model"
+	modelFSM "github.com/batazor/fsme/admin/server/pkg/model/fsm"
 	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"github.com/batazor/fsme/fsm"
 	"github.com/go-chi/chi"
@@ -49,7 +49,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM model.FSM
+	var newFSM modelFSM.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -106,7 +106,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM model.FSM
+	var newFSM modelFSM.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
