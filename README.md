@@ -79,6 +79,10 @@ func main() {
 }
 ```
 
+## UI
+
+![UI](./docs/editor.png)
+
 ### Feature
 
 + FSM
@@ -87,11 +91,8 @@ func main() {
 + Export
 + [Examples](./examples)
 
-### Extends
+### Refs
 
-1. Start with https://github.com/looplab/fsm
-2. Start with https://github.com/theckman/go-fsm
-
-## UI
-
-![UI](./docs/editor.png)
+- FSM
+  - https://github.com/looplab/fsm
+  - https://github.com/theckman/go-fsm
