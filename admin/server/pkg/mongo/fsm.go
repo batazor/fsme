@@ -10,7 +10,7 @@ import (
 	"log"
 )
 
-func (db DB) List() ([]*modelFSM.FSM, error) {
+func (db DB) List() ([]*modelFSM.Item, error) {
 	collection := db.DB.Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	// Pass these options to the Find method
@@ -18,7 +18,7 @@ func (db DB) List() ([]*modelFSM.FSM, error) {
 	filter := bson.D{}
 
 	// Here's an array in which you can store the decoded documents
-	results := make([]*modelFSM.FSM, 0)
+	results := make([]*modelFSM.Item, 0)
 
 	// Passing nil as the filter matches all documents in the collection
 	cur, err := collection.Find(context.TODO(), filter, &findOptions)
@@ -30,7 +30,7 @@ func (db DB) List() ([]*modelFSM.FSM, error) {
 	// Iterating through the cursor allows us to decode documents one at a time
 	for cur.Next(context.TODO()) {
 		// create a value into which the single document can be decoded
-		var elem *modelFSM.FSM
+		var elem *modelFSM.Item
 		err := cur.Decode(&elem)
 		if err != nil {
 			log.Fatal(err)
@@ -49,7 +49,7 @@ func (db DB) List() ([]*modelFSM.FSM, error) {
 	return results, nil
 }
 
-func (db *DB) Get(id string) (*modelFSM.FSM, error) {
+func (db *DB) Get(id string) (*modelFSM.Item, error) {
 	collection := db.DB.Collection(viper.GetString("MONGODB_COLLECTION"))
 	idFSM, err := primitive.ObjectIDFromHex(id)
 	if err != nil {
@@ -65,13 +65,13 @@ func (db *DB) Get(id string) (*modelFSM.FSM, error) {
 		return nil, response.Err()
 	}
 
-	var fsm modelFSM.FSM
+	var fsm modelFSM.Item
 	response.Decode(&fsm)
 
 	return &fsm, nil
 }
 
-func (db *DB) Add(fsm modelFSM.FSM) (*primitive.ObjectID, error) {
+func (db *DB) Add(fsm modelFSM.Item) (*primitive.ObjectID, error) {
 	collection := db.DB.Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	insertResult, err := collection.InsertOne(context.TODO(), fsm)
@@ -83,7 +83,7 @@ func (db *DB) Add(fsm modelFSM.FSM) (*primitive.ObjectID, error) {
 	return &objectId, err
 }
 
-func (db *DB) Update(fsm modelFSM.FSM) (modelFSM.FSM, error) {
+func (db *DB) Update(fsm modelFSM.Item) (modelFSM.Item, error) {
 	collection := db.DB.Collection(viper.GetString("MONGODB_COLLECTION"))
 
 	filter := bson.D{{"_id", fsm.Id}}

@@ -5,7 +5,7 @@ import (
 	"go.mongodb.org/mongo-driver/bson/primitive"
 )
 
-type FSM struct {
+type Item struct {
 	FSM         fsm.Export
 	Id          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Description string
@@ -20,4 +20,12 @@ type PublicFSM struct {
 	Transitions fsm.TransitionRuleSet
 
 	Events map[fsm.State]fsm.State
+}
+
+type FSM interface {
+	List() ([]*Item, error)
+	Get(string) (*Item, error)
+	Add(Item) (*primitive.ObjectID, error)
+	Update(Item) (*Item, error)
+	Delete(string) error
 }

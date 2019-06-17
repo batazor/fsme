@@ -49,7 +49,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM modelFSM.FSM
+	var newFSM modelFSM.Item
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -106,7 +106,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM modelFSM.FSM
+	var newFSM modelFSM.Item
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
