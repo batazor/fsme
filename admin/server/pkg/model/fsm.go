@@ -1,14 +1,9 @@
-package fsm
+package model
 
 import (
 	"github.com/batazor/fsme/fsm"
 	"go.mongodb.org/mongo-driver/bson/primitive"
-	"go.mongodb.org/mongo-driver/mongo"
 )
-
-type Config struct {
-	Client *mongo.Client
-}
 
 type FSM struct {
 	FSM         fsm.Export

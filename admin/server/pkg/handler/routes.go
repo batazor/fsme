@@ -3,7 +3,8 @@ package handler
 import (
 	"encoding/json"
 	"fmt"
-	modelFSM "github.com/batazor/fsme/admin/server/pkg/model/fsm"
+	"github.com/batazor/fsme/admin/server/pkg/model"
+	"github.com/batazor/fsme/admin/server/pkg/mongo"
 	"github.com/batazor/fsme/fsm"
 	"github.com/go-chi/chi"
 	"github.com/go-chi/chi/middleware"
@@ -16,7 +17,6 @@ func Routes() chi.Router {
 	r.Use(middleware.AllowContentType("application/json"))
 
 	r.Get("/", List)
-	//r.Get("/{id}", GetById)
 	r.Post("/", Create)
 	r.Patch("/{id}", Update)
 	r.Delete("/{id}", Delete)
@@ -29,8 +29,7 @@ func Routes() chi.Router {
 func List(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
-	// Get list FSM
-	machines, err := modelFSM.Cfg.List()
+	machines, err := mongo.Cfg.List()
 	if err != nil {
 		w.Write([]byte(""))
 	}
@@ -45,19 +44,12 @@ func List(w http.ResponseWriter, r *http.Request) {
 	w.Write([]byte(string(b)))
 }
 
-/*
-func GetById(w http.ResponseWriter, r *http.Request) {
-	w.Header().Set("Content-Type", "application/json")
-	w.Write([]byte("GetById"))
-}
-*/
-
 func Create(w http.ResponseWriter, r *http.Request) {
 	w.Header().Set("Content-Type", "application/json")
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM modelFSM.FSM
+	var newFSM model.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -91,7 +83,7 @@ func Create(w http.ResponseWriter, r *http.Request) {
 
 	newFSM.FSM = FSM.Export()
 
-	id, err := modelFSM.Cfg.Add(newFSM)
+	id, err := mongo.Cfg.Add(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error create new FSM"))
@@ -114,7 +106,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 
 	// Parse body
 	decoder := json.NewDecoder(r.Body)
-	var newFSM modelFSM.FSM
+	var newFSM model.FSM
 	err := decoder.Decode(&newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
@@ -122,7 +114,7 @@ func Update(w http.ResponseWriter, r *http.Request) {
 		return
 	}
 
-	newFSM, err = modelFSM.Cfg.Update(newFSM)
+	newFSM, err = mongo.Cfg.Update(newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error update FSM"))
@@ -145,7 +137,7 @@ func Delete(w http.ResponseWriter, r *http.Request) {
 	// Parse body
 	idFSM := chi.URLParam(r, "id")
 
-	err := modelFSM.Cfg.Delete(idFSM)
+	err := mongo.Cfg.Delete(idFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error delete FSM"))
@@ -163,7 +155,7 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 	eventName := chi.URLParam(r, "eventName")
 
 	// Get FSM
-	newFSM, err := modelFSM.Cfg.Get(id)
+	newFSM, err := mongo.Cfg.Get(id)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error get FSM"))
@@ -190,7 +182,7 @@ func SendEvent(w http.ResponseWriter, r *http.Request) {
 	newFSM.FSM = FSM.Export()
 
 	// Update state
-	resultFSM, err := modelFSM.Cfg.Update(*newFSM)
+	resultFSM, err := mongo.Cfg.Update(*newFSM)
 	if err != nil {
 		fmt.Printf("Error: %s", err)
 		w.Write([]byte("Error update FSM"))
