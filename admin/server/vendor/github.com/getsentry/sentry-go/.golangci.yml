@@ -1,6 +1,9 @@
 linters:
   enable-all: true
   disable:
-    - structcheck
-    - unused
-    - gochecknoglobals
+    - megacheck
+    - stylecheck
+run:
+  skip-dirs:
+    - echo
+    - example/echo

@@ -1,5 +1,20 @@
 # Changelog
 
+## 0.1.0
+
+- First stable release \o/
+
+## 0.0.1-beta.5
+
+- feat: **[breaking]** Add `NewHTTPTransport` and `NewHTTPSyncTransport` which accepts all transport options
+- feat: New `HTTPSyncTransport` that blocks after each call
+- feat: New `Echo` integration
+- ref: **[breaking]** Remove `BufferSize` option from `ClientOptions` and move it to `HTTPTransport` instead
+- ref: Export default `HTTPTransport`
+- ref: Export `net/http` integration handler
+- ref: Set `Request` instantly in the package handlers, not in `recoverWithSentry` so it can be accessed later on
+- ci: Add craft config
+
 ## 0.0.1-beta.4
 
 - feat: `IgnoreErrors` client option and corresponding integration

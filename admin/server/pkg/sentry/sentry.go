@@ -29,11 +29,12 @@ func init() {
 func Run() {
 	// Logger ==================================================================
 	logger, _ := zap.NewProduction()
-	defer logger.Sync()
+	//defer logger.Sync()
 
 	// Load Sentry
 	err := sentry.Init(sentry.ClientOptions{
-		Dsn: viper.GetString("SENTRY_DSN"),
+		Dsn:     viper.GetString("SENTRY_DSN"),
+		Release: "0.1.0",
 	})
 
 	if err != nil {
