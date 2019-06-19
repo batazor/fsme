@@ -44,7 +44,8 @@ class Graph extends Component {
         Object.keys(Transitions).forEach((item, index) => mapNode[item] = index)
 
         Object.keys(Transitions).forEach(item => {
-          const node = new SRD.DefaultNodeModel(item, "rgb(0,192,255)");
+          const color = props.fsm.FSM.State === item ? "rgb(192,255,0)" : "rgb(0,192,255)"
+          const node = new SRD.DefaultNodeModel(item, color);
 
           // set UI
           const UI = _.get(props, `fsm.UI[${item}]`, {})
