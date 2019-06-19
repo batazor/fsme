@@ -32,7 +32,51 @@ class Graph extends Component {
   static getDerivedStateFromProps(props, state) {
     // if update state
     if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
+      const engine = state.engine
+      const mapNode = {}
+      const edges = []
+      let nodes = []
 
+      var model = new SRD.DiagramModel();
+
+      const Transitions = _.get(props, 'fsm.FSM.Transitions', null)
+      if (Transitions) {
+        Object.keys(Transitions).forEach((item, index) => mapNode[item] = index)
+
+        Object.keys(Transitions).forEach(item => {
+          const node = new SRD.DefaultNodeModel(item, "rgb(0,192,255)");
+          node.setPosition(100, 100);
+
+          // As default add In/Out for all node
+          node.addOutPort("Out");
+          node.addInPort("In");
+
+          nodes.push(node)
+        })
+
+        Object.keys(Transitions).forEach((item, index) => {
+          const indexStartNode = mapNode[item]
+          const startNode = nodes[indexStartNode]
+
+          Object.keys(Transitions[item]).forEach(edge => {
+            const indexEndNode = mapNode[edge]
+            const endNode = nodes[indexEndNode]
+
+            if (endNode) {
+              const portOut = startNode.addOutPort("Out");
+              const portIn = endNode.addInPort("In");
+
+              const link = portOut.link(portIn);
+              edges.push(link)
+            }
+          })
+        })
+      }
+
+      model.addAll(...nodes, ...edges);
+
+      engine.setDiagramModel(model);
+      return { engine, fsm: props.fsm }
     }
 
     return null;
@@ -41,42 +85,66 @@ class Graph extends Component {
   constructor() {
     super();
 
-    this.state = {}
+    // 1) setup the diagram engine
+    const engine = new SRD.DiagramEngine();
+    engine.installDefaultFactories();
 
-    this.diagramEngine = new SRD.DiagramEngine();
-		this.diagramEngine.installDefaultFactories();
+    // 2) setup the diagram model
+    const model = new SRD.DiagramModel();
 
-		this.newModel();
+    // 7) load model into engine
+    engine.setDiagramModel(model);
+
+    this.state = {
+      engine,
+    }
+
+    this.getDiagramEngine = this.getDiagramEngine.bind(this)
+    this.onChangeFSM = this.onChangeFSM.bind(this)
   }
 
-  /* Define custom graph editing methods here */
-  newModel() {
-		this.activeModel = new SRD.DiagramModel();
-		this.diagramEngine.setDiagramModel(this.activeModel);
-
-		//3-A) create a default node
-		var node1 = new SRD.DefaultNodeModel("Node 1", "rgb(0,192,255)");
-		let port = node1.addOutPort("Out");
-		node1.setPosition(100, 100);
-
-		//3-B) create another default node
-		var node2 = new SRD.DefaultNodeModel("Node 2", "rgb(192,255,0)");
-		let port2 = node2.addInPort("In");
-		node2.setPosition(400, 100);
-
-		// link the ports
-		let link1 = port.link(port2);
-
-		this.activeModel.addAll(node1, node2, link1);
+	getDiagramEngine() {
+    this.onChangeFSM()
+		return this.state.engine;
 	}
 
-	getActiveDiagram(): SRD.DiagramModel {
-		return this.activeModel;
-	}
+  getNodeNameById(idNode) {
+    const { nodes } = this.state.engine.diagramModel.serializeDiagram()
+    const node = nodes.filter(item => item.id === idNode)
+    if (node.length) {
+      return node[0].name
+    }
 
-	getDiagramEngine(): SRD.DiagramEngine {
-		return this.diagramEngine;
-	}
+    return null
+  }
+
+  onChangeFSM() {
+    console.warn('onChangeFSM', this.state.engine.diagramModel.serializeDiagram())
+    console.warn('FSM', this.props.fsm.FSM)
+
+    const { nodes, links } = this.state.engine.diagramModel.serializeDiagram()
+
+    // Update Node
+    nodes.forEach(node => {
+      const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${node.name}]`, {})
+      _.set(this.state.fsm, `FSM.Transitions[${node.name}]`, isExistNode)
+    })
+
+    // Update Link
+    // links.forEach(link => {
+    //   const StartNode = this.getNodeNameById(link.source)
+    //   const EndNode = this.getNodeNameById(link.target)
+    //
+    //   const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${StartNode}]`, {})
+    //   isExistNode[StartNode] = { ...isExistNode[StartNode], [EndNode]: {} }
+    //   _.set(this.state.fsm, `FSM.Transitions[${StartNode}]`, isExistNode)
+    // })
+
+    // const Transitions = _.get(props, 'fsm.FSM.Transitions', [])
+    console.warn('STATE', this.state.fsm.FSM)
+
+    this.props.onChange(this.state.fsm)
+  }
 
   render() {
     const { classes } = this.props;
@@ -119,13 +187,13 @@ class Graph extends Component {
 					onDragOver={event => {
 						event.preventDefault();
 					}}
+          onMouseUp={event => this.onChangeFSM(event)}
 				>
-          <SRD.DiagramWidget className={classes.srd} diagramEngine={this.getDiagramEngine()} />
+          <SRD.DiagramWidget className={classes.srd} diagramEngine={this.state.engine} />
         </div>
       </div>
     );
   }
 }
-
 
 export default withStyles(styles)(Graph);

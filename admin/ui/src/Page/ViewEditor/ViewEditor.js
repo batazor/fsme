@@ -1,28 +1,24 @@
 import React, { Component } from 'react'
-import PropTypes from 'prop-types'
 import { connect } from 'react-redux'
+import { bindActionCreators } from 'redux'
+import { updateLocale } from '../../actions/fsm'
 
 import ViewEditor from '../../Components/ViewEditor/ViewEditor'
 
 class ViewEditorPage extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
-  }
-
   render() {
     const fsm = this.props.fsm[this.props.match.params.id]
 
     return (
-      <ViewEditor fsm={fsm} />
+      <ViewEditor
+        fsm={fsm}
+        onChange={this.props.updateLocaleActions}
+      />
     )
   }
 }
 
-ViewEditorPage.propTypes = {
-  classes: PropTypes.object.isRequired,
-};
+ViewEditorPage.propTypes = {};
 
 function mapStateToProps(state) {
   return {
@@ -31,7 +27,9 @@ function mapStateToProps(state) {
 }
 
 function mapDispatchToProps(dispatch) {
-  return {}
+  return {
+    updateLocaleActions: bindActionCreators(updateLocale, dispatch),
+  }
 }
 
 export default connect(
