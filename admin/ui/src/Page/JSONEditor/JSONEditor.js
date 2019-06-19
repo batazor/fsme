@@ -6,25 +6,13 @@ import { updateLocale } from '../../actions/fsm'
 import JSONEditor from '../../Components/JSONEditor'
 
 class JSONEditorPage extends Component {
-  constructor(props) {
-    super(props)
-
-    this.state = {}
-
-    this.onChangeFSM = this.onChangeFSM.bind(this)
-  }
-
-  onChangeFSM(code) {
-    this.props.updateLocaleActions(code)
-  }
-
   render() {
     const fsm = this.props.fsm[this.props.match.params.id]
 
     return (
       <JSONEditor
         code={fsm}
-        onChange={this.onChangeFSM}
+        onChange={this.props.updateLocaleActions}
       />
     )
   }
