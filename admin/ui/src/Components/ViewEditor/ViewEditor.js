@@ -45,11 +45,9 @@ class Graph extends Component {
 
         Object.keys(Transitions).forEach(item => {
           const node = new SRD.DefaultNodeModel(item, "rgb(0,192,255)");
-          node.setPosition(100, 100);
-
-          // As default add In/Out for all node
-          node.addOutPort("Out");
-          node.addInPort("In");
+          const xPosition = _.get(node, 'UI.X', 100)
+          const yPosition = _.get(node, 'UI.Y', 100)
+          node.setPosition(xPosition, yPosition);
 
           nodes.push(node)
         })
@@ -85,14 +83,14 @@ class Graph extends Component {
   constructor() {
     super();
 
-    // 1) setup the diagram engine
+    // setup the diagram engine
     const engine = new SRD.DiagramEngine();
     engine.installDefaultFactories();
 
-    // 2) setup the diagram model
+    // setup the diagram model
     const model = new SRD.DiagramModel();
 
-    // 7) load model into engine
+    // load model into engine
     engine.setDiagramModel(model);
 
     this.state = {
@@ -127,18 +125,27 @@ class Graph extends Component {
     // Update Node
     nodes.forEach(node => {
       const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${node.name}]`, {})
+
+      // Update UI
+      // isExistNode.UI = {
+      //   X: node.x,
+      //   Y: node.y,
+      // }
+
       _.set(this.state.fsm, `FSM.Transitions[${node.name}]`, isExistNode)
     })
 
     // Update Link
-    // links.forEach(link => {
-    //   const StartNode = this.getNodeNameById(link.source)
-    //   const EndNode = this.getNodeNameById(link.target)
-    //
-    //   const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${StartNode}]`, {})
-    //   isExistNode[StartNode] = { ...isExistNode[StartNode], [EndNode]: {} }
-    //   _.set(this.state.fsm, `FSM.Transitions[${StartNode}]`, isExistNode)
-    // })
+    links.forEach(link => {
+      const StartNode = this.getNodeNameById(link.source)
+      const EndNode = this.getNodeNameById(link.target)
+
+      if (EndNode) {
+        const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${StartNode}]`, {})
+        isExistNode[EndNode] = {}
+        _.set(this.state.fsm, `FSM.Transitions[${StartNode}]`, isExistNode)
+      }
+    })
 
     // const Transitions = _.get(props, 'fsm.FSM.Transitions', [])
     console.warn('STATE', this.state.fsm.FSM)

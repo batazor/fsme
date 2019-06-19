@@ -1,4 +1,4 @@
-# github.com/batazor/fsme v0.0.0-20190615235436-dc7e805cdb97
+# github.com/batazor/fsme v0.0.0-20190619171506-42646b23ef42
 github.com/batazor/fsme/fsm
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
@@ -50,17 +50,17 @@ github.com/xdg/scram
 # github.com/xdg/stringprep v1.0.0
 github.com/xdg/stringprep
 # go.mongodb.org/mongo-driver v1.0.3
-go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/bson/primitive
+go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/mongo
 go.mongodb.org/mongo-driver/mongo/options
+go.mongodb.org/mongo-driver/mongo/readpref
 go.mongodb.org/mongo-driver/bson/bsoncodec
 go.mongodb.org/mongo-driver/bson/bsonrw
 go.mongodb.org/mongo-driver/bson/bsontype
 go.mongodb.org/mongo-driver/x/bsonx/bsoncore
 go.mongodb.org/mongo-driver/event
 go.mongodb.org/mongo-driver/mongo/readconcern
-go.mongodb.org/mongo-driver/mongo/readpref
 go.mongodb.org/mongo-driver/mongo/writeconcern
 go.mongodb.org/mongo-driver/x/bsonx
 go.mongodb.org/mongo-driver/x/mongo/driver
