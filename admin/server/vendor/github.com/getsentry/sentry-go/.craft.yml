@@ -1,0 +1,11 @@
+github:
+  owner: getsentry
+  repo: sentry-go
+preReleaseCommand: ''
+changelogPolicy: simple
+targets:
+  - name: github
+  - name: registry
+    type: sdk
+    config:
+      canonical: 'github:getsentry/sentry-go'

@@ -17,7 +17,7 @@ import (
 
 // Logger is an instance of log.Logger that is use to provide debug information about running Sentry Client
 // can be enabled by either using `Logger.SetOutput` directly or with `Debug` client option
-var Logger = log.New(ioutil.Discard, "[Sentry] ", log.LstdFlags)
+var Logger = log.New(ioutil.Discard, "[Sentry] ", log.LstdFlags) // nolint: gochecknoglobals
 
 type EventProcessor func(event *Event, hint *EventHint) *Event
 
@@ -25,7 +25,7 @@ type EventModifier interface {
 	ApplyToEvent(event *Event, hint *EventHint) *Event
 }
 
-var globalEventProcessors []EventProcessor
+var globalEventProcessors []EventProcessor // nolint: gochecknoglobals
 
 func AddGlobalEventProcessor(processor EventProcessor) {
 	globalEventProcessors = append(globalEventProcessors, processor)
@@ -39,9 +39,9 @@ type Integration interface {
 
 // ClientOptions that configures a SDK Client
 type ClientOptions struct {
-	// The DSN to use. If not set the client is effectively disabled.
+	// The DSN to use. If the DSN is not set, the client is effectively disabled.
 	Dsn string
-	// In debug mode debug information is printed to stdput to help you understand what
+	// In debug mode, the debug information is printed to stdout to help you understand what
 	// sentry is doing.
 	Debug bool
 	// Configures whether SDK should generate and attach stacktraces to pure capture message calls.
@@ -74,8 +74,6 @@ type ClientOptions struct {
 	Environment string
 	// Maximum number of breadcrumbs.
 	MaxBreadcrumbs int
-	// An optional size of the transport buffer. Defaults to 30.
-	BufferSize int
 	// An optional pointer to `http.Transport` that will be used with a default HTTPTransport.
 	HTTPTransport *http.Transport
 	// An optional HTTP proxy to use.
@@ -147,7 +145,7 @@ func (client *Client) setupTransport() {
 	transport := client.options.Transport
 
 	if transport == nil {
-		transport = new(httpTransport)
+		transport = NewHTTPTransport()
 	}
 
 	transport.Configure(client.options)
