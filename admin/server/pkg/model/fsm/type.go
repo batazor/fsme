@@ -10,7 +10,7 @@ type Item struct {
 	Id          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Description string
 	Name        string
-	UI          UI
+	UI          map[string]UI
 }
 
 type PublicFSM struct {

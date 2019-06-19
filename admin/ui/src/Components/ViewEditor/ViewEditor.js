@@ -45,8 +45,11 @@ class Graph extends Component {
 
         Object.keys(Transitions).forEach(item => {
           const node = new SRD.DefaultNodeModel(item, "rgb(0,192,255)");
-          const xPosition = _.get(node, 'UI.X', 100)
-          const yPosition = _.get(node, 'UI.Y', 100)
+
+          // set UI
+          const UI = _.get(props, `fsm.UI[${item}]`, {})
+          const xPosition = UI.X || 100
+          const yPosition = UI.Y || 100
           node.setPosition(xPosition, yPosition);
 
           nodes.push(node)
@@ -125,14 +128,13 @@ class Graph extends Component {
     // Update Node
     nodes.forEach(node => {
       const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${node.name}]`, {})
+      _.set(this.state.fsm, `FSM.Transitions[${node.name}]`, isExistNode)
 
       // Update UI
-      // isExistNode.UI = {
-      //   X: node.x,
-      //   Y: node.y,
-      // }
-
-      _.set(this.state.fsm, `FSM.Transitions[${node.name}]`, isExistNode)
+      const nodeUI = _.get(this.state.fsm, `UI[${node.name}]`, {})
+      nodeUI.X = node.x
+      nodeUI.Y = node.y
+      _.set(this.state.fsm, `UI[${node.name}]`, nodeUI)
     })
 
     // Update Link
