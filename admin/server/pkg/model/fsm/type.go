@@ -10,6 +10,7 @@ type Item struct {
 	Id          primitive.ObjectID `bson:"_id,omitempty" json:"_id"`
 	Description string
 	Name        string
+	UI          UI
 }
 
 type PublicFSM struct {
@@ -20,6 +21,11 @@ type PublicFSM struct {
 	Transitions fsm.TransitionRuleSet
 
 	Events map[fsm.State]fsm.State
+}
+
+type UI struct {
+	X int
+	Y int
 }
 
 type FSM interface {
