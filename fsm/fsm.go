@@ -53,6 +53,11 @@ func (f *FSM) AddStateTransitionRules(src State, dst ...State) error {
 	f.stateMu.Lock()
 	defer f.stateMu.Unlock()
 
+	// if the transitions map is nil, we need to allocate it
+	if f.transitions == nil {
+		f.transitions = make(map[State]TransitionRuleSet)
+	}
+
 	// if the map fpr the source state does not exist, allocate it
 	if f.transitions[src] == nil {
 		f.transitions[src] = make(TransitionRuleSet)
