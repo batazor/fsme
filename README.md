@@ -81,7 +81,8 @@ func main() {
 
 ## UI
 
-![UI](./docs/editor.png)
+![view](./docs/editor.png)
+![view-editor](./docs/view-editor.png)
 
 ### Feature
 
