@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import Terminal from 'terminal-in-react'
 
@@ -46,6 +47,12 @@ class Command extends Component {
       </div>
     )
   }
+}
+
+Command.propTypes = {
+  classes: PropTypes.object.isRequired, // eslint-disable-line
+  onEvent: PropTypes.func.isRequired,
+  onDelete: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(Command)

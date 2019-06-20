@@ -1,4 +1,5 @@
 import React from 'react'
+import PropTypes from 'prop-types'
 import { makeStyles } from '@material-ui/styles'
 import { Link } from 'react-router-dom'
 import IconButton from '@material-ui/core/IconButton'
@@ -26,7 +27,7 @@ const useStyles = makeStyles({
   },
 })
 
-export default props => {
+function Menu({ fsm, isOpenMenu, onChangeOpenDrawer }) {
   const classes = useStyles()
 
   return (
@@ -34,7 +35,7 @@ export default props => {
       className={classes.drawer}
       variant="persistent"
       anchor="left"
-      open={props.isOpenMenu}
+      open={isOpenMenu}
       classes={{
         paper: classes.drawerPaper,
       }}
@@ -44,7 +45,7 @@ export default props => {
           FSME-UI
         </Typography>
 
-        <IconButton onClick={props.onChangeOpenDrawer}>
+        <IconButton onClick={onChangeOpenDrawer}>
           <ChevronLeftIcon />
         </IconButton>
       </div>
@@ -53,12 +54,12 @@ export default props => {
 
       <List>
         {
-          Object.keys(props.fsm)
+          Object.keys(fsm)
             .filter(key => key !== 'new')
-            .map((key, index) => (
-              <Link key={`/fsm/${props.fsm[key]._id}`} to={`/fsm/${props.fsm[key]._id}/view`}>
+            .map(key => (
+              <Link key={`/fsm/${fsm[key]._id}`} to={`/fsm/${fsm[key]._id}/view`}>
                 <ListItem button key={key}>
-                  <ListItemText primary={props.fsm[key].Name} />
+                  <ListItemText primary={fsm[key].Name} />
                 </ListItem>
               </Link>
             ))
@@ -67,3 +68,13 @@ export default props => {
     </Drawer>
   )
 }
+
+Menu.propTypes = {
+  isOpenMenu: PropTypes.bool.isRequired,
+  fsm: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+  }).isRequired,
+  onChangeOpenDrawer: PropTypes.func.isRequired,
+}
+
+export default Menu

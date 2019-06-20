@@ -9,6 +9,13 @@ plugins:
 rules:
   semi: ["error", "never"]
   curly: [ 2, "all" ]
-  no-console: ["error", { allow: ["warn", "error", "group", "groupEnd"] }]
   operator-linebreak: ["error", "after"]
   arrow-parens: ["error", "as-needed"]
+  no-console: ["error", { allow: ["warn", "error", "group", "groupEnd"] }]
+  no-param-reassign: ["error", { "props": false }]
+  no-underscore-dangle: 0
+  no-use-before-define: ["error", { "functions": false, "classes": false }]
+  no-return-assign: 0
+  import/no-extraneous-dependencies: 0 # Incorrect work with decorators
+  import/prefer-default-export: 0
+  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]

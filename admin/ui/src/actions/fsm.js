@@ -1,7 +1,7 @@
 import * as FSM from '../constants/fsm'
 
-export function list(opts = {}) {
-  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}`, {
+export function list() {
+  return dispatch => fetch(`${process.env.REACT_APP_API_URL}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -20,8 +20,8 @@ export function list(opts = {}) {
   // .catch(error => error.then(response => { throw response }))
 }
 
-export function get(id = 1) {
-  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}`, {
+export function get() {
+  return dispatch => fetch(`${process.env.REACT_APP_API_URL}`, {
     method: 'GET',
     headers: {
       Accept: 'application/json',
@@ -83,7 +83,7 @@ export function update(id) {
 }
 
 export function remove(id) {
-  return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
+  return dispatch => fetch(`${process.env.REACT_APP_API_URL}/${id}`, {
     method: 'DELETE',
     headers: {
       Accept: 'application/json',
@@ -92,7 +92,7 @@ export function remove(id) {
     credentials: 'include',
   })
     .then(response => response.json())
-    .then(response => {
+    .then(() => {
       dispatch({
         type: FSM.REMOVE,
         payload: { id },

@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import _ from 'lodash'
 import * as SRD from 'storm-react-diagrams'
@@ -55,7 +56,7 @@ class Graph extends Component {
           nodes.push(node)
         })
 
-        Object.keys(Transitions).forEach((item, index) => {
+        Object.keys(Transitions).forEach(item => {
           const indexStartNode = mapNode[item]
           const startNode = nodes[indexStartNode]
 
@@ -104,22 +105,8 @@ class Graph extends Component {
     this.onChangeFSM = this.onChangeFSM.bind(this)
   }
 
-  getDiagramEngine() {
-    this.onChangeFSM()
-    return this.state.engine
-  }
-
-  getNodeNameById(idNode) {
-    const { nodes } = this.state.engine.diagramModel.serializeDiagram()
-    const node = nodes.filter(item => item.id === idNode)
-    if (node.length) {
-      return node[0].name
-    }
-
-    return null
-  }
-
   onChangeFSM() {
+    /* eslint-disable */
     console.warn('onChangeFSM', this.state.engine.diagramModel.serializeDiagram())
     console.warn('FSM', this.props.fsm.FSM)
 
@@ -153,10 +140,27 @@ class Graph extends Component {
     console.warn('STATE', this.state.fsm.FSM)
 
     this.props.onChange(this.state.fsm)
+    /* eslint-enable */
+  }
+
+  getDiagramEngine() {
+    this.onChangeFSM()
+    return this.state.engine // eslint-disable-line
+  }
+
+  getNodeNameById(idNode) {
+    const { nodes } = this.state.engine.diagramModel.serializeDiagram() // eslint-disable-line
+    const node = nodes.filter(item => item.id === idNode)
+    if (node.length) {
+      return node[0].name
+    }
+
+    return null
   }
 
   render() {
     const { classes } = this.props
+    const { engine } = this.state
 
     return (
       <div className={classes.root}>
@@ -165,44 +169,48 @@ class Graph extends Component {
           <TrayItemWidget model={{ type: 'out' }} name="Out Node" color="rgb(0,192,255)" />
         </TrayWidget>
 
-        <div
+        <div // eslint-disable-line
           className={classes.diagramLayer}
           onDrop={event => {
-					  const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
-					  const nodesCount = _.keys(
-					    this
-					      .getDiagramEngine()
-					      .getDiagramModel()
-					      .getNodes(),
-					  ).length
+            const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
+            const nodesCount = _.keys(
+              this
+                .getDiagramEngine()
+                .getDiagramModel()
+                .getNodes(),
+            ).length
 
-					  let node = null
-					  if (data.type === 'in') {
-					    node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(192,255,0)')
-					    node.addInPort('In')
-					  } else {
-					    node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(0,192,255)')
-					    node.addOutPort('Out')
-					  }
-					  const points = this.getDiagramEngine().getRelativeMousePoint(event)
-					  node.x = points.x
-					  node.y = points.y
-					  this
-					    .getDiagramEngine()
-					    .getDiagramModel()
-					    .addNode(node)
-					  this.forceUpdate()
+            let node = null
+            if (data.type === 'in') {
+              node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(192,255,0)')
+              node.addInPort('In')
+            } else {
+              node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(0,192,255)')
+              node.addOutPort('Out')
+            }
+            const points = this.getDiagramEngine().getRelativeMousePoint(event)
+            node.x = points.x
+            node.y = points.y
+            this
+              .getDiagramEngine()
+              .getDiagramModel()
+              .addNode(node)
+            this.forceUpdate()
           }}
           onDragOver={event => {
-					  event.preventDefault()
+            event.preventDefault()
           }}
           onMouseUp={event => this.onChangeFSM(event)}
         >
-          <SRD.DiagramWidget className={classes.srd} diagramEngine={this.state.engine} />
+          <SRD.DiagramWidget className={classes.srd} diagramEngine={engine} />
         </div>
       </div>
     )
   }
+}
+
+Graph.propTypes = {
+  classes: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default withStyles(styles)(Graph)

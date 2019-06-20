@@ -16,11 +16,11 @@ const initialState = {
   },
 }
 
-export default function update(state: Object = initialState, action: Object): Object {
+export default function update(state = initialState, action) {
   switch (action.type) {
     case FSM.LIST: {
       state.list = initialState.list // clear old data
-      action.payload.forEach(fsm => state = push(state, fsm))
+      action.payload.forEach(fsm => state = push(state, fsm)) // eslint-disable-line
       return state
     }
     case FSM.GET: {

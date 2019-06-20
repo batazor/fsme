@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
@@ -39,7 +40,7 @@ class SpeedDialButton extends Component {
   };
 
   handleOpen = () => {
-    if (!this.state.hidden) {
+    if (!this.state.hidden) { // eslint-disable-line
       this.setState({
         open: true,
       })
@@ -52,22 +53,24 @@ class SpeedDialButton extends Component {
     })
   };
 
-  onRedirect = url => this.props.history.push(url)
+  onRedirect = url => this.props.history.push(url) // eslint-disable-line
 
   onSave = () => {
+    /* eslint-disable */
     if (this.props.match.params.id === 'new') {
       this.props.addActions(this.props.match.params.id)
     } else {
       this.props.updateActions(this.props.match.params.id)
     }
+    /* eslint-enable */
   }
 
   onDelete = () => {
-    const { id } = this.props.match.params
+    const { id } = this.props.match.params // eslint-disable-line
 
     if (id && id !== 'new') {
-      this.props.deleteFsmAction(id)
-        .then(res => {
+      this.props.deleteFsmAction(id) // eslint-disable-line
+        .then(() => {
           this.setState({ open: false })
           this.onRedirect('/fsm/new/json-editor')
         })
@@ -76,6 +79,7 @@ class SpeedDialButton extends Component {
 
   render() {
     const { classes, match } = this.props
+    const { hidden, open } = this.state
 
     const listButton = []
     if (match.params.id !== 'new') {
@@ -130,7 +134,7 @@ class SpeedDialButton extends Component {
       <SpeedDial
         ariaLabel="SpeedDial tooltip example"
         className={classes.speedDial}
-        hidden={this.state.hidden}
+        hidden={hidden}
         icon={<SpeedDialIcon />}
         onBlur={this.handleClose}
         onClick={this.handleClick}
@@ -138,7 +142,7 @@ class SpeedDialButton extends Component {
         onFocus={this.handleOpen}
         onMouseEnter={this.handleOpen}
         onMouseLeave={this.handleClose}
-        open={this.state.open}
+        open={open}
         direction="left"
       >
         { listButton.map(item => item) }
@@ -153,6 +157,17 @@ class SpeedDialButton extends Component {
       </SpeedDial>
     )
   }
+}
+
+SpeedDialButton.propTypes = {
+  classes: PropTypes.object.isRequired, // eslint-disable-line
+  match: PropTypes.shape({
+    params: PropTypes.object.isRequired,
+  }).isRequired,
+
+  addActions: PropTypes.func.isRequired,
+  updateActions: PropTypes.func.isRequired,
+  deleteFsmAction: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {

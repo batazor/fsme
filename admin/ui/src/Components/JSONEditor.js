@@ -2,13 +2,13 @@ import React, { Component } from 'react'
 import MonacoEditor from 'react-monaco-editor'
 
 class JSONEditor extends Component {
-  static getDerivedStateFromProps(props, state) {
+  static getDerivedStateFromProps(props, state) { // eslint-disable-line
     return {
       code: props.code,
     }
   }
 
-  constructor(props) {
+  constructor(props) { // eslint-disable-line
     super()
 
     this.state = {
@@ -19,20 +19,20 @@ class JSONEditor extends Component {
     this.editorDidMount = this.editorDidMount.bind(this)
   }
 
-  editorDidMount(editor, monaco) {
-    // console.log('editorDidMount', editor);
-    editor.focus()
-  }
-
-  onChange(newValue, e) {
+  onChange(newValue, e) { // eslint-disable-line
     try {
       const response = JSON.parse(newValue)
       if (response._id !== undefined) {
-        this.props.onChange(response)
+        this.props.onChange(response) // eslint-disable-line
       }
-    } catch (e) {
+    } catch (e) { // eslint-disable-line
       // ignore update if it's invalid JSON
     }
+  }
+
+  editorDidMount(editor, monaco) { // eslint-disable-line
+    // console.warn('editorDidMount', editor);
+    editor.focus()
   }
 
   render() {
@@ -40,7 +40,7 @@ class JSONEditor extends Component {
       <MonacoEditor
         language="json"
         theme="vs-dark"
-        value={JSON.stringify(this.state.code, null, 2)}
+        value={JSON.stringify(this.state.code, null, 2)} // eslint-disable-line
         // options={options}
         onChange={this.onChange}
         editorDidMount={this.editorDidMount}

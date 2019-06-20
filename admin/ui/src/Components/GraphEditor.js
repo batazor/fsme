@@ -105,21 +105,19 @@ class Graph extends Component {
   /* Define custom graph editing methods here */
 
   render() {
-    const { nodes } = this.state.graph
-    const { edges } = this.state.graph
-    const { selected } = this.state
+    const { classes } = this.props // eslint-disable-line
+    const { selected, graph } = this.state
+    const { nodes, edges } = graph
 
     const { NodeTypes } = GraphConfig
     const { NodeSubtypes } = GraphConfig
     const { EdgeTypes } = GraphConfig
 
-    const { classes } = this.props
-
     return (
       <div className={classes.root}>
         <GraphView
           className={classes.root}
-          ref="GraphView"
+          ref="GraphView" // eslint-disable-line
           gridSize
           nodeKey={NODE_KEY}
           nodes={nodes}

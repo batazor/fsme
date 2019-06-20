@@ -13,18 +13,18 @@ const styles = {
  * @author Dylan Vorster
  */
 class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
-	static defaultProps: TrayWidgetProps = {};
+  static defaultProps: TrayWidgetProps = {};
 
-	constructor(props: TrayWidgetProps) {
-	  super(props)
-	  this.state = {}
-	}
+  constructor(props: TrayWidgetProps) {
+    super(props)
+    this.state = {}
+  }
 
-	render() {
-	  const { classes } = this.props
+  render() {
+    const { classes, children } = this.props
 
-	  return <div className={classes.tray}>{this.props.children}</div>
-	}
+    return <div className={classes.tray}>{children}</div>
+  }
 }
 
 export default withStyles(styles)(TrayWidget)

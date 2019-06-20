@@ -30,9 +30,6 @@
     "lint": "$(npm bin)/eslint ./src",
     "lint:fix": "$(npm bin)/eslint --fix ./src"
   },
-  "eslintConfig": {
-    "extends": "react-app"
-  },
   "browserslist": [
     ">0.2%",
     "not dead",

@@ -6,7 +6,6 @@ import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
 
-
 import Home from '../Home'
 import GraphEditor from '../GraphEditor'
 import ViewEditorPage from '../ViewEditor'
@@ -37,34 +36,35 @@ class MainPage extends Component {
     this.onChangeOpenDrawer = this.onChangeOpenDrawer.bind(this)
   }
 
-  onEvent(args, print, runCommand) {
-    const { id } = this.props.match.params
-
-    args.shift()
-    this.props.sendEvent(id, args.join(' '))
+  componentDidMount() {
+    this.props.listAction() // eslint-disable-line
   }
 
-  onDelete(args, print, runCommand) {
-    const { id } = this.props.match.params
+  onEvent(args) {
+    const { id } = this.props.match.params  // eslint-disable-line
+
+    args.shift()
+    this.props.sendEventAction(id, args.join(' ')) // eslint-disable-line
+  }
+
+  onRedirect = url => this.props.history.push(url) // eslint-disable-line
+
+  onDelete(args, print, runCommand) { // eslint-disable-line
+    const { id } = this.props.match.params // eslint-disable-line
 
     if (id && id !== 'new') {
-      this.props.deleteFsmAction(id)
-        .then(res => this.onRedirect('/fsm/new/json-editor'))
+      this.props.deleteFsmAction(id) // eslint-disable-line
+        .then(() => this.onRedirect('/fsm/new/json-editor'))
     }
   }
 
   onChangeOpenDrawer() {
-    this.setState({ isOpenMenu: !this.state.isOpenMenu })
-  }
-
-  onRedirect = url => this.props.history.push(url)
-
-  componentDidMount() {
-    this.props.listActions()
+    this.setState(state => ({ isOpenMenu: !state.isOpenMenu }))
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, fsm } = this.props
+    const { isOpenMenu } = this.state
 
     return (
       <div className={classes.root}>
@@ -89,8 +89,8 @@ class MainPage extends Component {
         </main>
 
         <Menu
-          fsm={this.props.fsm}
-          isOpenMenu={this.state.isOpenMenu}
+          fsm={fsm}
+          isOpenMenu={isOpenMenu}
 
           onChangeOpenDrawer={this.onChangeOpenDrawer}
         />
@@ -103,7 +103,18 @@ class MainPage extends Component {
 }
 
 MainPage.propTypes = {
-  classes: PropTypes.object.isRequired,
+  classes: PropTypes.object.isRequired, // eslint-disable-line
+  fsm: PropTypes.shape({
+    Name: PropTypes.string.isRequired,
+  }).isRequired,
+  match: PropTypes.shape({
+    params: PropTypes.object.isRequired,
+  }).isRequired,
+  history: PropTypes.arrayOf(PropTypes.string).isRequired,
+
+  listAction: PropTypes.func.isRequired,
+  sendEventAction: PropTypes.func.isRequired,
+  deleteFsmAction: PropTypes.func.isRequired,
 }
 
 function mapStateToProps(state) {
@@ -114,8 +125,8 @@ function mapStateToProps(state) {
 
 function mapDispatchToProps(dispatch) {
   return {
-    listActions: bindActionCreators(list, dispatch),
-    sendEvent: bindActionCreators(sendEvent, dispatch),
+    listAction: bindActionCreators(list, dispatch),
+    sendEventAction: bindActionCreators(sendEvent, dispatch),
     deleteFsmAction: bindActionCreators(remove, dispatch),
   }
 }

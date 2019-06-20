@@ -20,18 +20,18 @@ class TrayItemWidget extends React.Component {
   }
 
   render() {
-    const { classes } = this.props
+    const { classes, color, name, model } = this.props // eslint-disable-line
 
     return (
       <div
-        style={{ borderColor: this.props.color }}
+        style={{ borderColor: color }}
         draggable
         onDragStart={event => {
-				  event.dataTransfer.setData('storm-diagram-node', JSON.stringify(this.props.model))
+          event.dataTransfer.setData('storm-diagram-node', JSON.stringify(model))
         }}
         className={classes.trayItem}
       >
-        {this.props.name}
+        {name}
       </div>
     )
   }
