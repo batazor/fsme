@@ -17,7 +17,7 @@ export function list(opts = {}) {
       })
     })
     .catch(error => console.error(error))
-    // .catch(error => error.then(response => { throw response }))
+  // .catch(error => error.then(response => { throw response }))
 }
 
 export function get(id = 1) {

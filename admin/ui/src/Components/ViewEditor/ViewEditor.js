@@ -1,12 +1,12 @@
 import React, { Component } from 'react'
 import { withStyles } from '@material-ui/core/styles'
 import _ from 'lodash'
-import * as SRD from "storm-react-diagrams";
+import * as SRD from 'storm-react-diagrams'
 
-import "storm-react-diagrams/dist/style.min.css";
+import 'storm-react-diagrams/dist/style.min.css'
 
-import TrayWidget from "./TrayWidget";
-import TrayItemWidget from "./TrayItemWidget";
+import TrayWidget from './TrayWidget'
+import TrayItemWidget from './TrayItemWidget'
 
 const styles = {
   root: {
@@ -14,44 +14,43 @@ const styles = {
     flex: 1,
   },
   diagramLayer: {
-    display: "flex",
+    display: 'flex',
     flex: 1,
-    position: "relative",
+    position: 'relative',
     flexGrow: 1,
   },
   srd: {
-    height: "100%",
-    backgroundColor: "#3c3c3c !important",
-    backgroundImage: "linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent)",
-    backgroundSize: "50px 50px",
+    height: '100%',
+    backgroundColor: '#3c3c3c !important',
+    backgroundImage: 'linear-gradient(0deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent), linear-gradient(90deg, transparent 24%, rgba(255, 255, 255, .05) 25%, rgba(255, 255, 255, .05) 26%, transparent 27%, transparent 74%, rgba(255, 255, 255, .05) 75%, rgba(255, 255, 255, .05) 76%, transparent 77%, transparent)',
+    backgroundSize: '50px 50px',
   },
-};
+}
 
 class Graph extends Component {
-
   static getDerivedStateFromProps(props, state) {
     // if update state
     if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
-      const engine = state.engine
+      const { engine } = state
       const mapNode = {}
       const edges = []
-      let nodes = []
+      const nodes = []
 
-      var model = new SRD.DiagramModel();
+      const model = new SRD.DiagramModel()
 
       const Transitions = _.get(props, 'fsm.FSM.Transitions', null)
       if (Transitions) {
         Object.keys(Transitions).forEach((item, index) => mapNode[item] = index)
 
         Object.keys(Transitions).forEach(item => {
-          const color = props.fsm.FSM.State === item ? "rgb(192,255,0)" : "rgb(0,192,255)"
-          const node = new SRD.DefaultNodeModel(item, color);
+          const color = props.fsm.FSM.State === item ? 'rgb(192,255,0)' : 'rgb(0,192,255)'
+          const node = new SRD.DefaultNodeModel(item, color)
 
           // set UI
           const UI = _.get(props, `fsm.UI[${item}]`, {})
           const xPosition = UI.X || 100
           const yPosition = UI.Y || 100
-          node.setPosition(xPosition, yPosition);
+          node.setPosition(xPosition, yPosition)
 
           nodes.push(node)
         })
@@ -65,37 +64,37 @@ class Graph extends Component {
             const endNode = nodes[indexEndNode]
 
             if (endNode) {
-              const portOut = startNode.addOutPort("Out");
-              const portIn = endNode.addInPort("In");
+              const portOut = startNode.addOutPort('Out')
+              const portIn = endNode.addInPort('In')
 
-              const link = portOut.link(portIn);
+              const link = portOut.link(portIn)
               edges.push(link)
             }
           })
         })
       }
 
-      model.addAll(...nodes, ...edges);
+      model.addAll(...nodes, ...edges)
 
-      engine.setDiagramModel(model);
+      engine.setDiagramModel(model)
       return { engine, fsm: props.fsm }
     }
 
-    return null;
+    return null
   }
 
   constructor() {
-    super();
+    super()
 
     // setup the diagram engine
-    const engine = new SRD.DiagramEngine();
-    engine.installDefaultFactories();
+    const engine = new SRD.DiagramEngine()
+    engine.installDefaultFactories()
 
     // setup the diagram model
-    const model = new SRD.DiagramModel();
+    const model = new SRD.DiagramModel()
 
     // load model into engine
-    engine.setDiagramModel(model);
+    engine.setDiagramModel(model)
 
     this.state = {
       engine,
@@ -105,10 +104,10 @@ class Graph extends Component {
     this.onChangeFSM = this.onChangeFSM.bind(this)
   }
 
-	getDiagramEngine() {
+  getDiagramEngine() {
     this.onChangeFSM()
-		return this.state.engine;
-	}
+    return this.state.engine
+  }
 
   getNodeNameById(idNode) {
     const { nodes } = this.state.engine.diagramModel.serializeDiagram()
@@ -157,53 +156,53 @@ class Graph extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <div className={classes.root}>
         <TrayWidget>
-          <TrayItemWidget model={{ type: "in" }} name="In Node" color="rgb(192,255,0)" />
-          <TrayItemWidget model={{ type: "out" }} name="Out Node" color="rgb(0,192,255)" />
+          <TrayItemWidget model={{ type: 'in' }} name="In Node" color="rgb(192,255,0)" />
+          <TrayItemWidget model={{ type: 'out' }} name="Out Node" color="rgb(0,192,255)" />
         </TrayWidget>
 
         <div
-					className={classes.diagramLayer}
-					onDrop={event => {
-						var data = JSON.parse(event.dataTransfer.getData("storm-diagram-node"));
-						var nodesCount = _.keys(
-							this
-								.getDiagramEngine()
-								.getDiagramModel()
-								.getNodes()
-						).length;
+          className={classes.diagramLayer}
+          onDrop={event => {
+					  const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
+					  const nodesCount = _.keys(
+					    this
+					      .getDiagramEngine()
+					      .getDiagramModel()
+					      .getNodes(),
+					  ).length
 
-						var node = null;
-						if (data.type === "in") {
-							node = new SRD.DefaultNodeModel("Node " + (nodesCount + 1), "rgb(192,255,0)");
-							node.addInPort("In");
-						} else {
-							node = new SRD.DefaultNodeModel("Node " + (nodesCount + 1), "rgb(0,192,255)");
-							node.addOutPort("Out");
-						}
-						var points = this.getDiagramEngine().getRelativeMousePoint(event);
-						node.x = points.x;
-						node.y = points.y;
-						this
-							.getDiagramEngine()
-							.getDiagramModel()
-							.addNode(node);
-						this.forceUpdate();
-					}}
-					onDragOver={event => {
-						event.preventDefault();
-					}}
+					  let node = null
+					  if (data.type === 'in') {
+					    node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(192,255,0)')
+					    node.addInPort('In')
+					  } else {
+					    node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(0,192,255)')
+					    node.addOutPort('Out')
+					  }
+					  const points = this.getDiagramEngine().getRelativeMousePoint(event)
+					  node.x = points.x
+					  node.y = points.y
+					  this
+					    .getDiagramEngine()
+					    .getDiagramModel()
+					    .addNode(node)
+					  this.forceUpdate()
+          }}
+          onDragOver={event => {
+					  event.preventDefault()
+          }}
           onMouseUp={event => this.onChangeFSM(event)}
-				>
+        >
           <SRD.DiagramWidget className={classes.srd} diagramEngine={this.state.engine} />
         </div>
       </div>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Graph);
+export default withStyles(styles)(Graph)

@@ -3,14 +3,14 @@ import { withStyles } from '@material-ui/core/styles'
 import { withRouter } from 'react-router-dom'
 import { bindActionCreators } from 'redux'
 import { connect } from 'react-redux'
-import SpeedDial from '@material-ui/lab/SpeedDial';
-import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
-import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
-import FileCopyIcon from '@material-ui/icons/FileCopyOutlined';
-import SaveIcon from '@material-ui/icons/Save';
-import ShareIcon from '@material-ui/icons/Share';
-import DeleteIcon from '@material-ui/icons/Delete';
-import AddIcon from '@material-ui/icons/Add';
+import SpeedDial from '@material-ui/lab/SpeedDial'
+import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon'
+import SpeedDialAction from '@material-ui/lab/SpeedDialAction'
+import FileCopyIcon from '@material-ui/icons/FileCopyOutlined'
+import SaveIcon from '@material-ui/icons/Save'
+import ShareIcon from '@material-ui/icons/Share'
+import DeleteIcon from '@material-ui/icons/Delete'
+import AddIcon from '@material-ui/icons/Add'
 import { add, update, remove } from '../../actions/fsm'
 
 import styles from './styles'
@@ -29,33 +29,33 @@ class SpeedDialButton extends Component {
     this.setState(state => ({
       open: false,
       hidden: !state.hidden,
-    }));
+    }))
   };
 
   handleClick = () => {
     this.setState(state => ({
       open: !state.open,
-    }));
+    }))
   };
 
   handleOpen = () => {
     if (!this.state.hidden) {
       this.setState({
         open: true,
-      });
+      })
     }
   };
 
   handleClose = () => {
     this.setState({
       open: false,
-    });
+    })
   };
 
   onRedirect = url => this.props.history.push(url)
 
   onSave = () => {
-    if (this.props.match.params.id === "new") {
+    if (this.props.match.params.id === 'new') {
       this.props.addActions(this.props.match.params.id)
     } else {
       this.props.updateActions(this.props.match.params.id)
@@ -65,7 +65,7 @@ class SpeedDialButton extends Component {
   onDelete = () => {
     const { id } = this.props.match.params
 
-    if (id && id !== "new") {
+    if (id && id !== 'new') {
       this.props.deleteFsmAction(id)
         .then(res => {
           this.setState({ open: false })
@@ -75,10 +75,10 @@ class SpeedDialButton extends Component {
   }
 
   render() {
-    const { classes, match } = this.props;
+    const { classes, match } = this.props
 
     const listButton = []
-    if (match.params.id !== "new") {
+    if (match.params.id !== 'new') {
       listButton.push(
         <SpeedDialAction
           key="New"
@@ -87,7 +87,7 @@ class SpeedDialButton extends Component {
           tooltipPlacement="top-start"
           tooltipOpen
           onClick={() => this.onRedirect('/fsm/new/json-editor')}
-        />
+        />,
       )
     }
     if (match.params.type) {
@@ -99,10 +99,10 @@ class SpeedDialButton extends Component {
           tooltipPlacement="top-start"
           tooltipOpen
           onClick={this.onSave}
-        />
+        />,
       )
 
-      if (match.params.id !== "new") {
+      if (match.params.id !== 'new') {
         listButton.push(
           <SpeedDialAction
             key="Copy"
@@ -111,7 +111,7 @@ class SpeedDialButton extends Component {
             tooltipPlacement="top-start"
             tooltipOpen
             onClick={this.handleClick}
-          />
+          />,
         )
         listButton.push(
           <SpeedDialAction
@@ -121,7 +121,7 @@ class SpeedDialButton extends Component {
             tooltipPlacement="top-start"
             tooltipOpen
             onClick={this.onDelete}
-          />
+          />,
         )
       }
     }

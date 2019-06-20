@@ -1,0 +1,14 @@
+extends:
+  - react-app
+  - airbnb
+  - plugin:jsx-a11y/recommended
+parser: babel-eslint
+plugins:
+  - react
+  - jsx-a11y
+rules:
+  semi: ["error", "never"]
+  curly: [ 2, "all" ]
+  no-console: ["error", { allow: ["warn", "error", "group", "groupEnd"] }]
+  operator-linebreak: ["error", "after"]
+  arrow-parens: ["error", "as-needed"]

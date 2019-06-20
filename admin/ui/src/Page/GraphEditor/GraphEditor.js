@@ -22,7 +22,7 @@ class GraphEditorPage extends Component {
 
 GraphEditorPage.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
 function mapStateToProps(state) {
   return {
@@ -37,4 +37,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(GraphEditorPage);
+)(GraphEditorPage)

@@ -1,11 +1,11 @@
 import React, { Component } from 'react'
 import PropTypes from 'prop-types'
 import { bindActionCreators } from 'redux'
-import { withRouter } from 'react-router-dom'
+import { withRouter, Route } from 'react-router-dom'
 import { connect } from 'react-redux'
 import { withStyles } from '@material-ui/core/styles'
 import Paper from '@material-ui/core/Paper'
-import { Route } from "react-router-dom";
+
 
 import Home from '../Home'
 import GraphEditor from '../GraphEditor'
@@ -14,7 +14,7 @@ import JSONEditorPage from '../JSONEditor'
 import Toolbar from './UI/ToolBar'
 import Menu from './UI/Menu'
 import SubToolBar from './UI/SubToolBar'
-import SpeedDial from '../../Containers/SpeedDial';
+import SpeedDial from '../../Containers/SpeedDial'
 import Terminal from '../../Containers/Terminal'
 import { list, remove } from '../../actions/fsm'
 import { sendEvent } from '../../actions/event'
@@ -41,13 +41,13 @@ class MainPage extends Component {
     const { id } = this.props.match.params
 
     args.shift()
-    this.props.sendEvent(id, args.join(" "))
+    this.props.sendEvent(id, args.join(' '))
   }
 
   onDelete(args, print, runCommand) {
     const { id } = this.props.match.params
 
-    if (id && id !== "new") {
+    if (id && id !== 'new') {
       this.props.deleteFsmAction(id)
         .then(res => this.onRedirect('/fsm/new/json-editor'))
     }
@@ -64,7 +64,7 @@ class MainPage extends Component {
   }
 
   render() {
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <div className={classes.root}>
@@ -104,7 +104,7 @@ class MainPage extends Component {
 
 MainPage.propTypes = {
   classes: PropTypes.object.isRequired,
-};
+}
 
 function mapStateToProps(state) {
   return {
@@ -123,4 +123,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(withStyles(styles)(withRouter(MainPage)));
+)(withStyles(styles)(withRouter(MainPage)))

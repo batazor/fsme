@@ -1,14 +1,14 @@
 export default theme => ({
   root: {
     flex: 1,
-    display: "flex",
-    flexDirection: "column",
-    overflow: "auto",
+    display: 'flex',
+    flexDirection: 'column',
+    overflow: 'auto',
   },
   main: {
-    overflow: "auto",
-    display: "flex",
-    flexDirection: "column",
+    overflow: 'auto',
+    display: 'flex',
+    flexDirection: 'column',
   },
   rootPaper: {
     display: 'grid',

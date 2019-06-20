@@ -2,7 +2,6 @@ import React, { Component } from 'react'
 import MonacoEditor from 'react-monaco-editor'
 
 class JSONEditor extends Component {
-
   static getDerivedStateFromProps(props, state) {
     return {
       code: props.code,
@@ -13,7 +12,7 @@ class JSONEditor extends Component {
     super()
 
     this.state = {
-      code: "",
+      code: '',
     }
 
     this.onChange = this.onChange.bind(this)
@@ -22,7 +21,7 @@ class JSONEditor extends Component {
 
   editorDidMount(editor, monaco) {
     // console.log('editorDidMount', editor);
-    editor.focus();
+    editor.focus()
   }
 
   onChange(newValue, e) {
@@ -31,7 +30,7 @@ class JSONEditor extends Component {
       if (response._id !== undefined) {
         this.props.onChange(response)
       }
-    } catch(e) {
+    } catch (e) {
       // ignore update if it's invalid JSON
     }
   }

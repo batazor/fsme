@@ -18,7 +18,7 @@ class ViewEditorPage extends Component {
   }
 }
 
-ViewEditorPage.propTypes = {};
+ViewEditorPage.propTypes = {}
 
 function mapStateToProps(state) {
   return {
@@ -35,4 +35,4 @@ function mapDispatchToProps(dispatch) {
 export default connect(
   mapStateToProps,
   mapDispatchToProps,
-)(ViewEditorPage);
+)(ViewEditorPage)

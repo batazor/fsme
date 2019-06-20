@@ -1,19 +1,18 @@
-import React, { Component } from 'react';
-import { withStyles } from '@material-ui/core/styles';
+import React, { Component } from 'react'
+import { withStyles } from '@material-ui/core/styles'
 import Terminal from 'terminal-in-react'
 
 const styles = {
   root: {
-    display: "flex",
-    justifyContent: "center",
+    display: 'flex',
+    justifyContent: 'center',
     overflow: 'auto',
   },
-};
+}
 
 class Command extends Component {
-
   constructor(props) {
-    super(props);
+    super(props)
 
     this.state = {
       commands: {
@@ -28,16 +27,16 @@ class Command extends Component {
   }
 
   render() {
-    const { classes } = this.props;
-    const { commands, descriptions } = this.state;
+    const { classes } = this.props
+    const { commands, descriptions } = this.state
 
     return (
       <div className={classes.root}>
         <Terminal
-          color='green'
-          backgroundColor='black'
-          barColor='black'
-          style={{ fontWeight: "bold", fontSize: "1em" }}
+          color="green"
+          backgroundColor="black"
+          barColor="black"
+          style={{ fontWeight: 'bold', fontSize: '1em' }}
           commands={commands}
           descriptions={descriptions}
           showActions={false}
@@ -45,8 +44,8 @@ class Command extends Component {
           msg="These shell commands are defined internally.  Type `help' to see this list."
         />
       </div>
-    );
+    )
   }
 }
 
-export default withStyles(styles)(Command);
+export default withStyles(styles)(Command)

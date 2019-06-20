@@ -1,6 +1,6 @@
 import * as FSM from '../constants/fsm'
 
-export function sendEvent(id, nameEveent = "") {
+export function sendEvent(id, nameEveent = '') {
   return (dispatch, getState) => fetch(`${process.env.REACT_APP_API_URL}/${id}/event/${nameEveent}`, {
     method: 'POST',
     headers: {

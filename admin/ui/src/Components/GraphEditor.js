@@ -5,51 +5,50 @@ import {
 } from 'react-digraph'
 import _ from 'lodash'
 
-const GraphConfig =  {
+const GraphConfig = {
   NodeTypes: {
     empty: { // required to show empty nodes
-      typeText: "None",
-      shapeId: "#empty", // relates to the type property of a node
+      typeText: 'None',
+      shapeId: '#empty', // relates to the type property of a node
       shape: (
         <symbol viewBox="0 0 100 100" id="empty" key="0">
-          <circle cx="50" cy="50" r="45"></circle>
+          <circle cx="50" cy="50" r="45" />
         </symbol>
-      )
+      ),
     },
     custom: { // required to show empty nodes
-      typeText: "Custom",
-      shapeId: "#custom", // relates to the type property of a node
+      typeText: 'Custom',
+      shapeId: '#custom', // relates to the type property of a node
       shape: (
         <symbol viewBox="0 0 100 100" id="custom" key="0">
-          <circle style={{ fill: 'yellow' }} cx="50" cy="50" r="45"></circle>
+          <circle style={{ fill: 'yellow' }} cx="50" cy="50" r="45" />
         </symbol>
-      )
-    }
+      ),
+    },
   },
   NodeSubtypes: {},
   EdgeTypes: {
-    emptyEdge: {  // required to show empty edges
-      shapeId: "#emptyEdge",
+    emptyEdge: { // required to show empty edges
+      shapeId: '#emptyEdge',
       shape: (
         <symbol viewBox="0 0 50 50" id="emptyEdge" key="0">
           <circle cx="25" cy="25" r="8" fill="currentColor"> </circle>
         </symbol>
-      )
-    }
-  }
+      ),
+    },
+  },
 }
 
-const NODE_KEY = "id"       // Allows D3 to correctly update DOM
+const NODE_KEY = 'id' // Allows D3 to correctly update DOM
 
 const styles = {
   root: {
     display: 'flex',
     flex: 1,
   },
-};
+}
 
 class Graph extends Component {
-
   static getDerivedStateFromProps(props, state) {
     // if update state
     if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
@@ -64,18 +63,18 @@ class Graph extends Component {
         Object.keys(Transitions).forEach(item => {
           Object.keys(Transitions[item]).forEach(edge => {
             edges.push({
-              "source": mapNode[item],
-              "target": mapNode[edge],
+              source: mapNode[item],
+              target: mapNode[edge],
             })
           })
         })
 
         nodes = Object.keys(Transitions).map((item, index) => ({
-          "id": index + 1,
-          "title": item,
-          "x": 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
-          "y": 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
-          "type": item === props.fsm.FSM.State ? "custom" : "empty",
+          id: index + 1,
+          title: item,
+          x: 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
+          y: 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
+          type: item === props.fsm.FSM.State ? 'custom' : 'empty',
         }))
       }
 
@@ -84,43 +83,43 @@ class Graph extends Component {
           nodes,
           edges,
         },
-        selected: {}
+        selected: {},
       }
     }
 
-    return null;
+    return null
   }
 
   constructor() {
-    super();
+    super()
 
     this.state = {
       graph: {
         nodes: [],
         edges: [],
       },
-      selected: {}
+      selected: {},
     }
   }
 
   /* Define custom graph editing methods here */
 
   render() {
-    const nodes = this.state.graph.nodes;
-    const edges = this.state.graph.edges;
-    const selected = this.state.selected;
+    const { nodes } = this.state.graph
+    const { edges } = this.state.graph
+    const { selected } = this.state
 
-    const NodeTypes = GraphConfig.NodeTypes;
-    const NodeSubtypes = GraphConfig.NodeSubtypes;
-    const EdgeTypes = GraphConfig.EdgeTypes;
+    const { NodeTypes } = GraphConfig
+    const { NodeSubtypes } = GraphConfig
+    const { EdgeTypes } = GraphConfig
 
-    const { classes } = this.props;
+    const { classes } = this.props
 
     return (
       <div className={classes.root}>
         <GraphView
           className={classes.root}
-          ref='GraphView'
+          ref="GraphView"
           gridSize
           nodeKey={NODE_KEY}
           nodes={nodes}
@@ -139,9 +138,9 @@ class Graph extends Component {
           onDeleteEdge={this.onDeleteEdge}
         />
       </div>
-    );
+    )
   }
 }
 
 
-export default withStyles(styles)(Graph);
+export default withStyles(styles)(Graph)

@@ -1,6 +1,6 @@
-import React, { Component } from 'react';
-import { BrowserRouter as Router } from "react-router-dom";
-import { Route } from "react-router-dom";
+import React, { Component } from 'react'
+import { BrowserRouter as Router, Route } from 'react-router-dom'
+
 import Main from '../Main'
 
 class App extends Component {
@@ -12,8 +12,8 @@ class App extends Component {
           <Route path="/:service/:id/:type" exact component={Main} />
         </Router>
       </div>
-    );
+    )
   }
 }
 
-export default App;
+export default App

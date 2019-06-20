@@ -7,11 +7,11 @@ const initialState = {
         State: null,
         Transitions: {},
         Events: {},
-        Callbacks: {}
+        Callbacks: {},
       },
-      _id: "new",
-      Description: "Description",
-      Name: "Title",
+      _id: 'new',
+      Description: 'Description',
+      Name: 'Title',
     },
   },
 }
