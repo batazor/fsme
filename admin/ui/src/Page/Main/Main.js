@@ -72,7 +72,7 @@ class MainPage extends Component {
           onChangeOpenDrawer={this.onChangeOpenDrawer}
         />
 
-        <Route path="/fsm/:id" component={SubToolBar} />
+        <Route path="/fsm/:id/:service" component={SubToolBar} />
 
         <main className={classes.main}>
           <Paper className={classes.rootPaper} elevation={1}>
