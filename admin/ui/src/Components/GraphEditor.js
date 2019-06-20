@@ -54,28 +54,33 @@ class Graph extends Component {
     if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
       const mapNode = {}
       const edges = []
-      let nodes = []
+      const nodes = []
 
       const Transitions = _.get(props, 'fsm.FSM.Transitions', null)
       if (Transitions) {
         Object.keys(Transitions).forEach((item, index) => mapNode[item] = index + 1)
 
-        Object.keys(Transitions).forEach(item => {
+        Object.keys(Transitions).forEach((item, index) => {
           Object.keys(Transitions[item]).forEach(edge => {
             edges.push({
               source: mapNode[item],
               target: mapNode[edge],
             })
           })
-        })
 
-        nodes = Object.keys(Transitions).map((item, index) => ({
-          id: index + 1,
-          title: item,
-          x: 150 + Math.random() * index * 300 + (index % 2 ? 0 : 200),
-          y: 230 + Math.random() * index * 200 + (index % 2 ? 0 : 450),
-          type: item === props.fsm.FSM.State ? 'custom' : 'empty',
-        }))
+          // set UI
+          const UI = _.get(props, `fsm.UI[${item}]`, {})
+          const xPosition = UI.X || 100
+          const yPosition = UI.Y || 100
+
+          nodes.push({
+            id: index + 1,
+            title: item,
+            x: xPosition,
+            y: yPosition,
+            type: item === props.fsm.FSM.State ? 'custom' : 'empty',
+          })
+        })
       }
 
       return {
