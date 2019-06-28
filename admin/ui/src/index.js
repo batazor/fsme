@@ -19,7 +19,7 @@ ReactDOM.render(
         </ConnectedRouter>
       </PersistGate>
     </Provider>
-  ), document.getElementById('root'),
+  ), document.getElementById('root'), // eslint-disable-line
 )
 
 // If you want your app to work offline and load faster, you can change

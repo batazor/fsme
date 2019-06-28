@@ -1,11 +1,15 @@
 extends:
-  - react-app
+  # - react-app
   - airbnb
   - plugin:jsx-a11y/recommended
 parser: babel-eslint
 plugins:
   - react
   - jsx-a11y
+globals:
+  window: true
+  fetch: true
+  navigator: true
 rules:
   semi: ["error", "never"]
   curly: [ 2, "all" ]
@@ -18,4 +22,4 @@ rules:
   no-return-assign: 0
   import/no-extraneous-dependencies: 0 # Incorrect work with decorators
   import/prefer-default-export: 0
-  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx"] }]
+  react/jsx-filename-extension: [1, { "extensions": [".js", ".jsx", ".ts", "tsx"] }]

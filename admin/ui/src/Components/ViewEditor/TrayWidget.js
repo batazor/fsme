@@ -1,4 +1,5 @@
 import * as React from 'react'
+import PropTypes from 'prop-types'
 import { withStyles } from '@material-ui/core/styles'
 
 const styles = {
@@ -12,10 +13,10 @@ const styles = {
 /**
  * @author Dylan Vorster
  */
-class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
-  static defaultProps: TrayWidgetProps = {};
+class TrayWidget extends React.Component {
+  static defaultProps = {};
 
-  constructor(props: TrayWidgetProps) {
+  constructor(props) {
     super(props)
     this.state = {}
   }
@@ -25,6 +26,11 @@ class TrayWidget extends React.Component<TrayWidgetProps, TrayWidgetState> {
 
     return <div className={classes.tray}>{children}</div>
   }
+}
+
+TrayWidget.propTypes = {
+  classes: PropTypes.object.isRequired, // eslint-disable-line
+  children: PropTypes.node.isRequired,
 }
 
 export default withStyles(styles)(TrayWidget)
