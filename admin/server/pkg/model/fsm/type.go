@@ -26,6 +26,7 @@ type PublicFSM struct {
 type UI struct {
 	X int
 	Y int
+	TYPE string // in, out, inOut
 }
 
 type FSM interface {

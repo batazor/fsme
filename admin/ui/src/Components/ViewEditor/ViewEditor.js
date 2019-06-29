@@ -36,6 +36,7 @@ class Graph extends Component {
       const mapNode = {}
       const edges = []
       const nodes = []
+      const ports = {}
 
       const model = new SRD.DiagramModel()
 
@@ -53,23 +54,38 @@ class Graph extends Component {
           const yPosition = UI.Y || 100
           node.setPosition(xPosition, yPosition)
 
+          // set Port
+          ports[item] = {}
+          switch (UI.TYPE) {
+            case 'In':
+              ports[item].In = node.addInPort('In')
+              break
+            case 'Out':
+              ports[item].Out = node.addOutPort('Out')
+              break
+            case 'InOut':
+              ports[item].Out = node.addOutPort('Out')
+              ports[item].In = node.addInPort('In')
+              break
+            default:
+          }
+
           nodes.push(node)
         })
 
         Object.keys(Transitions).forEach(item => {
-          const indexStartNode = mapNode[item]
-          const startNode = nodes[indexStartNode]
-
           Object.keys(Transitions[item]).forEach(edge => {
             const indexEndNode = mapNode[edge]
             const endNode = nodes[indexEndNode]
 
             if (endNode) {
-              const portOut = startNode.addOutPort('Out')
-              const portIn = endNode.addInPort('In')
+              const portOut = ports[edge].Out
+              const portIn = ports[item].In
 
-              const link = portOut.link(portIn)
-              edges.push(link)
+              if (portIn && portOut) {
+                const link = portOut.link(portIn)
+                edges.push(link)
+              }
             }
           })
         })
@@ -106,41 +122,73 @@ class Graph extends Component {
   }
 
   onChangeFSM() {
-    /* eslint-disable */
-    console.warn('onChangeFSM', this.state.engine.diagramModel.serializeDiagram())
-    console.warn('FSM', this.props.fsm.FSM)
+    const { onChange } = this.props
+    const { fsm, engine } = this.state
 
-    const { nodes, links } = this.state.engine.diagramModel.serializeDiagram()
+    // /* eslint-disable */
+    const { nodes, links } = engine.diagramModel.serializeDiagram()
 
     // Update Node
     nodes.forEach(node => {
-      const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${node.name}]`, {})
-      _.set(this.state.fsm, `FSM.Transitions[${node.name}]`, isExistNode)
+      const isExistNode = _.get(fsm, `FSM.Transitions[${node.name}]`, {})
+      _.set(fsm, `FSM.Transitions[${node.name}]`, isExistNode)
 
       // Update UI
-      const nodeUI = _.get(this.state.fsm, `UI[${node.name}]`, {})
-      nodeUI.X = node.x
-      nodeUI.Y = node.y
-      _.set(this.state.fsm, `UI[${node.name}]`, nodeUI)
+      const nodeUI = _.get(fsm, `UI[${node.name}]`, {})
+      nodeUI.X = parseInt(node.x, 10)
+      nodeUI.Y = parseInt(node.y, 10)
+
+      _.set(fsm, `UI[${node.name}]`, nodeUI)
     })
 
     // Update Link
     links.forEach(link => {
-      const StartNode = this.getNodeNameById(link.source)
-      const EndNode = this.getNodeNameById(link.target)
+      const StartNode = this.getNodeNameById(link.target)
+      const EndNode = this.getNodeNameById(link.source)
 
-      if (EndNode) {
-        const isExistNode = _.get(this.state.fsm, `FSM.Transitions[${StartNode}]`, {})
-        isExistNode[EndNode] = {}
-        _.set(this.state.fsm, `FSM.Transitions[${StartNode}]`, isExistNode)
+      if (StartNode && EndNode) {
+        _.set(fsm, `FSM.Transitions[${StartNode}][${EndNode}]`, {})
       }
     })
 
-    // const Transitions = _.get(props, 'fsm.FSM.Transitions', [])
-    console.warn('STATE', this.state.fsm.FSM)
+    // /* eslint-enable */
+    onChange(fsm)
+  }
 
-    this.props.onChange(this.state.fsm)
-    /* eslint-enable */
+  onDrop(event) {
+    const { fsm } = this.state
+    const { onChange } = this.props
+    const nodeUI = {}
+    const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
+    const nodesCount = _.keys(
+      this
+        .getDiagramEngine()
+        .getDiagramModel()
+        .getNodes(),
+    ).length
+
+    const nameNode = `Node ${nodesCount + 1}`
+
+    const node = new SRD.DefaultNodeModel(nameNode, 'rgb(192,255,0)')
+    if (data.type === 'in') {
+      node.addInPort('In')
+      nodeUI.TYPE = 'In'
+    }
+    if (data.type === 'out') {
+      nodeUI.TYPE = 'Out'
+    }
+    if (data.type === 'inOut') {
+      nodeUI.TYPE = 'InOut'
+    }
+
+    const points = this.getDiagramEngine().getRelativeMousePoint(event)
+    nodeUI.X = points.x
+    nodeUI.Y = points.y
+
+    _.set(fsm, `UI[${nameNode}]`, nodeUI)
+    _.set(fsm, `FSM.Transitions[${nameNode}]`, {})
+
+    onChange(fsm)
   }
 
   getDiagramEngine() {
@@ -165,41 +213,15 @@ class Graph extends Component {
     return (
       <div className={classes.root}>
         <TrayWidget>
-          <TrayItemWidget model={{ type: 'in' }} name="In Node" color="rgb(192,255,0)" />
-          <TrayItemWidget model={{ type: 'out' }} name="Out Node" color="rgb(0,192,255)" />
+          <TrayItemWidget model={{ type: 'in' }} name="Start" color="rgb(192,255,0)" />
+          <TrayItemWidget model={{ type: 'inOut' }} name="Event" color="rgb(192,255,0)" />
+          <TrayItemWidget model={{ type: 'out' }} name="End" color="rgb(0,192,255)" />
         </TrayWidget>
 
         <div // eslint-disable-line
           className={classes.diagramLayer}
-          onDrop={event => {
-            const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
-            const nodesCount = _.keys(
-              this
-                .getDiagramEngine()
-                .getDiagramModel()
-                .getNodes(),
-            ).length
-
-            let node = null
-            if (data.type === 'in') {
-              node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(192,255,0)')
-              node.addInPort('In')
-            } else {
-              node = new SRD.DefaultNodeModel(`Node ${nodesCount + 1}`, 'rgb(0,192,255)')
-              node.addOutPort('Out')
-            }
-            const points = this.getDiagramEngine().getRelativeMousePoint(event)
-            node.x = points.x
-            node.y = points.y
-            this
-              .getDiagramEngine()
-              .getDiagramModel()
-              .addNode(node)
-            this.forceUpdate()
-          }}
-          onDragOver={event => {
-            event.preventDefault()
-          }}
+          onDrop={event => this.onDrop(event)}
+          onDragOver={event => event.preventDefault()}
           onMouseUp={event => this.onChangeFSM(event)}
         >
           <SRD.DiagramWidget className={classes.srd} diagramEngine={engine} />
@@ -211,6 +233,8 @@ class Graph extends Component {
 
 Graph.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
+
+  onChange: PropTypes.func.isRequired,
 }
 
 export default withStyles(styles)(Graph)
