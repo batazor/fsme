@@ -44,6 +44,7 @@ class Graph extends Component {
       if (Transitions) {
         Object.keys(Transitions).forEach((item, index) => mapNode[item] = index)
 
+        // Add node
         Object.keys(Transitions).forEach(item => {
           const color = props.fsm.FSM.State === item ? 'rgb(192,255,0)' : 'rgb(0,192,255)'
           const node = new SRD.DefaultNodeModel(item, color)
@@ -73,6 +74,7 @@ class Graph extends Component {
           nodes.push(node)
         })
 
+        // Add link
         Object.keys(Transitions).forEach(item => {
           Object.keys(Transitions[item]).forEach(edge => {
             const indexEndNode = mapNode[edge]
@@ -84,6 +86,13 @@ class Graph extends Component {
 
               if (portIn && portOut) {
                 const link = portOut.link(portIn)
+
+                // Add label [event]
+                const Event = _.get(props, `fsm.FSM.Events[${edge}]`)
+                if (Event) {
+                  link.addLabel(Event)
+                }
+
                 edges.push(link)
               }
             }
@@ -148,6 +157,9 @@ class Graph extends Component {
 
       if (StartNode && EndNode) {
         _.set(fsm, `FSM.Transitions[${StartNode}][${EndNode}]`, {})
+
+        // Add event
+        _.set(fsm, `FSM.Events[${EndNode}]`, EndNode)
       }
     })
 
@@ -167,7 +179,7 @@ class Graph extends Component {
         .getNodes(),
     ).length
 
-    const nameNode = `Node ${nodesCount + 1}`
+    const nameNode = `Node ${nodesCount}`
 
     const node = new SRD.DefaultNodeModel(nameNode, 'rgb(192,255,0)')
     if (data.type === 'in') {
