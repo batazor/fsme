@@ -70,11 +70,11 @@ func Create(w http.ResponseWriter, r *http.Request) {
 	// Add transition
 	// ...code
 	// as example
-	FSM.AddStateTransitionRules("a", "b", "c")
-	FSM.AddStateTransitionRules("b", "d", "e")
+	//FSM.AddStateTransitionRules("a", "b", "c")
+	//FSM.AddStateTransitionRules("b", "d", "e")
 	// Add event
-	FSM.AddEvent("start", "a")
-	FSM.AddEvent("to b", "b")
+	//FSM.AddEvent("start", "a")
+	//FSM.AddEvent("to b", "b")
 	// ...code
 	// Add CB
 	// ...code

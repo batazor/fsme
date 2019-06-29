@@ -31,7 +31,9 @@ const styles = {
 class Graph extends Component {
   static getDerivedStateFromProps(props, state) {
     // if update state
-    if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
+    console.warn('getDerivedStateFromProps')
+    if (!_.isEqual(props, state)) {
+    // if (_.get(props, 'fsm.FSM.State') !== _.get(state, 'fsm.FSM.State')) {
       const { engine } = state
       const mapNode = {}
       const edges = []
@@ -109,8 +111,8 @@ class Graph extends Component {
     return null
   }
 
-  constructor() {
-    super()
+  constructor(props) {
+    super(props)
 
     // setup the diagram engine
     const engine = new SRD.DiagramEngine()
@@ -126,15 +128,14 @@ class Graph extends Component {
       engine,
     }
 
-    this.getDiagramEngine = this.getDiagramEngine.bind(this)
     this.onChangeFSM = this.onChangeFSM.bind(this)
   }
 
   onChangeFSM() {
-    const { onChange } = this.props
-    const { fsm, engine } = this.state
+    const { fsm, onChange } = this.props
+    const { engine } = this.state
 
-    // /* eslint-disable */
+    /* eslint-disable */
     const { nodes, links } = engine.diagramModel.serializeDiagram()
 
     // Update Node
@@ -152,8 +153,8 @@ class Graph extends Component {
 
     // Update Link
     links.forEach(link => {
-      const StartNode = this.getNodeNameById(link.target)
-      const EndNode = this.getNodeNameById(link.source)
+      const StartNode = this.getNodeNameById(link.source)
+      const EndNode = this.getNodeNameById(link.target)
 
       if (StartNode && EndNode) {
         _.set(fsm, `FSM.Transitions[${StartNode}][${EndNode}]`, {})
@@ -163,18 +164,17 @@ class Graph extends Component {
       }
     })
 
-    // /* eslint-enable */
+    /* eslint-enable */
     onChange(fsm)
   }
 
   onDrop(event) {
-    const { fsm } = this.state
-    const { onChange } = this.props
+    const { fsm, onChange } = this.props
+    const { engine } = this.state
     const nodeUI = {}
     const data = JSON.parse(event.dataTransfer.getData('storm-diagram-node'))
     const nodesCount = _.keys(
-      this
-        .getDiagramEngine()
+      engine
         .getDiagramModel()
         .getNodes(),
     ).length
@@ -193,19 +193,14 @@ class Graph extends Component {
       nodeUI.TYPE = 'InOut'
     }
 
-    const points = this.getDiagramEngine().getRelativeMousePoint(event)
-    nodeUI.X = points.x
-    nodeUI.Y = points.y
+    const points = engine.getRelativeMousePoint(event)
+    nodeUI.X = parseInt(points.x, 10)
+    nodeUI.Y = parseInt(points.y, 10)
 
     _.set(fsm, `UI[${nameNode}]`, nodeUI)
     _.set(fsm, `FSM.Transitions[${nameNode}]`, {})
 
     onChange(fsm)
-  }
-
-  getDiagramEngine() {
-    this.onChangeFSM()
-    return this.state.engine // eslint-disable-line
   }
 
   getNodeNameById(idNode) {
@@ -234,10 +229,12 @@ class Graph extends Component {
           className={classes.diagramLayer}
           onDrop={event => this.onDrop(event)}
           onDragOver={event => event.preventDefault()}
-          onMouseUp={event => this.onChangeFSM(event)}
+          // onMouseUp={event => this.onChangeFSM(event)}
         >
           <SRD.DiagramWidget className={classes.srd} diagramEngine={engine} />
         </div>
+
+        <button type="submit" onClick={() => this.onChangeFSM()}>onSave</button>
       </div>
     )
   }
@@ -245,6 +242,7 @@ class Graph extends Component {
 
 Graph.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
+  fsm: PropTypes.object.isRequired, // eslint-disable-line
 
   onChange: PropTypes.func.isRequired,
 }

@@ -1,0 +1,40 @@
+{
+  "FSM": {
+    "State": "Node 2",
+    "Transitions": {
+      "Node 0": {
+        "Node 1": {}
+      },
+      "Node 1": {
+        "Node 2": {}
+      },
+      "Node 2": {}
+    },
+    "Events": {
+      "Node 0": "Node 0",
+      "Node 1": "Node 1",
+      "Node 2": "Node 2"
+    },
+    "Callbacks": {}
+  },
+  "_id": "5d16c4699284a58f43174d89",
+  "Description": "Description",
+  "Name": "Pipeline",
+  "UI": {
+    "Node 0": {
+      "X": 163,
+      "Y": 180,
+      "TYPE": "In"
+    },
+    "Node 1": {
+      "X": 296,
+      "Y": 169,
+      "TYPE": "InOut"
+    },
+    "Node 2": {
+      "X": 468,
+      "Y": 177,
+      "TYPE": "Out"
+    }
+  }
+}
