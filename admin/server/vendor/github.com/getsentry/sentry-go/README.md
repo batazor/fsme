@@ -34,7 +34,7 @@ $ go get github.com/getsentry/sentry-go
 Or, if you are already using Go Modules, specify a version number as well:
 
 ```bash
-$ go get github.com/getsentry/sentry-go@0.1
+$ go get github.com/getsentry/sentry-go@v0.1.0
 ```
 
 ## Configuration
@@ -43,12 +43,17 @@ To use `sentry-go`, you’ll need to import the `sentry-go` package and initiali
 
 More on this in [Configuration](https://docs.sentry.io/platforms/go/config/) section.
 
+## Usage
+
+By default, Sentry Go SDK uses asynchronous transport, which in the code example below requires an explicit awaiting for event delivery to be finished using `sentry.Flush` method. It is necessary, because otherwise the program would not wait for the async HTTP calls to return a response, and exit the process immediately when it reached the end of the `main` function. It would not be required inside a running goroutine or if you would use `HTTPSyncTransport`, which you can read about in `Transports` section.
+
 ```go
 package main
 
 import (
     "fmt"
     "os"
+    "time"
 
     "github.com/getsentry/sentry-go"
 )
@@ -65,22 +70,24 @@ func main() {
   f, err := os.Open("filename.ext")
   if err != nil {
     sentry.CaptureException(err)
+    sentry.Flush(time.Second * 5)
   }
 }
 ```
 
 For more detailed information about how to get the most out of `sentry-go` there is additional documentation available:
 
-- [Configuration](https://docs.sentry.io/platforms/go/config.md)
-- [Error Reporting](https://docs.sentry.io/error-reporting/quickstart.md?platform=go)
-- [Enriching Error Data](https://docs.sentry.io/enriching-error-data/context.md?platform=go)
-- [Integrations](https://docs.sentry.io/platforms/go/integrations.md)
-  - [net/http](https://docs.sentry.io/platforms/go/http.md)
-  - [echo](https://docs.sentry.io/platforms/go/echo.md)
-  - [gin](https://docs.sentry.io/platforms/go/gin.md)
-  - [iris](https://docs.sentry.io/platforms/go/iris.md)
-  - [martini](https://docs.sentry.io/platforms/go/martini.md)
-  - [negroni](https://docs.sentry.io/platforms/go/negroni.md)
+- [Configuration](https://docs.sentry.io/platforms/go/config)
+- [Error Reporting](https://docs.sentry.io/error-reporting/quickstart?platform=go)
+- [Enriching Error Data](https://docs.sentry.io/enriching-error-data/context?platform=go)
+- [Transports](https://docs.sentry.io/platforms/go/transports)
+- [Integrations](https://docs.sentry.io/platforms/go/integrations)
+  - [net/http](https://docs.sentry.io/platforms/go/http)
+  - [echo](https://docs.sentry.io/platforms/go/echo)
+  - [gin](https://docs.sentry.io/platforms/go/gin)
+  - [iris](https://docs.sentry.io/platforms/go/iris)
+  - [martini](https://docs.sentry.io/platforms/go/martini)
+  - [negroni](https://docs.sentry.io/platforms/go/negroni)
 
 ## Resources:
 
