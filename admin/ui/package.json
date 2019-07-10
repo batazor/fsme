@@ -16,7 +16,7 @@
     "react-monaco-editor": "^0.26.2",
     "react-router": "^5.0.1",
     "react-scripts": "^3.0.1",
-    "redux": "^4.0.1",
+    "redux": "^4.0.4",
     "redux-persist": "^5.10.0",
     "redux-thunk": "^2.3.0",
     "terminal-in-react": "^4.3.1",
