@@ -1,8 +1,16 @@
 # Changelog
 
+## v0.1.2
+
+- feat: Better source code location resolution and more useful inapp frames (#26)
+- feat: Use `noopTransport` when no `Dsn` provided (#27)
+- ref: Allow empty `Dsn` instead of returning an error (#22)
+- fix: Use `NewScope` instead of literal struct inside a `scope.Clear` call (#24)
+- fix: Add to `WaitGroup` before the request is put inside a buffer (#25)
+
 ## v0.1.1
 
-- fix: Check for initialized Client in AddBreadcrumbs (#20)
+- fix: Check for initialized `Client` in `AddBreadcrumbs` (#20)
 - build: Bump version when releasing with Craft (#19)
 
 ## v0.1.0
