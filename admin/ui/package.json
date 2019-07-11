@@ -11,7 +11,7 @@
     "localforage": "^1.7.3",
     "lodash": "^4.17.14",
     "react": "^16.8.6",
-    "react-digraph": "^6.4.0",
+    "react-digraph": "^6.4.1",
     "react-dom": "^16.8.6",
     "react-monaco-editor": "^0.26.2",
     "react-router": "^5.0.1",
