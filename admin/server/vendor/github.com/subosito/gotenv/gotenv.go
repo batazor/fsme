@@ -18,20 +18,11 @@ const (
 	variablePattern = `(\\)?(\$)(\{?([A-Z0-9_]+)?\}?)`
 )
 
-// ErrFormat is an error for invalid line format
-type ErrFormat struct {
-	Message string
-}
-
-func (e ErrFormat) Error() string {
-	return e.Message
-}
-
 // Env holds key/value pair of valid environment variable
 type Env map[string]string
 
 /*
-Load is function to load a file or multiple files and then export the valid variables into environment variables if they are not exists.
+Load is a function to load a file or multiple files and then export the valid variables into environment variables if they do not exist.
 When it's called with no argument, it will load `.env` file on the current path and set the environment variables.
 Otherwise, it will loop over the filenames parameter and set the proper environment variables.
 */
@@ -40,41 +31,30 @@ func Load(filenames ...string) error {
 }
 
 /*
-MustLoad is similar function like Load but will panic when supplied files are not exist.
-*/
-func MustLoad(filenames ...string) {
-	err := Load(filenames...)
-	if err != nil {
-		panic(err.Error())
-	}
-}
-
-/*
-OverLoad is function to load a file or multiple files and then export and override the valid variables into environment variables.
+OverLoad is a function to load a file or multiple files and then export and override the valid variables into environment variables.
 */
 func OverLoad(filenames ...string) error {
 	return loadenv(true, filenames...)
 }
 
 /*
-MustOverLoad is similar function like OverLoad but will panic when supplied files are not exist.
+Must is wrapper function that will panic when supplied function returns an error.
 */
-func MustOverLoad(filenames ...string) {
-	err := OverLoad(filenames...)
-	if err != nil {
+func Must(fn func(filenames ...string) error, filenames ...string) {
+	if err := fn(filenames...); err != nil {
 		panic(err.Error())
 	}
 }
 
 /*
-Apply is function to load an io Reader then export the valid variables into environment variables if they are not exist.
+Apply is a function to load an io Reader then export the valid variables into environment variables if they do not exist.
 */
 func Apply(r io.Reader) error {
 	return parset(r, false)
 }
 
 /*
-OverApply is function to load an io Reader then export and override the valid variables into environment variables.
+OverApply is a function to load an io Reader then export and override the valid variables into environment variables.
 */
 func OverApply(r io.Reader) error {
 	return parset(r, true)
@@ -90,11 +70,13 @@ func loadenv(override bool, filenames ...string) error {
 		if err != nil {
 			return err
 		}
-		defer f.Close()
+
 		err = parset(f, override)
 		if err != nil {
 			return err
 		}
+
+		f.Close()
 	}
 
 	return nil
@@ -125,7 +107,7 @@ func setenv(key, val string, override bool) {
 }
 
 // Parse is a function to parse line by line any io.Reader supplied and returns the valid Env key/value pair of valid variables.
-// It expands the value of a variable from environment variable, but does not set the value to the environment itself.
+// It expands the value of a variable from the environment variable but does not set the value to the environment itself.
 // This function is skipping any invalid lines and only processing the valid one.
 func Parse(r io.Reader) Env {
 	env, _ := StrictParse(r)
@@ -133,8 +115,8 @@ func Parse(r io.Reader) Env {
 }
 
 // StrictParse is a function to parse line by line any io.Reader supplied and returns the valid Env key/value pair of valid variables.
-// It expands the value of a variable from environment variable, but does not set the value to the environment itself.
-// This function is returning an error if there is any invalid lines.
+// It expands the value of a variable from the environment variable but does not set the value to the environment itself.
+// This function is returning an error if there are any invalid lines.
 func StrictParse(r io.Reader) (Env, error) {
 	env := make(Env)
 	scanner := bufio.NewScanner(r)
@@ -165,23 +147,7 @@ func parseLine(s string, env Env) error {
 	rm := rl.FindStringSubmatch(s)
 
 	if len(rm) == 0 {
-		st := strings.TrimSpace(s)
-
-		if (st == "") || strings.HasPrefix(st, "#") {
-			return nil
-		}
-
-		if strings.HasPrefix(st, "export") {
-			vs := strings.SplitN(st, " ", 2)
-
-			if len(vs) > 1 {
-				if _, ok := env[vs[1]]; !ok {
-					return ErrFormat{Message: fmt.Sprintf("Line `%s` has an unset variable", st)}
-				}
-			}
-		}
-
-		return ErrFormat{Message: fmt.Sprintf("Line `%s` doesn't match format", s)}
+		return checkFormat(s, env)
 	}
 
 	key := rm[1]
@@ -211,34 +177,72 @@ func parseLine(s string, env Env) error {
 
 	rv := regexp.MustCompile(variablePattern)
 	fv := func(s string) string {
-		if strings.HasPrefix(s, "\\") {
-			return strings.TrimPrefix(s, "\\")
-		}
-
-		if hsq {
-			return s
-		}
-
-		sn := `(\$)(\{?([A-Z0-9_]+)\}?)`
-		rn := regexp.MustCompile(sn)
-		mn := rn.FindStringSubmatch(s)
-
-		if len(mn) == 0 {
-			return s
-		}
-
-		v := mn[3]
-
-		replace, ok := env[v]
-		if !ok {
-			replace = os.Getenv(v)
-		}
-
-		return replace
+		return varReplacement(s, hsq, env)
 	}
 
 	val = rv.ReplaceAllStringFunc(val, fv)
+	val = parseVal(val, env)
 
+	env[key] = val
+	return nil
+}
+
+func parseExport(st string, env Env) error {
+	if strings.HasPrefix(st, "export") {
+		vs := strings.SplitN(st, " ", 2)
+
+		if len(vs) > 1 {
+			if _, ok := env[vs[1]]; !ok {
+				return fmt.Errorf("line `%s` has an unset variable", st)
+			}
+		}
+	}
+
+	return nil
+}
+
+func varReplacement(s string, hsq bool, env Env) string {
+	if strings.HasPrefix(s, "\\") {
+		return strings.TrimPrefix(s, "\\")
+	}
+
+	if hsq {
+		return s
+	}
+
+	sn := `(\$)(\{?([A-Z0-9_]+)\}?)`
+	rn := regexp.MustCompile(sn)
+	mn := rn.FindStringSubmatch(s)
+
+	if len(mn) == 0 {
+		return s
+	}
+
+	v := mn[3]
+
+	replace, ok := env[v]
+	if !ok {
+		replace = os.Getenv(v)
+	}
+
+	return replace
+}
+
+func checkFormat(s string, env Env) error {
+	st := strings.TrimSpace(s)
+
+	if (st == "") || strings.HasPrefix(st, "#") {
+		return nil
+	}
+
+	if err := parseExport(st, env); err != nil {
+		return err
+	}
+
+	return fmt.Errorf("line `%s` doesn't match format", s)
+}
+
+func parseVal(val string, env Env) string {
 	if strings.Contains(val, "=") {
 		if !(val == "\n" || val == "\r") {
 			kv := strings.Split(val, "\n")
@@ -257,6 +261,5 @@ func parseLine(s string, env Env) error {
 		}
 	}
 
-	env[key] = val
-	return nil
+	return val
 }
