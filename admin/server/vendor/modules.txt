@@ -43,7 +43,7 @@ github.com/spf13/jwalterweatherman
 github.com/spf13/pflag
 # github.com/spf13/viper v1.4.1-0.20190613085137-3b4aca75714a
 github.com/spf13/viper
-# github.com/subosito/gotenv v1.1.1
+# github.com/subosito/gotenv v1.2.0
 github.com/subosito/gotenv
 # github.com/xdg/scram v0.0.0-20180814205039-7eeb5667e42c
 github.com/xdg/scram
