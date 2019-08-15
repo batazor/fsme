@@ -14,8 +14,6 @@ const styles = {
  * @author Dylan Vorster
  */
 class TrayWidget extends React.Component {
-  static defaultProps = {};
-
   constructor(props) {
     super(props)
     this.state = {}

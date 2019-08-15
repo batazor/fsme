@@ -1,4 +1,5 @@
 import React, { Component } from 'react'
+import PropTypes from 'prop-types'
 import MonacoEditor from 'react-monaco-editor'
 
 class JSONEditor extends Component {
@@ -47,6 +48,10 @@ class JSONEditor extends Component {
       />
     )
   }
+}
+
+JSONEditor.propTypes = {
+  code: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default JSONEditor

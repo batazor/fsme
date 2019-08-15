@@ -148,6 +148,7 @@ class Graph extends Component {
 
 Graph.propTypes = {
   classes: PropTypes.object.isRequired, // eslint-disable-line
+  fsm: PropTypes.object.isRequired, // eslint-disable-line
 }
 
 export default withStyles(styles)(Graph)
