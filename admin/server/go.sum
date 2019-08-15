@@ -14,6 +14,7 @@ github.com/batazor/fsme v0.0.0-20190710205306-ec6795b68d38 h1:qZdgysBSqVPMJsB+fK
 github.com/batazor/fsme v0.0.0-20190722230852-6a29c1c97135 h1:OS8DHHltc14Q4kSXPSLkYK9aT+3gGhblyFREBUvI1QQ=
 github.com/batazor/fsme v0.0.0-20190726145531-697222e24be1 h1:5BlEK0FB+SoQT7qcNmd69heuV9GI0jkzworBPcN2Yg0=
 github.com/batazor/fsme v0.0.0-20190731131712-21f9bed2e345 h1:Y/9rGVl90epgQGKNh2E0pmB5KO7sFN84aiHdd0r9xFo=
+github.com/batazor/fsme v0.0.0-20190815013310-debff6a5bc99 h1:TtLaiMQUXCzKdvcVuFBxo2BThK8iiN+2z7NHuDjElzQ=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
@@ -125,6 +126,7 @@ github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+
 github.com/stretchr/testify v1.2.2/go.mod h1:a8OnRcib4nhh0OaRAV+Yts87kKdq0PP7pXfy6kDkUVs=
 github.com/stretchr/testify v1.3.0 h1:TivCn/peBQ7UY8ooIcPgZFpTNSz0Q2U6UrFlUfqbe0Q=
 github.com/stretchr/testify v1.3.0/go.mod h1:M5WIy9Dh21IEIfnGCwXGc5bZfKNJtfHm1UVUgZn+9EI=
+github.com/stretchr/testify v1.4.0/go.mod h1:j7eGeouHqKxXV5pUuKE4zz7dFj8WfuZ+81PSLYec5m4=
 github.com/subosito/gotenv v1.1.1 h1:TWxckSF6WVKWbo2M3tMqCtWa9NFUgqM1SSynxmYONOI=
 github.com/subosito/gotenv v1.1.1/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
 github.com/subosito/gotenv v1.2.0/go.mod h1:N0PQaV/YGNqwC0u51sEeR/aUtSLEXKX9iv69rRypqCw=
