@@ -49,7 +49,7 @@ github.com/subosito/gotenv
 github.com/xdg/scram
 # github.com/xdg/stringprep v1.0.0
 github.com/xdg/stringprep
-# go.mongodb.org/mongo-driver v1.0.4
+# go.mongodb.org/mongo-driver v1.1.0
 go.mongodb.org/mongo-driver/bson/primitive
 go.mongodb.org/mongo-driver/bson
 go.mongodb.org/mongo-driver/mongo
@@ -65,21 +65,19 @@ go.mongodb.org/mongo-driver/mongo/writeconcern
 go.mongodb.org/mongo-driver/x/bsonx
 go.mongodb.org/mongo-driver/x/mongo/driver
 go.mongodb.org/mongo-driver/x/mongo/driver/auth
+go.mongodb.org/mongo-driver/x/mongo/driver/connstring
+go.mongodb.org/mongo-driver/x/mongo/driver/description
+go.mongodb.org/mongo-driver/x/mongo/driver/operation
 go.mongodb.org/mongo-driver/x/mongo/driver/session
 go.mongodb.org/mongo-driver/x/mongo/driver/topology
 go.mongodb.org/mongo-driver/x/mongo/driver/uuid
-go.mongodb.org/mongo-driver/x/network/command
-go.mongodb.org/mongo-driver/x/network/connection
-go.mongodb.org/mongo-driver/x/network/connstring
-go.mongodb.org/mongo-driver/x/network/description
-go.mongodb.org/mongo-driver/x/network/result
 go.mongodb.org/mongo-driver/tag
-go.mongodb.org/mongo-driver/x/network/wiremessage
+go.mongodb.org/mongo-driver/x/mongo/driver/address
+go.mongodb.org/mongo-driver/x/mongo/driver/wiremessage
 go.mongodb.org/mongo-driver/x/mongo/driver/auth/internal/gssapi
-go.mongodb.org/mongo-driver/x/network/address
-go.mongodb.org/mongo-driver/version
-go.mongodb.org/mongo-driver/x/network/compressor
 go.mongodb.org/mongo-driver/internal
+go.mongodb.org/mongo-driver/x/mongo/driver/dns
+go.mongodb.org/mongo-driver/version
 # go.uber.org/atomic v1.4.0
 go.uber.org/atomic
 # go.uber.org/multierr v1.1.0
