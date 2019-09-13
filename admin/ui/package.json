@@ -7,7 +7,7 @@
     "@material-ui/icons": "^4.2.1",
     "classnames": "^2.2.6",
     "connected-react-router": "^6.5.2",
-    "history": "^4.9.0",
+    "history": "^4.10.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
     "monaco-editor": "^0.17.1",
