@@ -10,7 +10,7 @@
     "history": "^4.10.1",
     "localforage": "^1.7.3",
     "lodash": "^4.17.15",
-    "monaco-editor": "^0.17.1",
+    "monaco-editor": "^0.20.0",
     "react": "^16.10.1",
     "react-digraph": "^6.5.0",
     "react-dom": "^16.10.1",
