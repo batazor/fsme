@@ -1,5 +1,49 @@
 # Changelog
 
+## Unreleased
+
+- "I am running away from my responsibilities. And it feels good." – Michael Scott, Season 4, "Money"
+
+## v0.4.0
+
+- fix(stacktrace): Correctly report package names (#127)
+- fix(stacktrace): Do not rely on AbsPath of files (#123)
+- build: Require github.com/ugorji/go@v1.1.7 (#110)
+- fix: Correctly store last event id (#99)
+- fix: Include request body in event payload (#94)
+- build: Reset go.mod version to 1.11 (#109)
+- fix: Eliminate data race in modules integration (#105)
+- feat: Add support for path prefixes in the DSN (#102)
+- feat: Add HTTPClient option (#86)
+- feat: Extract correct type and value from top-most error (#85)
+- feat: Check for broken pipe errors in Gin integration (#82)
+- fix: Client.CaptureMessage accept nil EventModifier (#72)
+
+## v0.3.1
+
+- feat: Send extra information exposed by the Go runtime (#76)
+- fix: Handle new lines in module integration (#65)
+- fix: Make sure that cache is locked when updating for contextifyFramesIntegration
+- ref: Update Iris integration and example to version 12
+- misc: Remove indirect dependencies in order to move them to separate go.mod files
+
+## v0.3.0
+
+- feat: Retry event marshalling without contextual data if the first pass fails
+- fix: Include `url.Parse` error in `DsnParseError`
+- fix: Make more `Scope` methods safe for concurrency
+- fix: Synchronize concurrent access to `Hub.client`
+- ref: Remove mutex from `Scope` exported API
+- ref: Remove mutex from `Hub` exported API
+- ref: Compile regexps for `filterFrames` only once
+- ref: Change `SampleRate` type to `float64`
+- doc: `Scope.Clear` not safe for concurrent use
+- ci: Test sentry-go with `go1.13`, drop `go1.10`
+
+_NOTE:_
+This version removes some of the internal APIs that landed publicly (namely `Hub/Scope` mutex structs) and may require (but shouldn't) some changes to your code.
+It's not done through major version update, as we are still in `0.x` stage.
+
 ## v0.2.1
 
 - fix: Run `Contextify` integration on `Threads` as well
@@ -15,7 +59,7 @@
 - feat: Move frames context reading into `contextifyFramesIntegration` (#28)
 
 _NOTE:_
-In case of any performance isues due to source contexts IO, you can let us know and turn off the integration in the meantime with:
+In case of any performance issues due to source contexts IO, you can let us know and turn off the integration in the meantime with:
 
 ```go
 sentry.Init(sentry.ClientOptions{
