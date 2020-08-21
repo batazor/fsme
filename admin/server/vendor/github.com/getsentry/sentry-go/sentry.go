@@ -5,8 +5,12 @@ import (
 	"time"
 )
 
-// Version Sentry-Go SDK Version
-const Version = "0.2.1"
+// Version is the version of the sentry-go SDK.
+const Version = "0.4.0"
+
+// apiVersion is the minimum version of the Sentry API compatible with the
+// sentry-go SDK.
+const apiVersion = "7"
 
 // Init initializes whole SDK by creating new `Client` and binding it to the current `Hub`
 func Init(options ClientOptions) error {
