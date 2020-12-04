@@ -29,6 +29,7 @@ type serverConfig struct {
 	poolMonitor               *event.PoolMonitor
 	connectionPoolMaxIdleTime time.Duration
 	registry                  *bsoncodec.Registry
+	monitoringDisabled        bool
 }
 
 func newServerConfig(opts ...ServerOption) (*serverConfig, error) {
@@ -52,6 +53,13 @@ func newServerConfig(opts ...ServerOption) (*serverConfig, error) {
 // ServerOption configures a server.
 type ServerOption func(*serverConfig) error
 
+func withMonitoringDisabled(fn func(bool) bool) ServerOption {
+	return func(cfg *serverConfig) error {
+		cfg.monitoringDisabled = fn(cfg.monitoringDisabled)
+		return nil
+	}
+}
+
 // WithConnectionOptions configures the server's connections.
 func WithConnectionOptions(fn func(...ConnectionOption) []ConnectionOption) ServerOption {
 	return func(cfg *serverConfig) error {
@@ -64,6 +72,14 @@ func WithConnectionOptions(fn func(...ConnectionOption) []ConnectionOption) Serv
 func WithCompressionOptions(fn func(...string) []string) ServerOption {
 	return func(cfg *serverConfig) error {
 		cfg.compressionOpts = fn(cfg.compressionOpts...)
+		return nil
+	}
+}
+
+// WithServerAppName configures the server's application name.
+func WithServerAppName(fn func(string) string) ServerOption {
+	return func(cfg *serverConfig) error {
+		cfg.appname = fn(cfg.appname)
 		return nil
 	}
 }
@@ -86,7 +102,7 @@ func WithHeartbeatTimeout(fn func(time.Duration) time.Duration) ServerOption {
 }
 
 // WithMaxConnections configures the maximum number of connections to allow for
-// a given server. If max is 0, then the default will be 100
+// a given server. If max is 0, then the default will be math.MaxInt64.
 func WithMaxConnections(fn func(uint64) uint64) ServerOption {
 	return func(cfg *serverConfig) error {
 		cfg.maxConns = fn(cfg.maxConns)
