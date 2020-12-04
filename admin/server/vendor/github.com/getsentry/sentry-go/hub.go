@@ -22,7 +22,7 @@ const defaultMaxBreadcrumbs = 30
 const maxBreadcrumbs = 100
 
 // Initial instance of the Hub that has no `Client` bound and an empty `Scope`
-var currentHub = NewHub(nil, NewScope()) // nolint: gochecknoglobals
+var currentHub = NewHub(nil, NewScope()) //nolint: gochecknoglobals
 
 // Hub is the central object that can manages scopes and clients.
 //
@@ -35,14 +35,31 @@ var currentHub = NewHub(nil, NewScope()) // nolint: gochecknoglobals
 // possible in which case it might become necessary to manually work with the
 // hub. This is for instance the case when working with async code.
 type Hub struct {
-	sync.RWMutex
+	mu          sync.RWMutex
 	stack       *stack
 	lastEventID EventID
 }
 
 type layer struct {
+	// mu protects concurrent reads and writes to client.
+	mu     sync.RWMutex
 	client *Client
-	scope  *Scope
+	// scope is read-only, not protected by mu.
+	scope *Scope
+}
+
+// Client returns the layer's client. Safe for concurrent use.
+func (l *layer) Client() *Client {
+	l.mu.RLock()
+	defer l.mu.RUnlock()
+	return l.client
+}
+
+// SetClient sets the layer's client. Safe for concurrent use.
+func (l *layer) SetClient(c *Client) {
+	l.mu.Lock()
+	defer l.mu.Unlock()
+	l.client = c
 }
 
 type stack []*layer
@@ -69,8 +86,8 @@ func (hub *Hub) LastEventID() EventID {
 }
 
 func (hub *Hub) stackTop() *layer {
-	hub.RLock()
-	defer hub.RUnlock()
+	hub.mu.RLock()
+	defer hub.mu.RUnlock()
 
 	stack := hub.stack
 	if stack == nil {
@@ -96,7 +113,7 @@ func (hub *Hub) Clone() *Hub {
 	if scope != nil {
 		scope = scope.Clone()
 	}
-	return NewHub(top.client, scope)
+	return NewHub(top.Client(), scope)
 }
 
 // Scope returns top-level `Scope` of the current `Hub` or `nil` if no `Scope` is bound.
@@ -114,7 +131,7 @@ func (hub *Hub) Client() *Client {
 	if top == nil {
 		return nil
 	}
-	return top.client
+	return top.Client()
 }
 
 // PushScope pushes a new scope for the current `Hub` and reuses previously bound `Client`.
@@ -123,7 +140,7 @@ func (hub *Hub) PushScope() *Scope {
 
 	var client *Client
 	if top != nil {
-		client = top.client
+		client = top.Client()
 	}
 
 	var scope *Scope
@@ -133,8 +150,8 @@ func (hub *Hub) PushScope() *Scope {
 		scope = NewScope()
 	}
 
-	hub.Lock()
-	defer hub.Unlock()
+	hub.mu.Lock()
+	defer hub.mu.Unlock()
 
 	*hub.stack = append(*hub.stack, &layer{
 		client: client,
@@ -146,8 +163,8 @@ func (hub *Hub) PushScope() *Scope {
 
 // PushScope pops the most recent scope for the current `Hub`.
 func (hub *Hub) PopScope() {
-	hub.Lock()
-	defer hub.Unlock()
+	hub.mu.Lock()
+	defer hub.mu.Unlock()
 
 	stack := *hub.stack
 	stackLen := len(stack)
@@ -160,7 +177,7 @@ func (hub *Hub) PopScope() {
 func (hub *Hub) BindClient(client *Client) {
 	top := hub.stackTop()
 	if top != nil {
-		top.client = client
+		top.SetClient(client)
 	}
 }
 
@@ -193,7 +210,13 @@ func (hub *Hub) CaptureEvent(event *Event) *EventID {
 	if client == nil || scope == nil {
 		return nil
 	}
-	return client.CaptureEvent(event, nil, scope)
+	eventID := client.CaptureEvent(event, nil, scope)
+	if eventID != nil {
+		hub.lastEventID = *eventID
+	} else {
+		hub.lastEventID = ""
+	}
+	return eventID
 }
 
 // CaptureMessage calls the method of a same name on currently bound `Client` instance
@@ -204,7 +227,13 @@ func (hub *Hub) CaptureMessage(message string) *EventID {
 	if client == nil || scope == nil {
 		return nil
 	}
-	return client.CaptureMessage(message, nil, scope)
+	eventID := client.CaptureMessage(message, nil, scope)
+	if eventID != nil {
+		hub.lastEventID = *eventID
+	} else {
+		hub.lastEventID = ""
+	}
+	return eventID
 }
 
 // CaptureException calls the method of a same name on currently bound `Client` instance
@@ -215,7 +244,13 @@ func (hub *Hub) CaptureException(exception error) *EventID {
 	if client == nil || scope == nil {
 		return nil
 	}
-	return client.CaptureException(exception, &EventHint{OriginalException: exception}, scope)
+	eventID := client.CaptureException(exception, &EventHint{OriginalException: exception}, scope)
+	if eventID != nil {
+		hub.lastEventID = *eventID
+	} else {
+		hub.lastEventID = ""
+	}
+	return eventID
 }
 
 // AddBreadcrumb records a new breadcrumb.
