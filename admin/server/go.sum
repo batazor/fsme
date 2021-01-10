@@ -30,6 +30,8 @@ github.com/batazor/fsme v0.0.0-20201204215312-ef550e24cd05 h1:cBF3rk4HUI2+gjueVH
 github.com/batazor/fsme v0.0.0-20201204215312-ef550e24cd05/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20201207120617-19b3b8af07fd h1:aXgllKKXlu8gHOj/4NnZg0Bh/vSp54ZCI0bQYvJ/xlA=
 github.com/batazor/fsme v0.0.0-20201207120617-19b3b8af07fd/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20210106130802-45f43858d781 h1:aBR81EmkijIoAxbqLBHCr3ZJqLC9p5U0Cmek7rNQ07Q=
+github.com/batazor/fsme v0.0.0-20210106130802-45f43858d781/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/cespare/xxhash v1.1.0/go.mod h1:XrSqR1VqqWfGrhpAt58auRo0WTKS1nRRg3ghfAqPWnc=
