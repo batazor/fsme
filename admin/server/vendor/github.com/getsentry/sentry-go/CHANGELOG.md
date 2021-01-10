@@ -1,8 +1,143 @@
 # Changelog
 
-## Unreleased
+## v0.9.0
 
-- "I am running away from my responsibilities. And it feels good." – Michael Scott, Season 4, "Money"
+- feat: Initial tracing and performance monitoring support (#285)
+- doc: Revamp sentryhttp documentation (#304)
+- fix: Hub.PopScope never empties the scope stack (#300)
+- ref: Report Event.Timestamp in local time (#299)
+- ref: Report Breadcrumb.Timestamp in local time (#299)
+
+_NOTE:_
+This version introduces support for [Sentry's Performance Monitoring](https://docs.sentry.io/platforms/go/performance/).
+The new tracing capabilities are beta, and we plan to expand them on future versions. Feedback is welcome, please open new issues on GitHub.
+The `sentryhttp` package got better API docs, an [updated usage example](https://github.com/getsentry/sentry-go/tree/master/example/http) and support for creating automatic transactions as part of Performance Monitoring.
+
+## v0.8.0
+
+- build: Bump required version of Iris (#296)
+- fix: avoid unnecessary allocation in Client.processEvent (#293)
+- doc: Remove deprecation of sentryhttp.HandleFunc (#284)
+- ref: Update sentryhttp example (#283)
+- doc: Improve documentation of sentryhttp package (#282)
+- doc: Clarify SampleRate documentation (#279)
+- fix: Remove RawStacktrace (#278)
+- docs: Add example of custom HTTP transport
+- ci: Test against go1.15, drop go1.12 support (#271)
+
+_NOTE:_
+This version comes with a few updates. Some examples and documentation have been
+improved. We've bumped the supported version of the Iris framework to avoid
+LGPL-licensed modules in the module dependency graph.
+The `Exception.RawStacktrace` and `Thread.RawStacktrace` fields have been
+removed to conform to Sentry's ingestion protocol, only `Exception.Stacktrace`
+and `Thread.Stacktrace` should appear in user code.
+
+## v0.7.0
+
+- feat: Include original error when event cannot be encoded as JSON (#258)
+- feat: Use Hub from request context when available (#217, #259)
+- feat: Extract stack frames from golang.org/x/xerrors (#262)
+- feat: Make Environment Integration preserve existing context data (#261)
+- feat: Recover and RecoverWithContext with arbitrary types (#268)
+- feat: Report bad usage of CaptureMessage and CaptureEvent (#269)
+- feat: Send debug logging to stderr by default (#266)
+- feat: Several improvements to documentation (#223, #245, #250, #265)
+- feat: Example of Recover followed by panic (#241, #247)
+- feat: Add Transactions and Spans (to support OpenTelemetry Sentry Exporter) (#235, #243, #254)
+- fix: Set either Frame.Filename or Frame.AbsPath (#233)
+- fix: Clone requestBody to new Scope (#244)
+- fix: Synchronize access and mutation of Hub.lastEventID (#264)
+- fix: Avoid repeated syscalls in prepareEvent (#256)
+- fix: Do not allocate new RNG for every event (#256)
+- fix: Remove stale replace directive in go.mod (#255)
+- fix(http): Deprecate HandleFunc, remove duplication (#260)
+
+_NOTE:_
+This version comes packed with several fixes and improvements and no breaking
+changes.
+Notably, there is a change in how the SDK reports file names in stack traces
+that should resolve any ambiguity when looking at stack traces and using the
+Suspect Commits feature.
+We recommend all users to upgrade.
+
+## v0.6.1
+
+- fix: Use NewEvent to init Event struct (#220)
+
+_NOTE:_
+A change introduced in v0.6.0 with the intent of avoiding allocations made a
+pattern used in official examples break in certain circumstances (attempting
+to write to a nil map).
+This release reverts the change such that maps in the Event struct are always
+allocated.
+
+## v0.6.0
+
+- feat: Read module dependencies from runtime/debug (#199)
+- feat: Support chained errors using Unwrap (#206)
+- feat: Report chain of errors when available (#185)
+- **[breaking]** fix: Accept http.RoundTripper to customize transport (#205)
+  Before the SDK accepted a concrete value of type `*http.Transport` in
+  `ClientOptions`, now it accepts any value implementing the `http.RoundTripper`
+  interface. Note that `*http.Transport` implements `http.RoundTripper`, so most
+  code bases will continue to work unchanged.  
+  Users of custom transport gain the ability to pass in other implementations of
+  `http.RoundTripper` and may be able to simplify their code bases.
+- fix: Do not panic when scope event processor drops event (#192)
+- **[breaking]** fix: Use time.Time for timestamps (#191)  
+  Users of sentry-go typically do not need to manipulate timestamps manually.
+  For those who do, the field type changed from `int64` to `time.Time`, which
+  should be more convenient to use. The recommended way to get the current time
+  is `time.Now().UTC()`.
+- fix: Report usage error including stack trace (#189)
+- feat: Add Exception.ThreadID field (#183)
+- ci: Test against Go 1.14, drop 1.11 (#170)
+- feat: Limit reading bytes from request bodies (#168)
+- **[breaking]** fix: Rename fasthttp integration package sentryhttp => sentryfasthttp  
+  The current recommendation is to use a named import, in which case existing
+  code should not require any change:
+  ```go
+  package main
+
+  import (
+  	"fmt"
+
+  	"github.com/getsentry/sentry-go"
+  	sentryfasthttp "github.com/getsentry/sentry-go/fasthttp"
+  	"github.com/valyala/fasthttp"
+  )
+  ```
+
+_NOTE:_
+This version includes some new features and a few breaking changes, none of
+which should pose troubles with upgrading. Most code bases should be able to
+upgrade without any changes.
+
+## v0.5.1
+
+- fix: Ignore err.Cause() when it is nil (#160)
+
+## v0.5.0
+
+- fix: Synchronize access to HTTPTransport.disabledUntil (#158)
+- docs: Update Flush documentation (#153)
+- fix: HTTPTransport.Flush panic and data race (#140)
+
+_NOTE:_
+This version changes the implementation of the default transport, modifying the
+behavior of `sentry.Flush`. The previous behavior was to wait until there were
+no buffered events; new concurrent events kept `Flush` from returning. The new
+behavior is to wait until the last event prior to the call to `Flush` has been
+sent or the timeout; new concurrent events have no effect. The new behavior is
+inline with the [Unified API
+Guidelines](https://docs.sentry.io/development/sdk-dev/unified-api/).
+
+We have updated the documentation and examples to clarify that `Flush` is meant
+to be called typically only once before program termination, to wait for
+in-flight events to be sent to Sentry. Calling `Flush` after every event is not
+recommended, as it introduces unnecessary latency to the surrounding function.
+Please verify the usage of `sentry.Flush` in your code base.
 
 ## v0.4.0
 
@@ -29,7 +164,7 @@
 
 ## v0.3.0
 
-- feat: Retry event marshalling without contextual data if the first pass fails
+- feat: Retry event marshaling without contextual data if the first pass fails
 - fix: Include `url.Parse` error in `DsnParseError`
 - fix: Make more `Scope` methods safe for concurrency
 - fix: Synchronize concurrent access to `Hub.client`
