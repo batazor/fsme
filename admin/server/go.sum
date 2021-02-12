@@ -58,6 +58,8 @@ github.com/batazor/fsme v0.0.0-20210201100617-76405f909d87 h1:Bl1KNtbo9gBx0zuE8e
 github.com/batazor/fsme v0.0.0-20210201100617-76405f909d87/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20210212095847-12aac00e026d h1:d3g5dykZA7YShO/3yK8vxM2V9oQwu/wHniVqRWS2NCM=
 github.com/batazor/fsme v0.0.0-20210212095847-12aac00e026d/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20210212120216-0571ba56484c h1:1/13WkVtRSSLW+KFi6uXdVpUvKdAum2EJGmkMPL5pQk=
+github.com/batazor/fsme v0.0.0-20210212120216-0571ba56484c/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
@@ -368,6 +370,7 @@ github.com/spf13/viper v1.4.1-0.20190613085137-3b4aca75714a h1:cacRVtgORjXatS3du
 github.com/spf13/viper v1.4.1-0.20190613085137-3b4aca75714a/go.mod h1:LLu5zwCkRPEBY0VPcRMqh58VtcO8Lp1DgqwstU7rYlk=
 github.com/spf13/viper v1.6.1 h1:VPZzIkznI1YhVMRi6vNFLHSwhnhReBfgTxIPccpfdZk=
 github.com/spf13/viper v1.6.1/go.mod h1:t3iDnF5Jlj76alVNuyFBk5oUMCvsrkbvZK0WQdfDi5k=
+github.com/spf13/viper v1.7.1 h1:pM5oEahlgWv/WnHXpgbKz7iLIxRf65tye2Ci+XFK5sk=
 github.com/spf13/viper v1.7.1/go.mod h1:8WkrPz2fc9jxqZNCJI/76HCieCp4Q8HaLFoCha5qpdg=
 github.com/stretchr/objx v0.1.0/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
 github.com/stretchr/objx v0.1.1/go.mod h1:HFkY916IF+rwdDfMAkV7OtwuqBVzrE8GR6GFx+wExME=
