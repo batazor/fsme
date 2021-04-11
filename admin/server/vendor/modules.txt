@@ -16,7 +16,7 @@ github.com/aws/aws-sdk-go/aws/awsutil
 github.com/aws/aws-sdk-go/aws/client/metadata
 github.com/aws/aws-sdk-go/private/protocol
 github.com/aws/aws-sdk-go/internal/sdkmath
-# github.com/batazor/fsme v0.0.0-20210411182058-a37e5b5b8212
+# github.com/batazor/fsme v0.0.0-20210411204927-85b1b62f2251
 github.com/batazor/fsme/fsm
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
