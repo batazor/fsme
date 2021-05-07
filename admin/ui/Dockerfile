@@ -1,4 +1,4 @@
-FROM node:12-alpine AS build
+FROM node:16-alpine AS build
 
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
