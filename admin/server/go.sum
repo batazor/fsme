@@ -702,6 +702,8 @@ github.com/batazor/fsme v0.0.0-20210522134153-834660400a74 h1:99FQ6X+bxdFe/Afq2G
 github.com/batazor/fsme v0.0.0-20210522134153-834660400a74/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20210522154610-887ab9bda962 h1:M5TVr49dJfPimgKx7LncDN+nAryQerUiQ05VuS7otfQ=
 github.com/batazor/fsme v0.0.0-20210522154610-887ab9bda962/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20210522180828-0256caf6bb54 h1:HhVMCUJVZ5CDBEE5Yr+xDawCV4irteYREbBtCzb9X5w=
+github.com/batazor/fsme v0.0.0-20210522180828-0256caf6bb54/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
 github.com/bgentry/speakeasy v0.1.0/go.mod h1:+zsyZBPWlz7T6j88CTgSN5bM796AkVf0kBD4zp0CCIs=
