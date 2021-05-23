@@ -16,7 +16,7 @@ github.com/aws/aws-sdk-go/internal/strings
 github.com/aws/aws-sdk-go/internal/sync/singleflight
 github.com/aws/aws-sdk-go/private/protocol
 github.com/aws/aws-sdk-go/private/protocol/rest
-# github.com/batazor/fsme v0.0.0-20210523012512-1ce98fce5302
+# github.com/batazor/fsme v0.0.0-20210523034635-d6908a5e8f87
 github.com/batazor/fsme/fsm
 # github.com/fsnotify/fsnotify v1.4.7
 github.com/fsnotify/fsnotify
