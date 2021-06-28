@@ -9,7 +9,7 @@ require (
 	github.com/spf13/viper v1.8.1
 	github.com/xdg/stringprep v1.0.0 // indirect
 	go.mongodb.org/mongo-driver v1.5.3
-	go.uber.org/zap v1.17.0
+	go.uber.org/zap v1.18.0
 )
 
 exclude github.com/batazor/fsme v0.0.0
