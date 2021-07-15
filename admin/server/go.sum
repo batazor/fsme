@@ -1791,6 +1791,8 @@ github.com/batazor/fsme v0.0.0-20210714200456-621b67e1e805 h1:5nPXgmI1hkXMpJC0UU
 github.com/batazor/fsme v0.0.0-20210714200456-621b67e1e805/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20210714213831-0d7542493ff3 h1:MC+wxwlOBxA2Flu/fiLN6YufFKxuaoKkeAp6w1JIDqk=
 github.com/batazor/fsme v0.0.0-20210714213831-0d7542493ff3/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20210714235310-2abaf58255b5 h1:YbbHug/t/EKp7RzxYS3tU3tHPfqJ0m+ND0Q9Ze5j5/4=
+github.com/batazor/fsme v0.0.0-20210714235310-2abaf58255b5/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
