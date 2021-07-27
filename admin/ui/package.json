@@ -14,7 +14,7 @@
     "react": "^16.14.0",
     "react-digraph": "^6.7.1",
     "react-dom": "^16.14.0",
-    "react-monaco-editor": "^0.43.0",
+    "react-monaco-editor": "^0.44.0",
     "react-router": "^5.2.0",
     "react-scripts": "^3.4.4",
     "redux": "^4.1.0",
