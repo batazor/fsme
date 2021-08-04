@@ -1,4 +1,4 @@
-# github.com/batazor/fsme v0.0.0-20210804005809-07256d80c040
+# github.com/batazor/fsme v0.0.0-20210804023809-273bb5c9ca58
 github.com/batazor/fsme/fsm
 # github.com/fsnotify/fsnotify v1.4.9
 github.com/fsnotify/fsnotify
