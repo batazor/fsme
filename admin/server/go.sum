@@ -2827,6 +2827,8 @@ github.com/batazor/fsme v0.0.0-20210916132529-9da7cb7dc488 h1:epT8JIt/Z3Wr9KJ3LN
 github.com/batazor/fsme v0.0.0-20210916132529-9da7cb7dc488/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/batazor/fsme v0.0.0-20210916153426-d196cfbad31d h1:sG1yQ4+Pv3ROsssNBQ10yVixW4pJrTjK2GqW4zGdtD0=
 github.com/batazor/fsme v0.0.0-20210916153426-d196cfbad31d/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
+github.com/batazor/fsme v0.0.0-20210916174737-4d4f353cb930 h1:9zQEjmKmdt2FQBQBfG8Q8wM2KmbXU6/SOQqX4KFFJn8=
+github.com/batazor/fsme v0.0.0-20210916174737-4d4f353cb930/go.mod h1:jtwodoyhLuK2l/xpNc9Sg8fy889te4dUjb3VR67u1J0=
 github.com/benbjohnson/clock v1.1.0/go.mod h1:J11/hYXuz8f4ySSvYwY0FKfm+ezbsZBKZxNJlLklBHA=
 github.com/beorn7/perks v0.0.0-20180321164747-3a771d992973/go.mod h1:Dwedo/Wpr24TaqPxmxbtue+5NUziq4I4S80YR8gNf3Q=
 github.com/beorn7/perks v1.0.0/go.mod h1:KWe93zE9D1o94FZ5RNwFwVgaQK1VOXiVxmqh+CedLV8=
