@@ -1,7 +1,7 @@
 go 1.12
 
 require (
-	github.com/batazor/fsme v0.0.0-20211011121822-a5c36ed8c0b5
+	github.com/batazor/fsme v0.0.0-20211011144641-4f8bc76a5a21
 	github.com/getsentry/sentry-go v0.11.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.0
