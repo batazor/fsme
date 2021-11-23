@@ -37,7 +37,7 @@ type Update struct {
 	writeConcern             *writeconcern.WriteConcern
 	retry                    *driver.RetryMode
 	result                   UpdateResult
-	crypt                    *driver.Crypt
+	crypt                    driver.Crypt
 	serverAPI                *driver.ServerAPIOptions
 }
 
@@ -339,7 +339,7 @@ func (u *Update) Retry(retry driver.RetryMode) *Update {
 }
 
 // Crypt sets the Crypt object to use for automatic encryption and decryption.
-func (u *Update) Crypt(crypt *driver.Crypt) *Update {
+func (u *Update) Crypt(crypt driver.Crypt) *Update {
 	if u == nil {
 		u = new(Update)
 	}

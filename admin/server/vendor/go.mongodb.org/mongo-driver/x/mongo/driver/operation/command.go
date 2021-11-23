@@ -32,9 +32,7 @@ type Command struct {
 	monitor        *event.CommandMonitor
 	resultResponse bsoncore.Document
 	resultCursor   *driver.BatchCursor
-	srvr           driver.Server
-	desc           description.Server
-	crypt          *driver.Crypt
+	crypt          driver.Crypt
 	serverAPI      *driver.ServerAPIOptions
 	createCursor   bool
 	cursorOpts     driver.CursorOptions
@@ -189,7 +187,7 @@ func (c *Command) ServerSelector(selector description.ServerSelector) *Command {
 }
 
 // Crypt sets the Crypt object to use for automatic encryption and decryption.
-func (c *Command) Crypt(crypt *driver.Crypt) *Command {
+func (c *Command) Crypt(crypt driver.Crypt) *Command {
 	if c == nil {
 		c = new(Command)
 	}
