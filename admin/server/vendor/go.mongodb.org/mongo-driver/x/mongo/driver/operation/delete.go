@@ -27,7 +27,7 @@ type Delete struct {
 	clock        *session.ClusterClock
 	collection   string
 	monitor      *event.CommandMonitor
-	crypt        *driver.Crypt
+	crypt        driver.Crypt
 	database     string
 	deployment   driver.Deployment
 	selector     description.ServerSelector
@@ -188,7 +188,7 @@ func (d *Delete) CommandMonitor(monitor *event.CommandMonitor) *Delete {
 }
 
 // Crypt sets the Crypt object to use for automatic encryption and decryption.
-func (d *Delete) Crypt(crypt *driver.Crypt) *Delete {
+func (d *Delete) Crypt(crypt driver.Crypt) *Delete {
 	if d == nil {
 		d = new(Delete)
 	}
