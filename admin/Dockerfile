@@ -30,7 +30,7 @@ RUN CGO_ENABLED=0 \
   -o app ./cmd/server
 
 # Application image ============================================================
-FROM nginx:1.21-alpine
+FROM nginx:1.23-alpine
 
 ARG PORT=80
 ENV PORT=$PORT
