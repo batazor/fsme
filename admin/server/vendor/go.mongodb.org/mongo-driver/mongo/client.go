@@ -546,6 +546,13 @@ func (c *Client) configure(opts *options.ClientOptions) error {
 			topology.WithMinConnections(func(uint64) uint64 { return *opts.MinPoolSize }),
 		)
 	}
+	// MaxConnecting
+	if opts.MaxConnecting != nil {
+		serverOpts = append(
+			serverOpts,
+			topology.WithMaxConnecting(func(uint64) uint64 { return *opts.MaxConnecting }),
+		)
+	}
 	// PoolMonitor
 	if opts.PoolMonitor != nil {
 		serverOpts = append(
@@ -836,7 +843,7 @@ func (c *Client) Database(name string, opts ...*options.DatabaseOptions) *Databa
 // databases are included in the result. It cannot be nil. An empty document (e.g. bson.D{}) should be used to include
 // all databases.
 //
-// The opts paramter can be used to specify options for this operation (see the options.ListDatabasesOptions documentation).
+// The opts parameter can be used to specify options for this operation (see the options.ListDatabasesOptions documentation).
 //
 // For more information about the command, see https://docs.mongodb.com/manual/reference/command/listDatabases/.
 func (c *Client) ListDatabases(ctx context.Context, filter interface{}, opts ...*options.ListDatabasesOptions) (ListDatabasesResult, error) {
