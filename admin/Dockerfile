@@ -14,7 +14,7 @@ RUN \
   npm run build
 
 # SERVER image =================================================================
-FROM golang:1.17-alpine AS build_server
+FROM golang:1.18-alpine AS build_server
 
 ENV GO111MODULE on
 
