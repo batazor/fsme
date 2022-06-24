@@ -1,6 +1,6 @@
 # github.com/batazor/fsme v0.0.0-20220624171529-278b9b2a00bf
 github.com/batazor/fsme/fsm
-# github.com/fsnotify/fsnotify v1.5.1
+# github.com/fsnotify/fsnotify v1.5.4
 github.com/fsnotify/fsnotify
 # github.com/getsentry/sentry-go v0.13.0
 github.com/getsentry/sentry-go
@@ -36,31 +36,39 @@ github.com/klauspost/compress/huff0
 github.com/klauspost/compress/internal/snapref
 github.com/klauspost/compress/zstd
 github.com/klauspost/compress/zstd/internal/xxhash
-# github.com/magiconair/properties v1.8.5
+# github.com/magiconair/properties v1.8.6
 github.com/magiconair/properties
-# github.com/mitchellh/mapstructure v1.4.3
+# github.com/mitchellh/mapstructure v1.5.0
 github.com/mitchellh/mapstructure
-# github.com/pelletier/go-toml v1.9.4
+# github.com/pelletier/go-toml v1.9.5
 github.com/pelletier/go-toml
+# github.com/pelletier/go-toml/v2 v2.0.1
+github.com/pelletier/go-toml/v2
+github.com/pelletier/go-toml/v2/internal/ast
+github.com/pelletier/go-toml/v2/internal/danger
+github.com/pelletier/go-toml/v2/internal/tracker
 # github.com/pkg/errors v0.9.1
 github.com/pkg/errors
-# github.com/spf13/afero v1.6.0
+# github.com/spf13/afero v1.8.2
 github.com/spf13/afero
 github.com/spf13/afero/mem
-# github.com/spf13/cast v1.4.1
+# github.com/spf13/cast v1.5.0
 github.com/spf13/cast
 # github.com/spf13/jwalterweatherman v1.1.0
 github.com/spf13/jwalterweatherman
 # github.com/spf13/pflag v1.0.5
 github.com/spf13/pflag
-# github.com/spf13/viper v1.10.1
+# github.com/spf13/viper v1.12.0
 github.com/spf13/viper
 github.com/spf13/viper/internal/encoding
+github.com/spf13/viper/internal/encoding/dotenv
 github.com/spf13/viper/internal/encoding/hcl
+github.com/spf13/viper/internal/encoding/ini
+github.com/spf13/viper/internal/encoding/javaproperties
 github.com/spf13/viper/internal/encoding/json
 github.com/spf13/viper/internal/encoding/toml
 github.com/spf13/viper/internal/encoding/yaml
-# github.com/subosito/gotenv v1.2.0
+# github.com/subosito/gotenv v1.3.0
 github.com/subosito/gotenv
 # github.com/xdg-go/pbkdf2 v1.0.0
 github.com/xdg-go/pbkdf2
@@ -116,19 +124,21 @@ go.uber.org/zap/internal/bufferpool
 go.uber.org/zap/internal/color
 go.uber.org/zap/internal/exit
 go.uber.org/zap/zapcore
-# golang.org/x/crypto v0.0.0-20210921155107-089bfa567519
+# golang.org/x/crypto v0.0.0-20220411220226-7b82a4e95df4
 golang.org/x/crypto/ocsp
 golang.org/x/crypto/pbkdf2
-# golang.org/x/sync v0.0.0-20210220032951-036812b2e83c
+# golang.org/x/sync v0.0.0-20220513210516-0976fa681c29
 golang.org/x/sync/errgroup
-# golang.org/x/sys v0.0.0-20211210111614-af8b64212486
+# golang.org/x/sys v0.0.0-20220520151302-bc2c85ada10a
 golang.org/x/sys/execabs
 golang.org/x/sys/internal/unsafeheader
 golang.org/x/sys/unix
 # golang.org/x/text v0.3.7
 golang.org/x/text/transform
 golang.org/x/text/unicode/norm
-# gopkg.in/ini.v1 v1.66.2
+# gopkg.in/ini.v1 v1.66.4
 gopkg.in/ini.v1
 # gopkg.in/yaml.v2 v2.4.0
 gopkg.in/yaml.v2
+# gopkg.in/yaml.v3 v3.0.0
+gopkg.in/yaml.v3
