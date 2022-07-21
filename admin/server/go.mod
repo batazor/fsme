@@ -1,4 +1,4 @@
-go 1.12
+go 1.18
 
 require (
 	github.com/batazor/fsme v0.0.0-20220721011947-e60051464cb7
