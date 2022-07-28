@@ -1,3 +1,6 @@
+# github.com/ajg/form v1.5.1
+## explicit
+github.com/ajg/form
 # github.com/batazor/fsme v0.0.0-20220728104947-1ba3fccaac18
 ## explicit
 github.com/batazor/fsme/fsm
@@ -17,8 +20,8 @@ github.com/go-chi/chi/middleware
 # github.com/go-chi/cors v1.2.1
 ## explicit; go 1.14
 github.com/go-chi/cors
-# github.com/go-chi/render v1.0.1
-## explicit
+# github.com/go-chi/render v1.0.2
+## explicit; go 1.16
 github.com/go-chi/render
 # github.com/golang/snappy v0.0.1
 ## explicit
