@@ -5,13 +5,14 @@ require (
 	github.com/getsentry/sentry-go v0.13.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
-	github.com/go-chi/render v1.0.1
+	github.com/go-chi/render v1.0.2
 	github.com/spf13/viper v1.12.0
 	go.mongodb.org/mongo-driver v1.10.0
 	go.uber.org/zap v1.21.0
 )
 
 require (
+	github.com/ajg/form v1.5.1 // indirect
 	github.com/fsnotify/fsnotify v1.5.4 // indirect
 	github.com/golang/snappy v0.0.1 // indirect
 	github.com/hashicorp/hcl v1.0.0 // indirect
