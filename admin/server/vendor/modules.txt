@@ -1,7 +1,7 @@
 # github.com/ajg/form v1.5.1
 ## explicit
 github.com/ajg/form
-# github.com/batazor/fsme v0.0.0-20220731165142-4467fc64f97d
+# github.com/batazor/fsme v0.0.0-20220731204117-f25371eb0f1f
 ## explicit
 github.com/batazor/fsme/fsm
 # github.com/fsnotify/fsnotify v1.5.4
