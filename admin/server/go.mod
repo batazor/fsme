@@ -8,7 +8,7 @@ require (
 	github.com/go-chi/render v1.0.2
 	github.com/spf13/viper v1.12.0
 	go.mongodb.org/mongo-driver v1.10.1
-	go.uber.org/zap v1.22.0
+	go.uber.org/zap v1.23.0
 )
 
 require (
