@@ -47,7 +47,7 @@
     "eslint-plugin-react": "^7.31.8",
     "monaco-editor-webpack-plugin": "^1.9.1",
     "react-app-rewired": "^2.2.1",
-    "react-redux": "^7.2.8",
+    "react-redux": "^7.2.9",
     "react-router-dom": "^5.3.3",
     "storm-react-diagrams": "^5.2.1"
   }
