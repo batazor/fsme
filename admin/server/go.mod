@@ -1,7 +1,7 @@
 go 1.19
 
 require (
-	github.com/batazor/fsme v0.0.0-20221004183918-daa3bfd2c04e
+	github.com/batazor/fsme v0.0.0-20221005021421-3951caccca1b
 	github.com/getsentry/sentry-go v0.14.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
