@@ -44,7 +44,7 @@
     "eslint-config-airbnb": "^19.0.4",
     "eslint-plugin-import": "^2.26.0",
     "eslint-plugin-jsx-a11y": "^6.6.1",
-    "eslint-plugin-react": "^7.31.8",
+    "eslint-plugin-react": "^7.31.9",
     "monaco-editor-webpack-plugin": "^1.9.1",
     "react-app-rewired": "^2.2.1",
     "react-redux": "^7.2.9",
