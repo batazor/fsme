@@ -7,7 +7,7 @@ require (
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.2
 	github.com/spf13/viper v1.13.0
-	go.mongodb.org/mongo-driver v1.10.3
+	go.mongodb.org/mongo-driver v1.10.4
 	go.uber.org/zap v1.23.0
 )
 
