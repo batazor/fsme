@@ -1,7 +1,6 @@
 go 1.19
 
 require (
-	github.com/batazor/fsme v0.0.0-20230111120314-301b10698b84
 	github.com/getsentry/sentry-go v0.16.0
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
@@ -43,7 +42,3 @@ require (
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
-
-exclude github.com/batazor/fsme v0.0.0
-
-module github.com/batazor/fsme/admin/server
