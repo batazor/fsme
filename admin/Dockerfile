@@ -1,7 +1,7 @@
 ### This Dockerfile create for deploy to heroku #%@!
 
 # UI image =====================================================================
-FROM node:17-alpine AS build_ui
+FROM node:19-alpine AS build_ui
 
 ARG REACT_APP_API_URL
 ENV REACT_APP_API_URL=$REACT_APP_API_URL
