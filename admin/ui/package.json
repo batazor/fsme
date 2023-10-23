@@ -18,7 +18,7 @@
     "react-router": "^5.3.4",
     "react-scripts": "^5.0.1",
     "redux": "^4.2.1",
-    "redux-persist": "^5.10.0",
+    "redux-persist": "^6.0.0",
     "redux-thunk": "^2.4.2",
     "terminal-in-react": "^4.3.1",
     "whatwg-fetch": "^3.6.19"
