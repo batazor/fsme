@@ -1,7 +1,7 @@
 go 1.19
 
 require (
-	github.com/getsentry/sentry-go v0.16.0
+	github.com/getsentry/sentry-go v0.29.1
 	github.com/go-chi/chi v4.1.2+incompatible
 	github.com/go-chi/cors v1.2.1
 	github.com/go-chi/render v1.0.2
